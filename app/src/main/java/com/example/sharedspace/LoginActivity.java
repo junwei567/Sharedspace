@@ -22,94 +22,90 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
-public class RegisterActivity extends AppCompatActivity {
+public class LoginActivity extends AppCompatActivity {
 
-    // views
     EditText mEmailEt, mPasswordEt;
-    Button mRegisterBtn;
-    TextView mHaveAccountTv;
+    TextView noHaveAccountTv;
+    Button mLoginBtn;
 
-    ProgressDialog progressDialog;
-
-    // instance of FirebaseAuth
+    // firebase
     private FirebaseAuth mAuth;
+
+    ProgressDialog pd;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_register);
+        setContentView(R.layout.activity_login);
 
         ActionBar actionBar = getSupportActionBar();
-        actionBar.setTitle("Create Account");
+        actionBar.setTitle("Login");
 
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setDisplayShowHomeEnabled(true);
 
-        // init
-        mEmailEt = findViewById(R.id.emailEt);
-        mPasswordEt = findViewById(R.id.passwordEt);
-        mRegisterBtn = findViewById(R.id.registerBtn);
-        mHaveAccountTv = findViewById(R.id.have_accountTv);
-        progressDialog = new ProgressDialog(this);
-        progressDialog.setMessage("Registration In Progress");
+        // Initialize Firebase Auth
         mAuth = FirebaseAuth.getInstance();
 
-        // handle register btn click
-        mRegisterBtn.setOnClickListener(new View.OnClickListener() {
+        mEmailEt = findViewById(R.id.emailEt);
+        mPasswordEt = findViewById(R.id.passwordEt);
+        noHaveAccountTv = findViewById(R.id.nohave_accountTv);
+        mLoginBtn = findViewById(R.id.loginBtn);
+
+        mLoginBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String email = mEmailEt.getText().toString().trim();
-                String password = mPasswordEt.getText().toString().trim();
+                String email = mEmailEt.getText().toString();
+                String pw = mPasswordEt.getText().toString().trim();
                 if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+                    // doesnt look like an email m8
                     mEmailEt.setError("Invalid Email");
                     mEmailEt.setFocusable(true);
-                }
-                else if (password.length() < 6) {
-                    mPasswordEt.setError("Password length at least 6 characters");
-                    mPasswordEt.setFocusable(true);
-                }
-                else {
-                    registerUser(email, password);
+                } else {
+                    loginUser(email, pw);
                 }
             }
         });
-        // handle login textview click listener
-        mHaveAccountTv.setOnClickListener(new View.OnClickListener() {
+
+        noHaveAccountTv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(RegisterActivity.this, LoginActivity.class));
+                startActivity(new Intent(LoginActivity.this, RegisterActivity.class));
             }
         });
 
+        pd = new ProgressDialog(this);
+        pd.setMessage("Logging in");
     }
 
-    private void registerUser(String email, String password) {
-        progressDialog.show();
-
-        mAuth.createUserWithEmailAndPassword(email, password)
+    private void loginUser(String email, String pw) {
+        pd.show();
+        mAuth.signInWithEmailAndPassword(email, pw)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
-                            // Sign in success, start register activity
-                            progressDialog.dismiss();
+                            pd.dismiss();
+                            // Sign in success, update UI with the signed-in user's information
+
                             FirebaseUser user = mAuth.getCurrentUser();
-                            Toast.makeText(RegisterActivity.this, "Registered \n" + user.getEmail(), Toast.LENGTH_SHORT).show();
-                            startActivity(new Intent(RegisterActivity.this, ProfileActivity.class));
+
+                            startActivity(new Intent(LoginActivity.this, ProfileActivity.class));
                             finish();
+
                         } else {
                             // If sign in fails, display a message to the user.
-                            progressDialog.dismiss();
-                            Toast.makeText(RegisterActivity.this, "Authentication failed.", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(LoginActivity.this, "Authentication failed.",
+                                    Toast.LENGTH_SHORT).show();
+
                         }
 
-                        // ...
                     }
                 }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
-                progressDialog.dismiss();
-                Toast.makeText(RegisterActivity.this, ""+e.getMessage(), Toast.LENGTH_SHORT).show();
+                pd.dismiss();
+                Toast.makeText(LoginActivity.this, ""+e.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }

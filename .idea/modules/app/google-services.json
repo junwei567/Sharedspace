@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "911822326631",
+    "firebase_url": "https://sharedspace-764f9.firebaseio.com",
+    "project_id": "sharedspace-764f9",
+    "storage_bucket": "sharedspace-764f9.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:911822326631:android:79b98f89227d126fee3dc2",
+        "android_client_info": {
+          "package_name": "com.example.sharedspace"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "911822326631-ii1lk3dcdpo8b1mg6tdbs6fhrg0ihh20.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.sharedspace",
+            "certificate_hash": "cdfd832212c46f3e2b9b69e35d209947e653e5fb"
+          }
+        },
+        {
+          "client_id": "911822326631-2pj335ms5t9o4bkdi41f4bcfingpcrn8.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDROf1nOxQwetv3aF27o6D2AOl-Fk_5JLU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "911822326631-2pj335ms5t9o4bkdi41f4bcfingpcrn8.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

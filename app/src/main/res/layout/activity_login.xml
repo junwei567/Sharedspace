@@ -5,14 +5,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="20dp"
-    tools:context=".RegisterActivity">
+    tools:context=".LoginActivity">
 
     <!--Label Register-->
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textAlignment="center"
-        android:text="Register"
+        android:text="Login"
         android:textColor="@color/colorBlack"
         android:textSize="25sp"/>
 
@@ -50,8 +50,8 @@
 
     <!--Input Password-->
     <Button
-        android:id="@+id/registerBtn"
-        android:text="Register"
+        android:id="@+id/loginBtn"
+        android:text="Login"
         android:layout_below="@+id/passwordTIL"
         android:layout_centerHorizontal="true"
         style="@style/Widget.AppCompat.Button.Colored"
@@ -59,12 +59,12 @@
         android:layout_height="wrap_content"/>
 
     <TextView
-        android:id="@+id/have_accountTv"
+        android:id="@+id/nohave_accountTv"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Login Here"
+        android:text="Register Here"
         android:textAlignment="center"
-        android:layout_below="@id/registerBtn"
+        android:layout_below="@id/loginBtn"
         android:layout_marginTop="30dp"
         android:textColor="@color/colorBlack"/>
 
