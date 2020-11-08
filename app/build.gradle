@@ -15,6 +15,13 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
+    sourceSets {
+        main {
+            java {
+            }
+        }
+    }
+
     buildTypes {
         release {
             minifyEnabled false
