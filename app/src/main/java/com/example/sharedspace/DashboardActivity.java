@@ -60,7 +60,7 @@ public class DashboardActivity extends AppCompatActivity {
                         case R.id.nav_profile:
                             // profile fragment transaction
                             actionBar.setTitle("Profile");
-                            HomeFragment profileFragment = new HomeFragment();
+                            ProfileFragment profileFragment = new ProfileFragment();
                             FragmentTransaction pft = getSupportFragmentManager().beginTransaction();
                             pft.replace(R.id.content, profileFragment, "");
                             pft.commit();
@@ -68,7 +68,7 @@ public class DashboardActivity extends AppCompatActivity {
                         case R.id.nav_friends:
                             // users fragment transaction
                             actionBar.setTitle("Friends");
-                            HomeFragment friendFragment = new HomeFragment();
+                            FriendsFragment friendFragment = new FriendsFragment();
                             FragmentTransaction fft = getSupportFragmentManager().beginTransaction();
                             fft.replace(R.id.content, friendFragment, "");
                             fft.commit();
