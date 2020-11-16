@@ -7,38 +7,32 @@
     android:layout_height="match_parent"
     tools:context=".HomeFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-
     <androidx.cardview.widget.CardView
-        android:id="@+id/card_view_1"
-        android:layout_width="320dp"
-        android:layout_height="100dp"
+        android:id="@+id/cardView_1"
         android:layout_gravity="center"
-        app:cardCornerRadius="4dp">
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center"
-            android:text="card1"
-            android:textAlignment="center"
-            android:textSize="30sp" />
-    </androidx.cardview.widget.CardView>
-
-    <androidx.cardview.widget.CardView
-        android:id="@+id/card_view_2"
-        android:layout_width="320dp"
+        android:layout_width="325dp"
         android:layout_height="100dp"
-        android:layout_gravity="center_horizontal"
+        app:cardBackgroundColor="@color/colorAccent"
         app:cardCornerRadius="4dp">
 
         <TextView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center"
-            android:text="card2"
+            android:id="@+id/card_header"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Introduction to Information Systems and Programming"
+            android:fontFamily="sans-serif-black"
+            android:textSize="20dp"
             android:textAlignment="center"
-            android:textSize="30sp" />
+            android:layout_gravity="center"/>
+
+        <TextView
+            android:id="@+id/card_friends"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Currently Studying: 200"
+            android:fontFamily="sans-serif-black"
+            android:textSize="10dp"
+            android:layout_gravity="bottom"/>
     </androidx.cardview.widget.CardView>
 
 </FrameLayout>

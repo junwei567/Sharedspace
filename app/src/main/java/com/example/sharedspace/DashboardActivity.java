@@ -38,10 +38,10 @@ public class DashboardActivity extends AppCompatActivity {
 
 
         // creates the default homeFragment
-//        HomeFragment homeFragment = new HomeFragment();
-//        FragmentTransaction hft = getSupportFragmentManager().beginTransaction();
-//        hft.replace(R.id.content, homeFragment, "");
-//        hft.commit();
+        HomeFragment homeFragment = new HomeFragment();
+        FragmentTransaction hft = getSupportFragmentManager().beginTransaction();
+        hft.replace(R.id.content, homeFragment, "");
+        hft.commit();
 
     }
 
@@ -52,11 +52,17 @@ public class DashboardActivity extends AppCompatActivity {
                     switch (menuItem.getItemId()) {
                         case R.id.nav_home:
                             actionBar.setTitle("Home");
-                            //removes ALL fragments, should show the basic layout of dashboardactivity
-                            for (Fragment fragment: getSupportFragmentManager().getFragments()){
-                                getSupportFragmentManager().beginTransaction().remove(fragment).commit();
-                            }
+                            HomeFragment homeFragment = new HomeFragment();
+                            FragmentTransaction hft = getSupportFragmentManager().beginTransaction();
+                            hft.replace(R.id.content, homeFragment, "");
+                            hft.commit();
+
+                            //removes ALL fragments, should show the basic layout of dashboard activity
+//                            for (Fragment fragment: getSupportFragmentManager().getFragments()){
+//                                getSupportFragmentManager().beginTransaction().remove(fragment).commit();
+//                            }
                             return true;
+
                         case R.id.nav_profile:
                             // profile fragment transaction
                             actionBar.setTitle("Profile");
@@ -65,6 +71,7 @@ public class DashboardActivity extends AppCompatActivity {
                             pft.replace(R.id.content, profileFragment, "");
                             pft.commit();
                             return true;
+
                         case R.id.nav_friends:
                             // users fragment transaction
                             actionBar.setTitle("Friends");

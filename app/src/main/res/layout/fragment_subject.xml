@@ -10,7 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="542dp"
         android:gravity="bottom"
-        android:text="Profile"
+        android:text="Subject"
         android:textAlignment="center"
         android:textSize="30sp" />
 
