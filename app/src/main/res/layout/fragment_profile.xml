@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    
+    android:background="#F1ED"
     tools:context=".ProfileFragment">
 
     <RelativeLayout
@@ -42,7 +42,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="5dp"
-                    android:text="Name"
                     android:layout_marginTop="5dp"
                     android:textSize="25sp"
                     android:textColor="@color/colorBlack"
@@ -52,7 +51,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="5dp"
-                    android:text="Class"
                     android:textColor="@color/colorBlack"
                     android:layout_marginLeft="5dp" />
                 <TextView
@@ -60,7 +58,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="5dp"
-                    android:text="Phone"
                     android:textColor="@color/colorBlack"
                     android:layout_marginLeft="5dp" />
             </LinearLayout>

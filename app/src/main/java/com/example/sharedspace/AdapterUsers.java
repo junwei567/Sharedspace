@@ -9,17 +9,17 @@ import androidx.recyclerview.widget.RecyclerView;
 
 public class AdapterUsers {
 
-    class MyHolder extends RecyclerView.ViewHolder{
-            ImageView mAvatarIv;
-            TextView mNameTv, mEmailTv;
-
-            public MyHolder(@NonNull View itemView) {
-                super(itemView);
-                //init views
-                mAvatarIv = itemView.findViewById(R.id.avatarIv);
-                Pica
-            }
-    }
+//    class MyHolder extends RecyclerView.ViewHolder{
+//            ImageView mAvatarIv;
+//            TextView mNameTv, mEmailTv;
+//
+//            public MyHolder(@NonNull View itemView) {
+//                super(itemView);
+//                //init views
+//                mAvatarIv = itemView.findViewById(R.id.avatarIv);
+//                Pica
+//            }
+//    }
 
 
 }
