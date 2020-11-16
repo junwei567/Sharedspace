@@ -43,4 +43,6 @@ dependencies {
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
 
+    // photo downloading for profile pic
+    implementation 'com.squareup.picasso:picasso:2.71828'
 }
