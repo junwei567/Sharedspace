@@ -3,6 +3,7 @@ package com.example.sharedspace;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.content.Intent;
@@ -19,28 +20,28 @@ public class DashboardActivity extends AppCompatActivity {
 
     // firebase auth
     FirebaseAuth firebaseAuth;
-
     ActionBar actionBar;
+    BottomNavigationView navigationView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dashboard);
-
         actionBar = getSupportActionBar();
-        actionBar.setTitle("Profile");
-
         firebaseAuth = FirebaseAuth.getInstance();
+        navigationView = findViewById(R.id.navigation);
 
-        BottomNavigationView navigationView = findViewById(R.id.navigation);
         navigationView.setOnNavigationItemSelectedListener(selectedListener);
 
         // home fragment transaction (default on start)
         actionBar.setTitle("Home");
-        HomeFragment homeFragment = new HomeFragment();
-        FragmentTransaction hft = getSupportFragmentManager().beginTransaction();
-        hft.replace(R.id.content, homeFragment, "");
-        hft.commit();
+
+
+        // creates the default homeFragment
+//        HomeFragment homeFragment = new HomeFragment();
+//        FragmentTransaction hft = getSupportFragmentManager().beginTransaction();
+//        hft.replace(R.id.content, homeFragment, "");
+//        hft.commit();
 
     }
 
@@ -50,12 +51,11 @@ public class DashboardActivity extends AppCompatActivity {
                 public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
                     switch (menuItem.getItemId()) {
                         case R.id.nav_home:
-                            // home fragment transaction
                             actionBar.setTitle("Home");
-                            HomeFragment homeFragment = new HomeFragment();
-                            FragmentTransaction hft = getSupportFragmentManager().beginTransaction();
-                            hft.replace(R.id.content, homeFragment, "");
-                            hft.commit();
+                            //removes ALL fragments, should show the basic layout of dashboardactivity
+                            for (Fragment fragment: getSupportFragmentManager().getFragments()){
+                                getSupportFragmentManager().beginTransaction().remove(fragment).commit();
+                            }
                             return true;
                         case R.id.nav_profile:
                             // profile fragment transaction
