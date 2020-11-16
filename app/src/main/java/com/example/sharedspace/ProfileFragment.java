@@ -102,19 +102,19 @@ public class ProfileFragment extends Fragment {
                 // check until get required data
                 for (DataSnapshot ds: dataSnapshot.getChildren()) {
                     String name = "" + ds.child("name").getValue();
-//                    String cclass = "" + ds.child("class").getValue();
-//                    String phone = "" + ds.child("phone").getValue();
-//                    String image = "" + ds.child("image").getValue();
+                    String cclass = "" + ds.child("class").getValue();
+                    String phone = "" + ds.child("phone").getValue();
+                    String image = "" + ds.child("image").getValue();
 
                     // set data
                     nameTv.setText(name);
-//                    classTv.setText(cclass);
-//                    phoneTv.setText(phone);
-//                    try {
-//                        Picasso.get().load(image).into(avatarIv);
-//                    } catch (Exception e) {
-//                        Picasso.get().load(R.drawable.ic_add_image).into(avatarIv);
-//                    }
+                    classTv.setText(cclass);
+                    phoneTv.setText(phone);
+                    try {
+                        Picasso.get().load(image).into(avatarIv);
+                    } catch (Exception e) {
+                        Picasso.get().load(R.drawable.ic_add_image).into(avatarIv);
+                    }
                 }
             }
 
