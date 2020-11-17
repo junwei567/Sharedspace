@@ -7,16 +7,20 @@ import androidx.core.app.NavUtils;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.TextView;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+
+import java.util.List;
 
 public class DashboardActivity extends AppCompatActivity {
 
@@ -35,20 +39,21 @@ public class DashboardActivity extends AppCompatActivity {
 
         navigationView.setOnNavigationItemSelectedListener(selectedListener);
 
-        getSupportFragmentManager().addOnBackStackChangedListener(new FragmentManager.OnBackStackChangedListener() {
-            @Override
-            public void onBackStackChanged() {
-                int stackHeight = getSupportFragmentManager().getBackStackEntryCount();
-                if (stackHeight > 0) { // if we have something on the stack (doesn't include the current shown fragment)
-                    getSupportActionBar().setHomeButtonEnabled(true);
-                    getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-                } else {
-                    getSupportActionBar().setDisplayHomeAsUpEnabled(false);
-                    getSupportActionBar().setHomeButtonEnabled(false);
-                }
-            }
-
-        });
+        //code for back button FOR FRAGMENTS
+//        getSupportFragmentManager().addOnBackStackChangedListener(new FragmentManager.OnBackStackChangedListener() {
+//            @Override
+//            public void onBackStackChanged() {
+//                int stackHeight = getSupportFragmentManager().getBackStackEntryCount();
+//                if (stackHeight > 0) { // if we have something on the stack (doesn't include the current shown fragment)
+//                    getSupportActionBar().setHomeButtonEnabled(true);
+//                    getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+//                } else {
+//                    getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+//                    getSupportActionBar().setHomeButtonEnabled(false);
+//                }
+//            }
+//
+//        });
 
 
         // modifies actionbar
@@ -57,10 +62,10 @@ public class DashboardActivity extends AppCompatActivity {
 
 
         // creates the default homeFragment
-        HomeFragment homeFragment = new HomeFragment();
-        FragmentTransaction hft = getSupportFragmentManager().beginTransaction();
-        hft.replace(R.id.content, homeFragment, "");
-        hft.commit();
+//        HomeFragment homeFragment = new HomeFragment();
+//        FragmentTransaction hft = getSupportFragmentManager().beginTransaction();
+//        hft.replace(R.id.content, homeFragment, "");
+//        hft.commit();
 
     }
 
@@ -71,11 +76,11 @@ public class DashboardActivity extends AppCompatActivity {
                     switch (menuItem.getItemId()) {
                         case R.id.nav_home:
                             actionBar.setTitle("Home");
-                            HomeFragment homeFragment = new HomeFragment();
-                            FragmentTransaction hft = getSupportFragmentManager().beginTransaction();
-                            hft.replace(R.id.content, homeFragment, "");
-                            hft.addToBackStack(null);
-                            hft.commit();
+//                            HomeFragment homeFragment = new HomeFragment();
+//                            FragmentTransaction hft = getSupportFragmentManager().beginTransaction();
+//                            hft.replace(R.id.content, homeFragment, "");
+//                            hft.addToBackStack(null);
+//                            hft.commit();
 
                             //removes ALL fragments, should show the basic layout of dashboard activity
 //                            for (Fragment fragment: getSupportFragmentManager().getFragments()){
@@ -140,11 +145,37 @@ public class DashboardActivity extends AppCompatActivity {
             case R.id.action_logout:
                 firebaseAuth.signOut();
                 checkUserStatus();
-            case R.id.home:
-                getSupportFragmentManager().popBackStack();
-                return true;
+//            case R.id.home:
+//                getSupportFragmentManager().popBackStack();
+//                return true;
             default:
                 return super.onOptionsItemSelected(item);
+        }
+    }
+
+    //Adapter for recyclerview
+    public class SubjectAdapter extends RecyclerView.Adapter<SubjectAdapter.ViewHolder>{
+
+        //To change Object to Subject once concrete implementation of the Subject class is complete
+        private List<Object> subjectList;
+        public SubjectAdapter(List<Object> subjects){
+            subjectList = subjects;
+        }
+
+
+
+        public class ViewHolder extends RecyclerView.ViewHolder {
+
+            public TextView subjectNameView;
+            public TextView subjectMembersView;
+
+            public ViewHolder(View itemView){
+                super(itemView);
+
+                subjectNameView = itemView.findViewById(R.id.card_header);
+                subjectMembersView = itemView.findViewById(R.id.card_studying);
+
+            }
         }
     }
 }

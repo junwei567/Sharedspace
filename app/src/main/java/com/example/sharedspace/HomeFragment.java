@@ -1,4 +1,4 @@
-//NOTE: HomeFragment describes the behaviour of all of the subject cards
+//NOTE: DEPRECATED AGAIN: WE'RE USING ACTIVITIES, NOT FRAGMENTS
 
 package com.example.sharedspace;
 
