@@ -37,6 +37,7 @@ public class DashboardActivity extends AppCompatActivity {
     ActionBar actionBar;
     BottomNavigationView navigationView;
     //Button uselessButton;
+    public final static String COURSE_ID_KEY = "COURSE_ID_KEY";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -210,7 +211,7 @@ public class DashboardActivity extends AppCompatActivity {
             Subject subject = subjectList.get(position);
 
             // Set item views based on your views and data model
-            TextView subjectNameView = holder.subjectNameView;
+            final TextView subjectNameView = holder.subjectNameView;
             subjectNameView.setText(subject.getCourseTitle());
 
             TextView subjectMembersView = holder.subjectMembersView;
@@ -218,13 +219,15 @@ public class DashboardActivity extends AppCompatActivity {
             subjectMembersView.setText(numberOfStudents);
 
             TextView subjectIDView = holder.subjectIDView;
-            subjectIDView.setText(subject.getCourseID());
+            final String courseID = subject.getCourseID();
+            subjectIDView.setText(courseID);
 
             CardView cardView = holder.cardView;
             cardView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     Intent toSubjectIntent = new Intent(DashboardActivity.this, SubjectActivity.class);
+                    toSubjectIntent.putExtra(COURSE_ID_KEY, courseID);
                     startActivity(toSubjectIntent);
                 }
             });

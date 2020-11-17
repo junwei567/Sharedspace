@@ -29,6 +29,8 @@ public class SubjectActivity extends AppCompatActivity {
     RecyclerView recyclerViewRooms;
     Subject thisSubject;
 
+    public final static String COURSE_ID_KEY = "COURSE_ID_KEY";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,9 +42,15 @@ public class SubjectActivity extends AppCompatActivity {
         navigationView = findViewById(R.id.navigation);
         //navigationView.setOnNavigationItemSelectedListener(selectedListener);
 
+        //gets the course_id that was passed to SubjectActivity from DashboardActivity (so you know what course's rooms to display)
+        String courseID = getIntent().getStringExtra(SubjectActivity.COURSE_ID_KEY);
+        actionBar.setTitle(courseID);
+
         recyclerViewRooms = findViewById(R.id.recyclerViewRooms);
 
-        thisSubject = new Subject("500001", "info sys");
+        //we need the controller to help us get the Subject from its courseID, this is just a dummy to test
+        thisSubject = new Subject(courseID, "replace this later");
+        //thisSubject = new Subject("500001", "info sys");
 
         // Create adapter passing in the sample user data
         ContactsAdapter adapter = new ContactsAdapter(thisSubject);
