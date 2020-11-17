@@ -14,6 +14,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -28,6 +29,7 @@ public class DashboardActivity extends AppCompatActivity {
     FirebaseAuth firebaseAuth;
     ActionBar actionBar;
     BottomNavigationView navigationView;
+    Button uselessButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,6 +56,31 @@ public class DashboardActivity extends AppCompatActivity {
 //            }
 //
 //        });
+
+        uselessButton = findViewById(R.id.uselessButton);
+        uselessButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(DashboardActivity.this, SubjectActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        getSupportFragmentManager().addOnBackStackChangedListener(new FragmentManager.OnBackStackChangedListener() {
+            @Override
+            public void onBackStackChanged() {
+                int stackHeight = getSupportFragmentManager().getBackStackEntryCount();
+                if (stackHeight > 0) { // if we have something on the stack (doesn't include the current shown fragment)
+                    getSupportActionBar().setHomeButtonEnabled(true);
+                    getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+                } else {
+                    getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+                    getSupportActionBar().setHomeButtonEnabled(false);
+                }
+            }
+
+        });
+
 
 
         // modifies actionbar
@@ -152,7 +179,7 @@ public class DashboardActivity extends AppCompatActivity {
                 return super.onOptionsItemSelected(item);
         }
     }
-
+/*
     //Adapter for recyclerview
     public class SubjectAdapter extends RecyclerView.Adapter<SubjectAdapter.ViewHolder>{
 
@@ -178,4 +205,6 @@ public class DashboardActivity extends AppCompatActivity {
             }
         }
     }
+
+ */
 }
