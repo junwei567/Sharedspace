@@ -22,6 +22,7 @@ import android.widget.Button;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.example.sharedspace.dummy.DummyController;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -36,6 +37,7 @@ public class DashboardActivity extends AppCompatActivity {
     FirebaseAuth firebaseAuth;
     ActionBar actionBar;
     BottomNavigationView navigationView;
+    DummyController controller;
     //Button uselessButton;
     public final static String COURSE_ID_KEY = "COURSE_ID_KEY";
 
@@ -49,20 +51,15 @@ public class DashboardActivity extends AppCompatActivity {
 
         navigationView.setOnNavigationItemSelectedListener(selectedListener);
 
-        //temporary testing list of subjects
-        Subject s1 = new Subject("50.004", "Introduction to Algorithms");
-        Subject s2 = new Subject("50.001", "Introduction to Information Systems and Programming");
-        List<Subject> slist = new ArrayList<Subject>();
-        slist.add(s1);
-        slist.add(s2);
-
-        RecyclerView rvSubject = (RecyclerView) findViewById(R.id.rv_subject);
-        SubjectAdapter subjectAdapter = new SubjectAdapter(slist);
-        rvSubject.setAdapter(subjectAdapter);
-        rvSubject.setLayoutManager(new LinearLayoutManager(this));
+        //temporary testing list of subjects, this list should be retrieved from the controller onCreate
+//        Subject s1 = new Subject("50.004", "Introduction to Algorithms");
+//        Subject s2 = new Subject("50.001", "Introduction to Information Systems and Programming");
+//        List<Subject> slist = new ArrayList<Subject>();
+//        slist.add(s1);
+//        slist.add(s2);
 
 
-        //the useless button give new intent to make
+        //a button to move to subjectActivity, for testing
 //        uselessButton = findViewById(R.id.uselessButton);
 //        uselessButton.setOnClickListener(new View.OnClickListener() {
 //            @Override
@@ -71,35 +68,11 @@ public class DashboardActivity extends AppCompatActivity {
 //                startActivity(intent);
 //            }
 //        });
-//
-//        getSupportFragmentManager().addOnBackStackChangedListener(new FragmentManager.OnBackStackChangedListener() {
-//            @Override
-//            public void onBackStackChanged() {
-//                int stackHeight = getSupportFragmentManager().getBackStackEntryCount();
-//                if (stackHeight > 0) { // if we have something on the stack (doesn't include the current shown fragment)
-//                    getSupportActionBar().setHomeButtonEnabled(true);
-//                    getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-//                } else {
-//                    getSupportActionBar().setDisplayHomeAsUpEnabled(false);
-//                    getSupportActionBar().setHomeButtonEnabled(false);
-//                }
-//            }
-//
-//        });
 
 
 
         // modifies actionbar
         actionBar.setTitle("Home");
-       // actionBar.setDisplayHomeAsUpEnabled(true);
-
-
-        // creates the default homeFragment
-//        HomeFragment homeFragment = new HomeFragment();
-//        FragmentTransaction hft = getSupportFragmentManager().beginTransaction();
-//        hft.replace(R.id.content, homeFragment, "");
-//        hft.commit();
-
     }
 
     private BottomNavigationView.OnNavigationItemSelectedListener selectedListener =
@@ -109,11 +82,6 @@ public class DashboardActivity extends AppCompatActivity {
                     switch (menuItem.getItemId()) {
                         case R.id.nav_home:
                             actionBar.setTitle("Home");
-//                            HomeFragment homeFragment = new HomeFragment();
-//                            FragmentTransaction hft = getSupportFragmentManager().beginTransaction();
-//                            hft.replace(R.id.content, homeFragment, "");
-//                            hft.addToBackStack(null);
-//                            hft.commit();
 
                             //removes ALL fragments, should show the basic layout of dashboard activity
                             for (Fragment fragment: getSupportFragmentManager().getFragments()){
@@ -126,8 +94,8 @@ public class DashboardActivity extends AppCompatActivity {
                             actionBar.setTitle("Profile");
                             ProfileFragment profileFragment = new ProfileFragment();
                             FragmentTransaction pft = getSupportFragmentManager().beginTransaction();
-                            pft.replace(R.id.content, profileFragment, "");
-                            pft.addToBackStack(null);
+                            pft.replace(R.id.content, profileFragment, "Profile");
+                            pft.addToBackStack("Profile");
                             pft.commit();
                             return true;
 
@@ -136,8 +104,8 @@ public class DashboardActivity extends AppCompatActivity {
                             actionBar.setTitle("Friends");
                             FriendsFragment friendFragment = new FriendsFragment();
                             FragmentTransaction fft = getSupportFragmentManager().beginTransaction();
-                            fft.replace(R.id.content, friendFragment, "");
-                            fft.addToBackStack(null);
+                            fft.replace(R.id.content, friendFragment, "Friends");
+                            fft.addToBackStack("Friends");
                             fft.commit();
                             return true;
                     }
@@ -163,6 +131,19 @@ public class DashboardActivity extends AppCompatActivity {
         super.onStart();
     }
 
+    @Override
+    protected void onResume() {
+        controller = DummyController.getInstance();
+        List<Subject> slist = controller.getUserSubjects();
+
+        //boilerplate code for initiating a recyclerview
+        RecyclerView rvSubject = (RecyclerView) findViewById(R.id.rv_subject);
+        SubjectAdapter subjectAdapter = new SubjectAdapter(slist);
+        rvSubject.setAdapter(subjectAdapter);
+        rvSubject.setLayoutManager(new LinearLayoutManager(this));
+        super.onResume();
+    }
+
     //
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -178,9 +159,9 @@ public class DashboardActivity extends AppCompatActivity {
             case R.id.action_logout:
                 firebaseAuth.signOut();
                 checkUserStatus();
-//            case R.id.home:
-//                getSupportFragmentManager().popBackStack();
-//                return true;
+            case R.id.action_add:
+                //moves to SubjectAddActivity
+                startActivity(new Intent(DashboardActivity.this, SubjectAddActivity.class));
             default:
                 return super.onOptionsItemSelected(item);
         }
