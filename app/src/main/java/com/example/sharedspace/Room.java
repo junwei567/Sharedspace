@@ -18,28 +18,27 @@ import java.util.Date;
 import java.util.HashMap;
 
 public class Room {
-    private static int roomNumber = 1; // Tracks the number of rooms created
-
-    private int roomID;
+    private long roomUID;
     private String title;
     private long timeStarted;
     private String roomDescription;
     private long timeToClose;
     private ArrayList<String> studentIDList;
 
-    public void Room(String title, String roomDescription, long timeToClose, String studentID){
+    public Room(String title, String roomDescription, String studentID, long timeToClose, long timeStarted){
         this.title = title;
         this.roomDescription = roomDescription;
         this.timeToClose = timeToClose;
         studentIDList.add(studentID);
+        this.timeStarted = timeStarted;
+    }
 
-        this.timeStarted = new Date().getTime();
-        this.roomID = roomNumber;
-        roomNumber++; // Increment room number so that next room will be set to roomNumber 2, 3, 4, etc.
+    public Room(){ // Default constructor needed by Firebase
+
     }
 
     // Create room then put in values with a hash map, using time as the room UID
-    private void registerRoom(String uid, String name) {
+    private void registerRoom(String name) {
 //        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         Long datetime = System.currentTimeMillis();
         String roomUID = String.valueOf(datetime);
@@ -66,7 +65,7 @@ public class Room {
         databaseReference.child("Rooms").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                roomNo[0] =  (int) dataSnapshot.getChildrenCount();
+                roomNo[0] = (int) dataSnapshot.getChildrenCount();
             }
 
             @Override
@@ -75,5 +74,9 @@ public class Room {
             }
         });
         return roomNo[0];
+    }
+
+    public long getRoomUID() {
+        return roomUID;
     }
 }

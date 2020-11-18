@@ -8,7 +8,7 @@ public class Subject {
     private ArrayList<String> studentList;
     private ArrayList<Room> roomList;
 
-    public void Subject(String courseID, String courseTitle){
+    public Subject(String courseID, String courseTitle){
         this.courseID = courseID;
         this.courseTitle = courseTitle;
         studentList = new ArrayList<>();
@@ -28,7 +28,7 @@ public class Subject {
     }
 
     public void createRoom(String title, String roomDescription, long timeToClose, String studentID){ // Also input studentID so we can automatically add the creator into the room
-        roomList.add(new Room());
+        roomList.add(new Room(title, roomDescription, timeToClose, studentID));
     }
 
     public ArrayList<String> getStudentList() {

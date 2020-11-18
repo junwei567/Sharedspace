@@ -6,15 +6,8 @@ public class ChatMessage {
     private String messageText;
     private String messageUserID;
     private long messageTime;
+    private int avatarNo;
 
-    // Constructor for when user creates and sends a new message
-    public ChatMessage(String messageText, String messageUserID) {
-        this.messageText = messageText;
-        this.messageUserID = messageUserID;
-
-        // Initialize to current time
-        messageTime = new Date().getTime();
-    }
 
     // Constructor for constructing new ChatMessage object from data in Firebase
     public ChatMessage(String messageText, String messageUserID, long messageTime) {
