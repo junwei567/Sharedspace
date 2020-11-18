@@ -83,21 +83,22 @@ public class HomeFragment extends Fragment {
         databaseReference = firebaseDatabase.getReference("Users");
 
         FloatingActionButton fab = view.findViewById(R.id.fab);
+        final EditText input = view.findViewById(R.id.input);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                EditText input = v.findViewById(R.id.input);
+                String inputStr = input.getText().toString();
+                ModelChatMessage msg = new ModelChatMessage(inputStr, user.getDisplayName());
+                firebaseDatabase.getReference().push().setValue(msg);
 
                 // read input field and push instance of chatmsg to fb db
-                FirebaseDatabase.getInstance().getReference().push()
-                        .setValue(new ModelChatMessage(input.getText().toString(),
-                                FirebaseAuth.getInstance().getCurrentUser().getDisplayName())
-                        );
+//                FirebaseDatabase.getInstance().getReference().push()
+//                        .setValue(new ModelChatMessage(input.getText().toString(),
+//                                FirebaseAuth.getInstance().getCurrentUser().getDisplayName())
+//                        );
             }
         });
         return view;
-
-
     }
 
 
