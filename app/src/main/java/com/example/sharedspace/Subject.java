@@ -27,8 +27,8 @@ public class Subject {
         studentList.add(studentID);
     }
 
-    public void createRoom(String title, String roomDescription, long timeToClose, String studentID){ // Also input studentID so we can automatically add the creator into the room
-        roomList.add(new Room(title, roomDescription, timeToClose, studentID));
+    public void createRoom(String title, String roomDescription, String studentID, long timeStarted, long timeToClose){ // Also input studentID so we can automatically add the creator into the room
+        roomList.add(new Room(title, roomDescription, studentID, timeStarted, timeToClose));
     }
 
     public ArrayList<String> getStudentList() {
