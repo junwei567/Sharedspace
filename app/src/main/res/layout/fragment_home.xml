@@ -19,60 +19,19 @@
         android:layout_height="wrap_content"
         android:clickable="true"
         android:src="@drawable/ic_edit_white"
-        android:id="@+id/fab"
+        android:id="@+id/edit_fab"
         android:tint="@android:color/white"
         android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"
         app:fabSize="mini" />
-    <com.google.android.material.textfield.TextInputLayout
+
+    <Button
+        android:clickable="true"
+        android:id="@+id/message_butt"
+        android:text="Message"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/text_input_layout"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentStart="true" >
+        android:layout_height="wrap_content" />
 
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Input"
-            android:id="@+id/input" />
 
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <ListView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentStart="true"
-        android:layout_above="@id/fab"
-        android:dividerHeight="16dp"
-        android:divider="@android:color/transparent"
-        android:id="@+id/list_of_msg"
-        android:layout_marginBottom="16dp" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentStart="true"
-        android:id="@+id/message_user"
-        android:textStyle="normal|bold" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/message_user"
-        android:layout_alignParentEnd="true"
-        android:id="@+id/message_time" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/message_user"
-        android:layout_alignParentStart="true"
-        android:layout_marginTop="5dp"
-        android:id="@+id/message_text"
-        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-        android:textSize="18sp" />
 
 </RelativeLayout>

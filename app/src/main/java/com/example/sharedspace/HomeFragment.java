@@ -1,14 +1,17 @@
 package com.example.sharedspace;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ListView;
+
 
 import com.firebase.ui.database.FirebaseListAdapter;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -82,22 +85,15 @@ public class HomeFragment extends Fragment {
         firebaseDatabase = FirebaseDatabase.getInstance();
         databaseReference = firebaseDatabase.getReference("Users");
 
-        FloatingActionButton fab = view.findViewById(R.id.fab);
-        final EditText input = view.findViewById(R.id.input);
-        fab.setOnClickListener(new View.OnClickListener() {
+        Button butt = view.findViewById(R.id.message_butt);
+        butt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String inputStr = input.getText().toString();
-                ModelChatMessage msg = new ModelChatMessage(inputStr, user.getDisplayName());
-                firebaseDatabase.getReference().push().setValue(msg);
-
-                // read input field and push instance of chatmsg to fb db
-//                FirebaseDatabase.getInstance().getReference().push()
-//                        .setValue(new ModelChatMessage(input.getText().toString(),
-//                                FirebaseAuth.getInstance().getCurrentUser().getDisplayName())
-//                        );
+                Intent intent = new Intent(getActivity(), ChatActivity.class);
+                startActivity(intent);
             }
         });
+
         return view;
     }
 
