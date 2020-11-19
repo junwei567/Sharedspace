@@ -3,6 +3,9 @@ package com.example.sharedspace;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.NavUtils;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.content.Intent;
@@ -19,24 +22,41 @@ public class DashboardActivity extends AppCompatActivity {
 
     // firebase auth
     FirebaseAuth firebaseAuth;
-
     ActionBar actionBar;
+    BottomNavigationView navigationView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dashboard);
-
         actionBar = getSupportActionBar();
-        actionBar.setTitle("Profile");
-
         firebaseAuth = FirebaseAuth.getInstance();
+        navigationView = findViewById(R.id.navigation);
 
-        BottomNavigationView navigationView = findViewById(R.id.navigation);
         navigationView.setOnNavigationItemSelectedListener(selectedListener);
 
-        // home fragment transaction (default on start)
+        getSupportFragmentManager().addOnBackStackChangedListener(new FragmentManager.OnBackStackChangedListener() {
+            @Override
+            public void onBackStackChanged() {
+                int stackHeight = getSupportFragmentManager().getBackStackEntryCount();
+                if (stackHeight > 0) { // if we have something on the stack (doesn't include the current shown fragment)
+                    getSupportActionBar().setHomeButtonEnabled(true);
+                    getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+                } else {
+                    getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+                    getSupportActionBar().setHomeButtonEnabled(false);
+                }
+            }
+
+        });
+
+
+        // modifies actionbar
         actionBar.setTitle("Home");
+       // actionBar.setDisplayHomeAsUpEnabled(true);
+
+
+        // creates the default homeFragment
         HomeFragment homeFragment = new HomeFragment();
         FragmentTransaction hft = getSupportFragmentManager().beginTransaction();
         hft.replace(R.id.content, homeFragment, "");
@@ -50,27 +70,36 @@ public class DashboardActivity extends AppCompatActivity {
                 public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
                     switch (menuItem.getItemId()) {
                         case R.id.nav_home:
-                            // home fragment transaction
                             actionBar.setTitle("Home");
                             HomeFragment homeFragment = new HomeFragment();
                             FragmentTransaction hft = getSupportFragmentManager().beginTransaction();
                             hft.replace(R.id.content, homeFragment, "");
+                            hft.addToBackStack(null);
                             hft.commit();
+
+                            //removes ALL fragments, should show the basic layout of dashboard activity
+//                            for (Fragment fragment: getSupportFragmentManager().getFragments()){
+//                                getSupportFragmentManager().beginTransaction().remove(fragment).commit();
+//                            }
                             return true;
+
                         case R.id.nav_profile:
                             // profile fragment transaction
                             actionBar.setTitle("Profile");
                             ProfileFragment profileFragment = new ProfileFragment();
                             FragmentTransaction pft = getSupportFragmentManager().beginTransaction();
                             pft.replace(R.id.content, profileFragment, "");
+                            pft.addToBackStack(null);
                             pft.commit();
                             return true;
+
                         case R.id.nav_friends:
                             // users fragment transaction
                             actionBar.setTitle("Friends");
                             FriendsFragment friendFragment = new FriendsFragment();
                             FragmentTransaction fft = getSupportFragmentManager().beginTransaction();
                             fft.replace(R.id.content, friendFragment, "");
+                            fft.addToBackStack(null);
                             fft.commit();
                             return true;
                     }
@@ -104,13 +133,18 @@ public class DashboardActivity extends AppCompatActivity {
 
     }
 
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-        if (id == R.id.action_logout) {
-            firebaseAuth.signOut();
-            checkUserStatus();
+        switch (item.getItemId()) {
+            case R.id.action_logout:
+                firebaseAuth.signOut();
+                checkUserStatus();
+            case R.id.home:
+                getSupportFragmentManager().popBackStack();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
         }
-        return super.onOptionsItemSelected(item);
     }
 }
