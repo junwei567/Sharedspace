@@ -30,4 +30,6 @@ public class ChatController {
                         messageUserID, messageTime)
                 );
     }
+
+    //TODO: getMessage method
 }

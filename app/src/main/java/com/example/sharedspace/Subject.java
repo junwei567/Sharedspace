@@ -40,7 +40,7 @@ public class Subject {
     public ArrayList<Room> getRoomList() {
         if (roomList.size()==0) {
             for (int i=1; i< 21;i++) {
-                roomList.add(new Room("Room "+i,"This describes a room",3,"1004485"));
+                roomList.add(new Room("Room "+i,"This describes a room","1004485", 10000, 69000));
 
                 // this extra line is just to simulate test case
                 if (i==3||i==7||i==18) {

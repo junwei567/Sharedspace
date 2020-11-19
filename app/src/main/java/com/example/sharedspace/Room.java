@@ -8,6 +8,7 @@ public class Room {
     private String roomDescription;
     private long timeToClose;
     private ArrayList<String> studentIDList;
+    private final int MAX_ROOM_SIZE = 100; //idk if it's necessary to keep a max room size, we can delete it later
 
     public Room(String title, String roomDescription, String studentID, long timeStarted, long timeToClose){
         studentIDList = new ArrayList<>();
@@ -52,13 +53,14 @@ public class Room {
         return this.studentIDList.size();
     }
 
+    //do we need an is_full? I'll instantiate a dummy MAX_ROOM_SIZE here but we can delete that later
     public Boolean isFull() {
         if (getSizeOfRoom() < MAX_ROOM_SIZE) return false;
         return true;
     }
 
     public String getTimeStarted() {
-        return Long.toString(timeStarted);
+        return Long.toString(roomUID); //since roomUID and timestarted are now the same variable
     }
 }
 

@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,12 +23,14 @@ import org.w3c.dom.Text;
 import java.util.List;
 
 public class SubjectActivity extends AppCompatActivity {
-    FirebaseAuth firebaseAuth;
+    FirebaseAuth firebaseAuth; //is this necessary here? firebase should only be called in our controllers
     ActionBar actionBar;
     BottomNavigationView navigationView;
 
     RecyclerView recyclerViewRooms;
     Subject thisSubject;
+
+    Button addRoomButton;
 
     public final static String COURSE_ID_KEY = "COURSE_ID_KEY";
 
@@ -42,8 +45,10 @@ public class SubjectActivity extends AppCompatActivity {
         navigationView = findViewById(R.id.navigation);
         //navigationView.setOnNavigationItemSelectedListener(selectedListener);
 
+        addRoomButton = findViewById(R.id.add_room_button);
+
         //gets the course_id that was passed to SubjectActivity from DashboardActivity (so you know what course's rooms to display)
-        String courseID = getIntent().getStringExtra(SubjectActivity.COURSE_ID_KEY);
+        final String courseID = getIntent().getStringExtra(SubjectActivity.COURSE_ID_KEY);
         actionBar.setTitle(courseID);
 
         recyclerViewRooms = findViewById(R.id.recyclerViewRooms);
@@ -58,6 +63,15 @@ public class SubjectActivity extends AppCompatActivity {
         recyclerViewRooms.setAdapter(adapter);
         // Set layout manager to position the items
         recyclerViewRooms.setLayoutManager(new LinearLayoutManager(this));
+
+        //moves to the room add activity
+        addRoomButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent toRoomAddIntent = new Intent(SubjectActivity.this, RoomAddActivity.class);
+                toRoomAddIntent.putExtra(COURSE_ID_KEY, courseID);
+            }
+        });
     }
 
 
