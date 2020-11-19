@@ -3,6 +3,7 @@
     package="com.example.sharedspace">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.CAMERA" />
 
     <application
         android:allowBackup="true"
@@ -11,7 +12,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".LoginActivity"></activity>
+        <activity android:name=".ChatActivityAlgo"></activity>
+        <activity android:name=".ChatActivityComStr" />
+        <activity android:name=".SubjectActivity" />
+        <activity android:name=".ChatActivityInfoSys" />
+        <activity android:name=".LoginActivity" />
         <activity android:name=".DashboardActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

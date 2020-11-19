@@ -20,6 +20,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.UserProfileChangeRequest;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -28,7 +29,7 @@ import java.util.HashMap;
 public class RegisterActivity extends AppCompatActivity {
 
     // views
-    EditText mEmailEt, mPasswordEt;
+    EditText mEmailEt, mPasswordEt, mDisplayName;
     Button mRegisterBtn;
     TextView mHaveAccountTv;
 
@@ -52,6 +53,7 @@ public class RegisterActivity extends AppCompatActivity {
         mEmailEt = findViewById(R.id.emailEt);
         mPasswordEt = findViewById(R.id.passwordEt);
         mRegisterBtn = findViewById(R.id.registerBtn);
+        mDisplayName = findViewById(R.id.displayNameEt);
         mHaveAccountTv = findViewById(R.id.have_accountTv);
         progressDialog = new ProgressDialog(this);
         progressDialog.setMessage("Registration In Progress");
@@ -63,6 +65,7 @@ public class RegisterActivity extends AppCompatActivity {
             public void onClick(View v) {
                 String email = mEmailEt.getText().toString().trim();
                 String password = mPasswordEt.getText().toString().trim();
+                String displayName = mDisplayName.getText().toString();
                 if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
                     mEmailEt.setError("Invalid Email");
                     mEmailEt.setFocusable(true);
@@ -72,7 +75,7 @@ public class RegisterActivity extends AppCompatActivity {
                     mPasswordEt.setFocusable(true);
                 }
                 else {
-                    registerUser(email, password);
+                    registerUser(email, password, displayName);
                 }
             }
         });
@@ -86,7 +89,7 @@ public class RegisterActivity extends AppCompatActivity {
 
     }
 
-    private void registerUser(String email, String password) {
+    private void registerUser(String email, String password, final String displayName) {
         progressDialog.show();
 
         mAuth.createUserWithEmailAndPassword(email, password)
@@ -104,13 +107,18 @@ public class RegisterActivity extends AppCompatActivity {
                             HashMap<Object, String> hashMap = new HashMap<>();
                             hashMap.put("email", email);
                             hashMap.put("uid", uid);
-                            hashMap.put("name", ""); // TODO add name later
+                            hashMap.put("name", displayName);
+                            hashMap.put("class", "");
+                            hashMap.put("phone", "");
+                            hashMap.put("image", "");
                             // path to store user data named "Users"
                             FirebaseDatabase db = FirebaseDatabase.getInstance();
                             DatabaseReference reference = db.getReference("Users");
                             // put hash map in db
                             reference.child(uid).setValue(hashMap);
-
+                            // make displayName into hidden firebase db
+                            UserProfileChangeRequest profileUpdate = new UserProfileChangeRequest.Builder().setDisplayName(displayName).build();
+                            user.updateProfile(profileUpdate);
                             Toast.makeText(RegisterActivity.this, "Registered \n" + user.getEmail(), Toast.LENGTH_SHORT).show();
                             startActivity(new Intent(RegisterActivity.this, DashboardActivity.class));
                             finish();
