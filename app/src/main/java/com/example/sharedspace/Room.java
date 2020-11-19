@@ -2,35 +2,47 @@ package com.example.sharedspace;
 
 import java.util.ArrayList;
 
-import java.util.Date;
-
 public class Room {
-    public final int MAX_ROOM_SIZE = 5;
-    private static int roomNumber = 1; // Tracks the number of rooms created
-
-
-    private int roomID;
+    private long roomUID;
     private String title;
-    private long timeStarted;
     private String roomDescription;
     private long timeToClose;
     private ArrayList<String> studentIDList;
 
-    public Room(String title, String roomDescription, long timeToClose, String studentID){
+    public Room(String title, String roomDescription, String studentID, long timeStarted, long timeToClose){
+        studentIDList = new ArrayList<>();
+
         this.title = title;
         this.roomDescription = roomDescription;
         this.timeToClose = timeToClose;
-        this.studentIDList = new ArrayList<>();
-        this.studentIDList.add(studentID);
+        studentIDList.add(studentID);
+        this.roomUID = timeStarted; // roomUID and time started will be in the same variable
+    }
 
-        this.timeStarted = new Date().getTime();
-        this.roomID = roomNumber;
-        roomNumber++; // Increment room number so that next room will be set to roomNumber 2, 3, 4, etc.
+    public Room(){ // Default constructor needed by Firebase
+
+    }
+
+    public long getRoomUID() {
+        return roomUID;
     }
 
     public String getTitle() {
         return title;
     }
+
+    public String getRoomDescription() {
+        return roomDescription;
+    }
+
+    public long getTimeToClose() {
+        return timeToClose;
+    }
+
+    public ArrayList<String> getStudentIDList() {
+        return studentIDList;
+    }
+
 
     public void addStudent(String studentID) {
         this.studentIDList.add(studentID);
