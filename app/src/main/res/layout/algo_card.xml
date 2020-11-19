@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:id="@+id/algo_card_view"
+    android:layout_height="100dp"
+    android:layout_marginTop="75dp"
+    android:clickable="true"
+    android:foreground="?android:attr/selectableItemBackground"
+    >
+
+    <RelativeLayout
+        android:padding="5dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/card_header"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="Alge"
+            android:fontFamily="sans-serif-black"
+            android:textSize="20dp"
+            android:gravity="center"
+            android:layout_alignParentBottom="true"/>
+
+        <TextView
+            android:id="@+id/card_subjectID"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="50.00?"
+            android:textSize="12dp"
+            android:layout_alignParentBottom="true"/>
+
+        <TextView
+            android:id="@+id/card_description"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="30dp"
+            android:layout_marginBottom="0dp"
+            android:text="Currently Studying:"
+            android:textSize="12dp" />
+
+        <TextView
+            android:id="@+id/card_studying"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="69"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginEnd="5dp"
+            android:textSize="12dp" />
+
+        <Button
+            android:id="@+id/alButton"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@android:color/transparent"
+            />
+
+    </RelativeLayout>
+
+</androidx.cardview.widget.CardView>

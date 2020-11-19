@@ -1,5 +1,8 @@
 package com.example.sharedspace;
 
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+
 import android.os.Bundle;
 import android.text.format.DateFormat;
 import android.view.View;
@@ -7,24 +10,13 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-
 import com.firebase.ui.database.FirebaseListAdapter;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 
+public class ChatActivityComStr extends AppCompatActivity {
 
-public class ChatActivity extends AppCompatActivity {
-
-//    FirebaseAuth firebaseAuth;
-//    FirebaseUser user;
-//    FirebaseDatabase firebaseDatabase;
-//    DatabaseReference databaseReference;
 
     FloatingActionButton fab;
     private FirebaseListAdapter<ModelChatMessage> adapter;
@@ -34,23 +26,18 @@ public class ChatActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat);
 
-//        firebaseAuth = FirebaseAuth.getInstance();
-//        user = firebaseAuth.getCurrentUser();
-//        firebaseDatabase = FirebaseDatabase.getInstance();
-//        databaseReference = firebaseDatabase.getReference("Users");
-
         fab = findViewById(R.id.fab_write);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 EditText inp = findViewById(R.id.input);
                 FirebaseDatabase.getInstance()
-                        .getReference("Messages")
+                        .getReference("ComStr")
                         .push()
                         .setValue(new ModelChatMessage(inp.getText().toString(),
                                 FirebaseAuth.getInstance()
-                        .getCurrentUser()
-                        .getDisplayName())
+                                        .getCurrentUser()
+                                        .getDisplayName())
                         );
                 inp.setText("");
             }
@@ -62,7 +49,7 @@ public class ChatActivity extends AppCompatActivity {
     private void displayChatMessages() {
         ListView listOfMessages = findViewById(R.id.list_of_msg);
         adapter = new FirebaseListAdapter<ModelChatMessage>(this, ModelChatMessage.class,
-                R.layout.message, FirebaseDatabase.getInstance().getReference("Messages")) {
+                R.layout.message, FirebaseDatabase.getInstance().getReference("ComStr")) {
             @Override
             protected void populateView(View v, ModelChatMessage model, int position) {
                 // Get references to the views of message.xml
@@ -82,8 +69,6 @@ public class ChatActivity extends AppCompatActivity {
 
         listOfMessages.setAdapter(adapter);
     }
-
-
 
 
 }

@@ -6,30 +6,37 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".HomeFragment">
 
-<!--    &lt;!&ndash; TODO: Update blank fragment layout &ndash;&gt;-->
-<!--    <TextView-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="match_parent"-->
-<!--        android:textAlignment="center"-->
-<!--        android:textSize="30sp"-->
-<!--        android:gravity="center"-->
-<!--        android:text="Home" />-->
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:layout_width="wrap_content"
+    <TextView
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:clickable="true"
-        android:src="@drawable/ic_edit_white"
-        android:id="@+id/edit_fab"
-        android:tint="@android:color/white"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentEnd="true"
-        app:fabSize="mini" />
+        android:textAlignment="center"
+        android:background="@color/com_facebook_messenger_blue"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="20dp"
+        android:padding="20dp"
+        android:text= "@string/pinboard"
+        android:textSize="25sp"/>
 
     <Button
         android:clickable="true"
         android:id="@+id/message_butt"
-        android:text="Message"
-        android:layout_width="match_parent"
+        android:text="discussion chat"
+        android:padding="20dp"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <Button
+        android:clickable="true"
+        android:id="@+id/calendar"
+        android:text=" View Calendar "
+        android:padding="20dp"
+        android:layout_marginTop="20dp"
+        android:layout_below="@+id/message_butt"
+        android:layout_centerHorizontal="true"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 
 
