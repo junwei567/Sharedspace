@@ -84,9 +84,6 @@ public class ProfileFragment extends Fragment {
     // uri of image
     Uri image_uri;
 
-
-
-
     public ProfileFragment() {
         // Required empty public constructor
     }
