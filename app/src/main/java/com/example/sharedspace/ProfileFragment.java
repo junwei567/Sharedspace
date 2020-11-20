@@ -77,7 +77,6 @@ public class ProfileFragment extends Fragment {
     private static final int STORAGE_REQUEST_CODE = 200;
     private static final int IMAGE_PICK_GALLERY_CODE = 300;
 
-
     String cameraPermissions[];
     String storagePermissions[];
 
@@ -171,8 +170,6 @@ public class ProfileFragment extends Fragment {
     private  void requestCamPermission() {
         requestPermissions(cameraPermissions, CAMERA_REQUEST_CODE);
     }
-
-
 
     private void showEditProfileDialog() {
         String options[] = {"Edit Profile Picture", "Edit Name", "Edit Phone", "Edit Class"};
