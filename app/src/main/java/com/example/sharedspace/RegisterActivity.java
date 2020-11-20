@@ -86,7 +86,6 @@ public class RegisterActivity extends AppCompatActivity {
                 startActivity(new Intent(RegisterActivity.this, LoginActivity.class));
             }
         });
-
     }
 
     private void registerUser(String email, String password, final String displayName) {

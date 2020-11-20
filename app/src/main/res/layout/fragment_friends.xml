@@ -5,13 +5,9 @@
     android:layout_height="match_parent"
     tools:context=".FriendsFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/friends_recyclerView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:textAlignment="center"
-        android:textSize="30sp"
-        android:gravity="center"
-        android:text="Friends" />
+        android:layout_height="match_parent"/>
 
 </FrameLayout>

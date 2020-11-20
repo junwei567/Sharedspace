@@ -3,16 +3,9 @@ package com.example.sharedspace;
 public class ModelUser {
 
     //use name from firebase
-    String name, search, phone, image;
+    String name, search, phone, image, cclass, uid;
 
     public ModelUser() {
-    }
-
-    public ModelUser(String name, String search, String phone, String image) {
-        this.name = name;
-        this.search = search;
-        this.phone = phone;
-        this.image = image;
     }
 
     public String getName() {
@@ -45,5 +38,21 @@ public class ModelUser {
 
     public void setImage(String image) {
         this.image = image;
+    }
+
+    public String getCclass() {
+        return cclass;
+    }
+
+    public void setCclass(String cclass) {
+        this.cclass = cclass;
+    }
+
+    public String getUid() {
+        return uid;
+    }
+
+    public void setUid(String uid) {
+        this.uid = uid;
     }
 }
