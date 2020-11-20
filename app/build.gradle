@@ -48,6 +48,7 @@ dependencies {
 
     implementation 'com.android.support:design:28.0.0'
     implementation 'com.firebaseui:firebase-ui:0.6.0'
+    implementation 'de.hdodenhof:circleimageview:3.1.0'
 
     // photo downloading for profile pic
     implementation 'com.squareup.picasso:picasso:2.71828'

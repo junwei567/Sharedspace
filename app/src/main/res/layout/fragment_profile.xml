@@ -24,10 +24,9 @@
                 android:orientation="horizontal"
                 android:layout_marginTop="100dp">
                 <!--profile pic-->
-                <ImageView
+                <de.hdodenhof.circleimageview.CircleImageView
                     android:id="@+id/avatarIv"
                     android:layout_marginStart="20dp"
-                    android:background="@color/colorPrimary"
                     android:padding="5dp"
                     android:src="@drawable/ic_smiley_white"
                     android:layout_width="120dp"
@@ -66,6 +65,20 @@
             </LinearLayout>
         </RelativeLayout>
     </ScrollView>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true"
+        android:background="#F1EDED"
+        android:textSize="15sp"
+        android:text="STUDY HARD DONT DROP OUT \n work on Algo quiz \n brush up on ABCs"
+        android:padding="10dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        />
+
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab"
         android:src="@drawable/ic_edit_white"

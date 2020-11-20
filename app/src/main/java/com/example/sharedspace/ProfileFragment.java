@@ -4,21 +4,31 @@ import android.Manifest;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -28,7 +38,16 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Picasso;
+
+import java.util.HashMap;
+
+import static android.app.Activity.RESULT_OK;
+import static com.google.firebase.iid.FirebaseInstanceId.getInstance;
 
 ///**
 // * A simple {@link Fragment} subclass.
@@ -42,62 +61,35 @@ public class ProfileFragment extends Fragment {
     FirebaseUser user;
     FirebaseDatabase firebaseDatabase;
     DatabaseReference databaseReference;
+    FirebaseStorage storage;
+    StorageReference storageReference;
+    // path for images
+    String storagePath = "Users_Profile_Imgs/";
 
     // views from xml
     ImageView avatarIv;
     TextView nameTv, classTv, phoneTv;
     FloatingActionButton editProfile;
-
-    ProgressBar progressBar;
+    
+    ProgressDialog pd;
 
     private static final int CAMERA_REQUEST_CODE = 100;
     private static final int STORAGE_REQUEST_CODE = 200;
-//    private static final int IMAGE_REQUEST_CODE = 300;
-//    private static final int IMAGEPICKCAM_REQUEST_CODE = 400;
+    private static final int IMAGE_PICK_GALLERY_CODE = 300;
+
 
     String cameraPermissions[];
     String storagePermissions[];
 
+    // uri of image
+    Uri image_uri;
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-//    private static final String ARG_PARAM1 = "param1";
-//    private static final String ARG_PARAM2 = "param2";
 
-    // TODO: Rename and change types of parameters
-//    private String mParam1;
-//    private String mParam2;
+
 
     public ProfileFragment() {
         // Required empty public constructor
     }
-
-//    /**
-//     * Use this factory method to create a new instance of
-//     * this fragment using the provided parameters.
-//     *
-//     * @param param1 Parameter 1.
-//     * @param param2 Parameter 2.
-//     * @return A new instance of fragment ProfileFragment.
-//     */
-    // TODO: Rename and change types and number of parameters
-//    public static ProfileFragment newInstance(String param1, String param2) {
-//        ProfileFragment fragment = new ProfileFragment();
-//        Bundle args = new Bundle();
-//        args.putString(ARG_PARAM1, param1);
-//        args.putString(ARG_PARAM2, param2);
-//        fragment.setArguments(args);
-//        return fragment;
-//    }
-
-//    @Override
-//    public void onCreate(Bundle savedInstanceState) {
-//        super.onCreate(savedInstanceState);
-//        if (getArguments() != null) {
-//            mParam1 = getArguments().getString(ARG_PARAM1);
-//            mParam2 = getArguments().getString(ARG_PARAM2);
-//        }
-//    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -110,6 +102,8 @@ public class ProfileFragment extends Fragment {
         user = firebaseAuth.getCurrentUser();
         firebaseDatabase = FirebaseDatabase.getInstance();
         databaseReference = firebaseDatabase.getReference("Users");
+        storage = FirebaseStorage.getInstance();
+        storageReference = storage.getReference();
 
         // init arrays of permissions
         cameraPermissions = new String[]{Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE};
@@ -122,7 +116,7 @@ public class ProfileFragment extends Fragment {
         phoneTv = view.findViewById(R.id.phoneTv);
         editProfile = view.findViewById(R.id.fab);
 
-        progressBar = new ProgressBar(getActivity());
+        pd = new ProgressDialog(getActivity());
 
         Query query = databaseReference.orderByChild("email").equalTo(user.getEmail());
         query.addValueEventListener(new ValueEventListener() {
@@ -169,7 +163,7 @@ public class ProfileFragment extends Fragment {
         return result;
     }
     private  void requestStoragePermission() {
-        ActivityCompat.requestPermissions(getActivity(), storagePermissions, STORAGE_REQUEST_CODE);
+        requestPermissions(storagePermissions, STORAGE_REQUEST_CODE);
     }
 
     private boolean checkCamPermission() {
@@ -178,7 +172,7 @@ public class ProfileFragment extends Fragment {
         return result && resulta;
     }
     private  void requestCamPermission() {
-        ActivityCompat.requestPermissions(getActivity(), cameraPermissions, CAMERA_REQUEST_CODE);
+        requestPermissions(cameraPermissions, CAMERA_REQUEST_CODE);
     }
 
 
@@ -192,14 +186,68 @@ public class ProfileFragment extends Fragment {
             public void onClick(DialogInterface dialog, int which) {
                 if (which ==0) {
                     //profile clicked
+                    pd.setMessage("Updating Profile Pic");
                     showImagePicDialog();
                 } else if (which == 1) {
                     //name
+                    pd.setMessage("Updating Name");
+                    showNameUpdateDialog("name");
                 } else if (which ==2) {
                     //phone
+                    pd.setMessage("Updating...");
+                    showNameUpdateDialog("phone");
                 } else if (which ==3) {
                     //class
+                    pd.setMessage("Updating Class");
+                    showNameUpdateDialog("class");
                 }
+            }
+        });
+        builder.create().show();
+    }
+
+    private void showNameUpdateDialog(final String key) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        builder.setTitle("Update " + key);
+        // set layout of dialog
+        LinearLayout linearLayout = new LinearLayout(getActivity());
+        linearLayout.setOrientation(LinearLayout.VERTICAL);
+        final EditText editText = new EditText(getActivity());
+        editText.setHint("Enter " + key);
+        linearLayout.addView(editText);
+
+        builder.setView(linearLayout);
+        builder.setPositiveButton("Update", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                String value = editText.getText().toString().trim();
+                if (!TextUtils.isEmpty(value)) {
+                    pd.show();
+                    HashMap<String, Object> result = new HashMap<>();
+                    result.put(key, value);
+                    databaseReference.child(user.getUid()).updateChildren(result)
+                            .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                @Override
+                                public void onSuccess(Void aVoid) {
+                                    pd.dismiss();
+                                    Toast.makeText(getActivity(), "updated!",Toast.LENGTH_SHORT).show();
+                                }
+                            }).addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            pd.dismiss();
+                            Toast.makeText(getActivity(), ""+e.getMessage(),Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                } else {
+                    Toast.makeText(getActivity(), "Enter " + key, Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
             }
         });
         builder.create().show();
@@ -213,14 +261,18 @@ public class ProfileFragment extends Fragment {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 if (which ==0) {
+                    // camera clicked
                     if (!checkCamPermission()) {
                         requestCamPermission();
+                    } else {
+                        Toast.makeText(getActivity(), "Sorry not implemented yet", Toast.LENGTH_SHORT).show();
                     }
-                    // cam
                 } else if (which == 1) {
                     // local
                     if (!checkStoragePermission()) {
                         requestStoragePermission();
+                    } else {
+                        pickFromGallery();
                     }
                 }
             }
@@ -235,18 +287,86 @@ public class ProfileFragment extends Fragment {
                 if (grantResults.length>0) {
                     boolean cameraAccepted = grantResults[0] == PackageManager.PERMISSION_GRANTED;
                     boolean writeStorageAccepted = grantResults[1] == PackageManager.PERMISSION_GRANTED;
-//                    if (cameraAccepted && writeStorageAccepted) {
-//                        pickFromCamera();
-//                    } else {
-//
-//                    }
+                    if (cameraAccepted && writeStorageAccepted) {
+                        Toast.makeText(getActivity(), "Sorry not implemented yet", Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(getActivity(), "Please enable to use function", Toast.LENGTH_SHORT).show();
+                    }
                 }
+                break;
             } case STORAGE_REQUEST_CODE: {
-
+                if (grantResults.length>0) {
+                    boolean cameraAccepted = grantResults[0] == PackageManager.PERMISSION_GRANTED;
+                    boolean writeStorageAccepted = grantResults[1] == PackageManager.PERMISSION_GRANTED;
+                    if (writeStorageAccepted) {
+                        pickFromGallery();
+                    } else {
+                        Toast.makeText(getActivity(), "Please enable to use function", Toast.LENGTH_SHORT).show();
+                    }
+                }
 
             }
+            break;
         }
 
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        if (resultCode == RESULT_OK) {
+            if (requestCode == IMAGE_PICK_GALLERY_CODE) {
+                image_uri = data.getData();
+                uploadProfileCoverPhoto(image_uri);
+            }
+        }
+    }
+
+
+    private void uploadProfileCoverPhoto(Uri image_uri) {
+        pd.show();
+        String filePath = storagePath + "_" + user.getUid();
+        StorageReference storageReference2nd = storageReference.child(filePath);
+        storageReference2nd.putFile(image_uri)
+                .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                    @Override
+                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                        Task<Uri> uriTask = taskSnapshot.getStorage().getDownloadUrl();
+                        while (!uriTask.isSuccessful());
+                        Uri downloadUri = uriTask.getResult();
+                        if (uriTask.isSuccessful()) {
+                            HashMap<String, Object> results = new HashMap<>();
+                            results.put("image", downloadUri.toString());
+                            databaseReference.child(user.getUid()).updateChildren(results)
+                                    .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                        @Override
+                                        public void onSuccess(Void aVoid) {
+                                            pd.dismiss();
+                                        }
+                                    }).addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull Exception e) {
+                                    pd.dismiss();
+                                    Toast.makeText(getActivity(),"Photo too ugly",Toast.LENGTH_SHORT).show();
+                                }
+                            });
+                        } else {
+                            pd.dismiss();
+                            Toast.makeText(getActivity(), "Sorry photo too cute", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                pd.dismiss();
+                Toast.makeText(getActivity(), e.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    private void pickFromGallery() {
+        Intent galleryIntent = new Intent(Intent.ACTION_PICK);
+        galleryIntent.setType("image/*");
+        startActivityForResult(galleryIntent, IMAGE_PICK_GALLERY_CODE);
     }
 }
