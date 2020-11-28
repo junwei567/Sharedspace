@@ -2,6 +2,7 @@ package com.example.sharedspace;
 
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,140 +15,109 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 
-public class SubjectAdapter extends RecyclerView.Adapter {
-    private ArrayList<ModelSubject> subjectList;
+public class SubjectAdapter extends RecyclerView.Adapter<SubjectAdapter.ViewHolder> {
+    private ArrayList<Subject> subjectList;
     Context mContext;
     int total_subjects;
 
-    public static class InfoSysViewHolder extends RecyclerView.ViewHolder {
-        TextView subjectTitle, subjectCode, currStudying;
-        CardView cardView;
-        Button isButton;
+//    public static class InfoSysViewHolder extends RecyclerView.ViewHolder {
+//        TextView subjectTitle, subjectCode, currStudying;
+//        CardView cardView;
+//        Button isButton;
+//
+//        public InfoSysViewHolder(View view) {
+//            super(view);
+//
+//            this.subjectTitle = view.findViewById(R.id.card_header);
+//            this.subjectCode = view.findViewById(R.id.card_subjectID);
+//            this.currStudying = view.findViewById(R.id.card_studying);
+//            this.cardView = view.findViewById(R.id.card_view);
+//            this.isButton = view.findViewById(R.id.isButton);
+//        }
+//    }
+//
+//    public static class CompStructViewHolder extends RecyclerView.ViewHolder {
+//        TextView subjectTitle, subjectCode, currStudying;
+//        CardView cardView;
+//        Button csButton;
+//
+//        public CompStructViewHolder(View view) {
+//            super(view);
+//
+//            this.subjectTitle = view.findViewById(R.id.card_header);
+//            this.subjectCode = view.findViewById(R.id.card_subjectID);
+//            this.currStudying = view.findViewById(R.id.card_studying);
+//            this.cardView = view.findViewById(R.id.card_view);
+//            this.csButton = view.findViewById(R.id.csButton);
+//        }
+//    }
+//
+//    public static class AlgoViewHolder extends RecyclerView.ViewHolder {
+//        TextView subjectTitle, subjectCode, currStudying;
+//        CardView cardView;
+//        Button alButton;
+//
+//        public AlgoViewHolder(View view) {
+//            super(view);
+//
+//            this.subjectTitle = view.findViewById(R.id.card_header);
+//            this.subjectCode = view.findViewById(R.id.card_subjectID);
+//            this.currStudying = view.findViewById(R.id.card_studying);
+//            this.cardView = view.findViewById(R.id.card_view);
+//            this.alButton = view.findViewById(R.id.alButton);
+//        }
+//    }
+    public class ViewHolder extends RecyclerView.ViewHolder {
+        // Your holder should contain a member variable
+        // for any view that will be set as you render a row
+        TextView cardHeaderTextView, cardSubjectIDTextView, cardStudyingTextView;
+        CardView subjectCard;
 
-        public InfoSysViewHolder(View view) {
-            super(view);
+        // We also create a constructor that accepts the entire item row
+        // and does the view lookups to find each subview
+        public ViewHolder(View itemView) {
+            // Stores the itemView in a public final member variable that can be used
+            // to access the context from any ViewHolder instance.
+            super(itemView);
 
-            this.subjectTitle = view.findViewById(R.id.card_header);
-            this.subjectCode = view.findViewById(R.id.card_subjectID);
-            this.currStudying = view.findViewById(R.id.card_studying);
-            this.cardView = view.findViewById(R.id.card_view);
-            this.isButton = view.findViewById(R.id.isButton);
+            Log.i("Subject","ViewHolder accessed");
+            cardHeaderTextView = itemView.findViewById(R.id.card_header);
+            cardSubjectIDTextView = itemView.findViewById(R.id.card_subjectID);
+            cardStudyingTextView = itemView.findViewById(R.id.card_studying);
+            subjectCard = itemView.findViewById(R.id.subject_card_view);
         }
     }
 
-    public static class CompStructViewHolder extends RecyclerView.ViewHolder {
-        TextView subjectTitle, subjectCode, currStudying;
-        CardView cardView;
-        Button csButton;
-
-        public CompStructViewHolder(View view) {
-            super(view);
-
-            this.subjectTitle = view.findViewById(R.id.card_header);
-            this.subjectCode = view.findViewById(R.id.card_subjectID);
-            this.currStudying = view.findViewById(R.id.card_studying);
-            this.cardView = view.findViewById(R.id.card_view);
-            this.csButton = view.findViewById(R.id.csButton);
-        }
-    }
-
-    public static class AlgoViewHolder extends RecyclerView.ViewHolder {
-        TextView subjectTitle, subjectCode, currStudying;
-        CardView cardView;
-        Button alButton;
-
-        public AlgoViewHolder(View view) {
-            super(view);
-
-            this.subjectTitle = view.findViewById(R.id.card_header);
-            this.subjectCode = view.findViewById(R.id.card_subjectID);
-            this.currStudying = view.findViewById(R.id.card_studying);
-            this.cardView = view.findViewById(R.id.card_view);
-            this.alButton = view.findViewById(R.id.alButton);
-        }
-    }
-
-    public SubjectAdapter(ArrayList<ModelSubject>data, Context context) {
+    public SubjectAdapter(ArrayList<Subject>data, Context context) {
         this.subjectList = data;
         this.mContext = context;
-        total_subjects = subjectList.size();
+        this.total_subjects = subjectList.size();
     }
 
     @Override
-    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view;
-        switch (viewType) {
-            case ModelSubject.infoSys:
-                view = LayoutInflater.from(parent.getContext()).inflate(R.layout.infosys_card, parent, false);
-                return new InfoSysViewHolder(view);
-            case ModelSubject.compStruct:
-                view = LayoutInflater.from(parent.getContext()).inflate(R.layout.compstr_card, parent, false);
-                return new CompStructViewHolder(view);
-            case ModelSubject.algo:
-                view = LayoutInflater.from(parent.getContext()).inflate(R.layout.algo_card, parent, false);
-                return new AlgoViewHolder(view);
-        }
-        return null;
+    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.subject_card, parent, false);
+        return new ViewHolder(view);
+
     }
 
-    @Override
-    public int getItemViewType(int position) {
-        switch (subjectList.get(position).type) {
-            case 1:
-                return ModelSubject.infoSys;
-            case 2:
-                return ModelSubject.compStruct;
-            case 4:
-                return ModelSubject.algo;
-            default:
-                return -1;
-        }
-    }
 
     @Override
-    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, final int listPosition) {
-        ModelSubject object = subjectList.get(listPosition);
-
-        if (object != null) {
-            switch (object.type) {
-                case ModelSubject.infoSys:
-                    ((InfoSysViewHolder) holder).subjectTitle.setText(object.text);
-                    ((InfoSysViewHolder) holder).subjectCode.setText(object.code);
-                    ((InfoSysViewHolder) holder).currStudying.setText(object.studying);
-                    ((InfoSysViewHolder) holder).isButton.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            Intent intent = new Intent(mContext, ChatActivityInfoSys.class);
-                            mContext.startActivity(intent);
-                        }
-                    });
-                    break;
-                case ModelSubject.compStruct:
-                    ((CompStructViewHolder) holder).subjectTitle.setText(object.text);
-                    ((CompStructViewHolder) holder).subjectCode.setText(object.code);
-                    ((CompStructViewHolder) holder).currStudying.setText(object.studying);
-                    ((CompStructViewHolder) holder).csButton.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            Intent intent = new Intent(mContext, ChatActivityComStr.class);
-                            mContext.startActivity(intent);
-                        }
-                    });
-                    break;
-                case ModelSubject.algo:
-                    ((AlgoViewHolder) holder).subjectTitle.setText(object.text);
-                    ((AlgoViewHolder) holder).subjectCode.setText(object.code);
-                    ((AlgoViewHolder) holder).currStudying.setText(object.studying);
-                    ((AlgoViewHolder) holder).alButton.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            Intent intent = new Intent(mContext, ChatActivityAlgo.class);
-                            mContext.startActivity(intent);
-                        }
-                    });
-                    break;
+    public void onBindViewHolder(@NonNull ViewHolder holder, final int listPosition) {
+        Subject object = subjectList.get(listPosition);
+        holder.cardHeaderTextView.setText(object.getCourseTitle());
+        holder.cardSubjectIDTextView.setText(object.getCourseID());
+        holder.cardStudyingTextView.setText("69");
+        holder.subjectCard.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+//                Intent intent = new Intent(mContext,RoomActivity.class);
+//                mContext.startActivity(intent);
+                
             }
-        }
+        });
+
+
     }
 
     @Override
