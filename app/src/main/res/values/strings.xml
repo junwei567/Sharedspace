@@ -5,5 +5,11 @@
     <string name="home">Home</string>
     <string name="profile">Profile</string>
     <string name="settings">Settings</string>
+    <string name="title_activity_room_list">RoomListActivity</string>
+    <!--
+    This string is used for square devices and overridden by hello_world in
+    values-round/strings.xml for round devices.
+    -->
+    <string name="hello_world">Hello Square World!</string>
 
 </resources>

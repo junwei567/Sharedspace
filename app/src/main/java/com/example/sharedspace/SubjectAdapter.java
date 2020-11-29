@@ -20,54 +20,7 @@ public class SubjectAdapter extends RecyclerView.Adapter<SubjectAdapter.ViewHold
     Context mContext;
     int total_subjects;
 
-//    public static class InfoSysViewHolder extends RecyclerView.ViewHolder {
-//        TextView subjectTitle, subjectCode, currStudying;
-//        CardView cardView;
-//        Button isButton;
-//
-//        public InfoSysViewHolder(View view) {
-//            super(view);
-//
-//            this.subjectTitle = view.findViewById(R.id.card_header);
-//            this.subjectCode = view.findViewById(R.id.card_subjectID);
-//            this.currStudying = view.findViewById(R.id.card_studying);
-//            this.cardView = view.findViewById(R.id.card_view);
-//            this.isButton = view.findViewById(R.id.isButton);
-//        }
-//    }
-//
-//    public static class CompStructViewHolder extends RecyclerView.ViewHolder {
-//        TextView subjectTitle, subjectCode, currStudying;
-//        CardView cardView;
-//        Button csButton;
-//
-//        public CompStructViewHolder(View view) {
-//            super(view);
-//
-//            this.subjectTitle = view.findViewById(R.id.card_header);
-//            this.subjectCode = view.findViewById(R.id.card_subjectID);
-//            this.currStudying = view.findViewById(R.id.card_studying);
-//            this.cardView = view.findViewById(R.id.card_view);
-//            this.csButton = view.findViewById(R.id.csButton);
-//        }
-//    }
-//
-//    public static class AlgoViewHolder extends RecyclerView.ViewHolder {
-//        TextView subjectTitle, subjectCode, currStudying;
-//        CardView cardView;
-//        Button alButton;
-//
-//        public AlgoViewHolder(View view) {
-//            super(view);
-//
-//            this.subjectTitle = view.findViewById(R.id.card_header);
-//            this.subjectCode = view.findViewById(R.id.card_subjectID);
-//            this.currStudying = view.findViewById(R.id.card_studying);
-//            this.cardView = view.findViewById(R.id.card_view);
-//            this.alButton = view.findViewById(R.id.alButton);
-//        }
-//    }
-    public class ViewHolder extends RecyclerView.ViewHolder {
+   public class ViewHolder extends RecyclerView.ViewHolder {
         // Your holder should contain a member variable
         // for any view that will be set as you render a row
         TextView cardHeaderTextView, cardSubjectIDTextView, cardStudyingTextView;
@@ -104,15 +57,16 @@ public class SubjectAdapter extends RecyclerView.Adapter<SubjectAdapter.ViewHold
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, final int listPosition) {
-        Subject object = subjectList.get(listPosition);
+        final Subject object = subjectList.get(listPosition);
         holder.cardHeaderTextView.setText(object.getCourseTitle());
         holder.cardSubjectIDTextView.setText(object.getCourseID());
         holder.cardStudyingTextView.setText("69");
         holder.subjectCard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                Intent intent = new Intent(mContext,RoomActivity.class);
-//                mContext.startActivity(intent);
+                Intent intent = new Intent(mContext,RoomListActivity.class);
+                intent.putExtra(SubjectActivity.SUBJECT_TYPE, object.getCourseType());
+                mContext.startActivity(intent);
                 
             }
         });

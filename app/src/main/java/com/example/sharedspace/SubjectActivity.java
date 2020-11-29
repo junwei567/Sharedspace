@@ -30,6 +30,7 @@ public class SubjectActivity extends AppCompatActivity {
     ActionBar actionBar;
     BottomNavigationView navigationView;
     RecyclerView mRecyclerView;
+    final static String SUBJECT_TYPE="subject";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
