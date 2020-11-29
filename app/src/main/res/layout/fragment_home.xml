@@ -7,37 +7,33 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".HomeFragment">
 
-    <TextView
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/home_recyclerview"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textAlignment="center"
-        android:background="@color/com_facebook_messenger_blue"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
-        android:layout_marginTop="20dp"
-        android:padding="20dp"
-        android:text= "@string/pinboard"
-        android:textSize="25sp"/>
+        android:layout_height="500dp" />
 
     <Button
-        android:clickable="true"
         android:id="@+id/message_butt"
-        android:text="discussion chat"
-        android:padding="20dp"
-        android:layout_centerVertical="true"
-        android:layout_centerHorizontal="true"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="527dp"
+        android:layout_marginEnd="127dp"
+        android:clickable="true"
+        android:padding="20dp"
+        android:text="discussion chat" />
 
     <Button
-        android:clickable="true"
         android:id="@+id/calendar_butt"
-        android:text=" View Calendar "
-        android:padding="20dp"
-        android:layout_marginTop="20dp"
-        android:layout_below="@+id/message_butt"
-        android:layout_centerHorizontal="true"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/message_butt"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="11dp"
+        android:layout_marginEnd="130dp"
+        android:clickable="true"
+        android:padding="20dp"
+        android:text=" View Calendar " />
 
 </RelativeLayout>

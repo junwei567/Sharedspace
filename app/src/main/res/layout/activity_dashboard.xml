@@ -8,15 +8,6 @@
     android:gravity="center"
     tools:context=".DashboardActivity">
 
-    <!-- TODO make dashboard or main menu for user here   -->
-<!--    <TextView-->
-<!--        android:id="@+id/profileTv"-->
-<!--        android:text="Profile"-->
-<!--        android:textSize="30sp"-->
-<!--        android:textColor="@color/colorPrimary"-->
-<!--        android:layout_centerHorizontal="true"-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="wrap_content"/>-->
     <FrameLayout
         android:id="@+id/content"
         android:layout_width="match_parent"
