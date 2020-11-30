@@ -128,6 +128,8 @@ public class RoomListActivity extends AppCompatActivity {
 
         //gets the course_id that was passed to SubjectActivity from DashboardActivity (so you know what course's rooms to display)
         final String courseType = getIntent().getStringExtra(SubjectActivity.SUBJECT_TYPE);
+        final String courseTitle = getIntent().getStringExtra(SubjectActivity.SUBJECT_TITLE);
+
         mDatabase = FirebaseDatabase.getInstance().getReference().child("subjects");
         mDatabase.addChildEventListener(new ChildEventListener() {
             @Override
@@ -158,7 +160,7 @@ public class RoomListActivity extends AppCompatActivity {
             }
         });
 
-        actionBar.setTitle("title");//thisSubject.getCourseTitle()); //TODO
+        actionBar.setTitle(courseTitle); //TODO
 
         listViewRooms = findViewById(R.id.ListViewRooms);
 
@@ -167,7 +169,7 @@ public class RoomListActivity extends AppCompatActivity {
 
         // Create adapter passing in the sample user data
         FirebaseListAdapter<Room> adapter = new FirebaseListAdapter<Room>(this, Room.class,
-                R.layout.room_card, mDatabase.child("50001").child("roomList")) {
+                R.layout.room_card, mDatabase.child(courseType).child("roomList")) {
             @Override
             protected void populateView(View v, Room model, int position) {
                 TextView roomTitleTextView, timeClosedTextView, numberOfPeopleTextView;

@@ -31,6 +31,7 @@ public class SubjectActivity extends AppCompatActivity {
     BottomNavigationView navigationView;
     RecyclerView mRecyclerView;
     final static String SUBJECT_TYPE="subject";
+    final static String SUBJECT_TITLE = "title";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -66,6 +66,7 @@ public class SubjectAdapter extends RecyclerView.Adapter<SubjectAdapter.ViewHold
             public void onClick(View v) {
                 Intent intent = new Intent(mContext,RoomListActivity.class);
                 intent.putExtra(SubjectActivity.SUBJECT_TYPE, object.getCourseType());
+                intent.putExtra(SubjectActivity.SUBJECT_TITLE, object.getCourseTitle());
                 mContext.startActivity(intent);
                 
             }
