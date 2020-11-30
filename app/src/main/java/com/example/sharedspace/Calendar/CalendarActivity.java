@@ -3,11 +3,19 @@ package com.example.sharedspace.Calendar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
+import android.Manifest;
+import android.content.Context;
+import android.content.pm.PackageManager;
+import android.database.Cursor;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
@@ -17,6 +25,7 @@ import com.github.tibolte.agendacalendarview.CalendarPickerController;
 import com.github.tibolte.agendacalendarview.models.BaseCalendarEvent;
 import com.github.tibolte.agendacalendarview.models.CalendarEvent;
 import com.github.tibolte.agendacalendarview.models.DayItem;
+
 
 public class CalendarActivity extends AppCompatActivity implements CalendarPickerController {
     private static final String LOG_TAG = CalendarActivity.class.getSimpleName();
@@ -28,6 +37,7 @@ public class CalendarActivity extends AppCompatActivity implements CalendarPicke
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_calendar);
         mAgendaCalendarView = findViewById(R.id.agenda_calendar_view);
+        Context context = this;
 
         minDate = Calendar.getInstance();
         maxDate = Calendar.getInstance();
@@ -38,14 +48,60 @@ public class CalendarActivity extends AppCompatActivity implements CalendarPicke
         maxDate.add(Calendar.YEAR, 1);
 
         List<CalendarEvent> eventList = new ArrayList<>();
+        readCalendarEvent(context, eventList);
         mockList(eventList);
 
         mAgendaCalendarView.init(eventList, minDate, maxDate, Locale.getDefault(), this);
         mAgendaCalendarView.addEventRenderer(new DrawableEventRenderer());
+    }
 
+    public static void readCalendarEvent(Context context,List<CalendarEvent> eventList) {
+
+        Calendar startCal = Calendar.getInstance();
+        Calendar endCal = Calendar.getInstance();
+        startCal.set(2020,7,1);
+        endCal.set(2022,1,1);
+        String selection = "((dtstart >= "+startCal.getTimeInMillis()+") AND (dtend <= "+endCal.getTimeInMillis()+"))";
+        Cursor cursor = context.getContentResolver()
+                .query(
+                        Uri.parse("content://com.android.calendar/events"),
+                        new String[] { "calendar_id", "title", "description",
+                                "dtstart", "dtend", "eventLocation" }, selection,
+                        null, null);
+        cursor.moveToFirst();
+        String CNames[] = new String[cursor.getCount()];
+
+        Calendar startD;
+        String nameOfEvent;
+        String descriptions;
+        for (int i = 0; i < 50; i++) {
+
+            nameOfEvent = cursor.getString(1);
+            descriptions = cursor.getString(2);
+            startD = getDate(Long.parseLong(cursor.getString(3)));
+//            endD = getDate(Long.parseLong(cursor.getString(4)));
+            Calendar startTime = Calendar.getInstance();
+            startTime.set(startD.get(Calendar.YEAR),startD.get(Calendar.MONTH),startD.get(Calendar.DAY_OF_MONTH));
+            BaseCalendarEvent event1 = new BaseCalendarEvent(nameOfEvent, descriptions, "NIL",
+                    ContextCompat.getColor(context, R.color.MediumPurple), startTime, startTime, true);
+            eventList.add(event1);
+
+            CNames[i] = cursor.getString(1);
+            cursor.moveToNext();
+
+        }
+    }
+
+    public static Calendar getDate(long milliSeconds) {
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy/MM/dd");
+        Date d;
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTimeInMillis(milliSeconds);
+        return calendar;
     }
 
     private void mockList(List<CalendarEvent> eventList) {
+
         Calendar startTime1 = Calendar.getInstance();
         Calendar endTime1 = Calendar.getInstance();
         startTime1.set(2020, 10, 30);
@@ -94,14 +150,6 @@ public class CalendarActivity extends AppCompatActivity implements CalendarPicke
                 ContextCompat.getColor(this, R.color.Coral), startTime6, endTime6, true);
         eventList.add(event6);
 
-//        Calendar startTime3 = Calendar.getInstance();
-//        startTime3.add(Calendar.DAY_OF_WEEK, 1);
-//        Calendar endTime3 = Calendar.getInstance();
-//        endTime3.add(Calendar.DAY_OF_WEEK, 2);
-//        BaseCalendarEvent event3 = new BaseCalendarEvent("50.002 Cohort Based Learning", "Computation Structures", "2.412",
-//                ContextCompat.getColor(this, R.color.Goldenrod), startTime3, endTime3, true);
-//        eventList.add(event3);
-
     }
 
     @Override
@@ -120,4 +168,5 @@ public class CalendarActivity extends AppCompatActivity implements CalendarPicke
             getSupportActionBar().setTitle(calendar.getDisplayName(Calendar.MONTH, Calendar.LONG, Locale.getDefault()));
         }
     }
+    
 }

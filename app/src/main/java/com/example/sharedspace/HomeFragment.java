@@ -2,9 +2,12 @@
 
 package com.example.sharedspace;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 
@@ -36,6 +39,9 @@ public class HomeFragment extends Fragment {
         // Required empty public constructor
     }
 
+    private static final int CALENDAR_REQUEST_CODE = 400;
+    String calendarPermission[];
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -47,6 +53,8 @@ public class HomeFragment extends Fragment {
 //        user = firebaseAuth.getCurrentUser();
 //        firebaseDatabase = FirebaseDatabase.getInstance();
 //        databaseReference = firebaseDatabase.getReference("Users");
+        calendarPermission = new String[]{Manifest.permission.READ_CALENDAR};
+        if (!checkCalendarPermission()) requestCalendarPermission();
 
         Button butt = view.findViewById(R.id.message_butt);
         butt.setOnClickListener(new View.OnClickListener() {
@@ -68,4 +76,14 @@ public class HomeFragment extends Fragment {
 
         return view;
     }
+
+    private boolean checkCalendarPermission() {
+        boolean result = ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.READ_CALENDAR) == (PackageManager.PERMISSION_GRANTED);
+        return result;
+    }
+
+    private void requestCalendarPermission() {
+        requestPermissions(calendarPermission, CALENDAR_REQUEST_CODE);
+    }
+
 }
