@@ -42,10 +42,6 @@ public class SubjectActivity extends AppCompatActivity {
 
         navigationView.setOnNavigationItemSelectedListener(selectedListener);
 
-        ArrayList<Subject> subjectArrayList = new ArrayList<>();
-        subjectArrayList.add(new Subject("50.001","50001","Introduction to Information Systems and Programming"));
-        subjectArrayList.add(new Subject("50.002","50002","Computer Structures"));
-        subjectArrayList.add(new Subject("50.004","50004","Introduction to Algorithms"));
 
 
         mListViewSubjects = findViewById(R.id.ListViewSubjects);
@@ -54,6 +50,10 @@ public class SubjectActivity extends AppCompatActivity {
                 R.layout.subject_card, mDatabase) {
             @Override
             protected void populateView(View v, Subject model, int position) {
+//                if (model.getCourseType() in subjecttitlearraylist) {
+//                    storagesubjectarray store model
+//                }
+
                 final Subject thisModel = model;
                 TextView cardHeaderTextView, cardSubjectIDTextView, cardStudyingTextView;
                 CardView subjectCard;
@@ -82,6 +82,11 @@ public class SubjectActivity extends AppCompatActivity {
         mListViewSubjects.setAdapter(subjectListAdapter);
 
         //TODO: useful for adding new objects manually
+        ArrayList<Subject> subjectArrayList = new ArrayList<>();
+        subjectArrayList.add(new Subject("50.001","50001","Introduction to Information Systems and Programming"));
+        subjectArrayList.add(new Subject("50.002","50002","Computer Structures"));
+        subjectArrayList.add(new Subject("50.004","50004","Introduction to Algorithms"));
+
         //for (Subject sub:subjectArrayList) mDatabase.child(sub.getCourseType()).setValue(sub);
         //FirebaseDatabase.getInstance().getReference().child("messages").child("10000").setValue("messages");
 
