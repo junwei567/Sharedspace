@@ -12,7 +12,11 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1">
-
+        <ListView
+            android:id="@+id/fakeListViewSubjects"
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior" />
         <ListView
             android:id="@+id/ListViewSubjects"
             android:layout_width="match_parent"

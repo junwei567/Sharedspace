@@ -19,6 +19,7 @@ import android.widget.TextView;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.FirebaseDatabase;
 
 public class DashboardActivity extends AppCompatActivity {
 
@@ -26,6 +27,7 @@ public class DashboardActivity extends AppCompatActivity {
     FirebaseAuth firebaseAuth;
     ActionBar actionBar;
     BottomNavigationView navigationView;
+    //FirebaseDatabase firebaseDatabase;
 
     TextView appDescriptionTextView;
     Button discussionChatButton, calendarButton;
@@ -37,6 +39,7 @@ public class DashboardActivity extends AppCompatActivity {
         actionBar = getSupportActionBar();
         firebaseAuth = FirebaseAuth.getInstance();
         navigationView = findViewById(R.id.navigation);
+        FirebaseDatabase.getInstance().setPersistenceEnabled(true);
 
         navigationView.setOnNavigationItemSelectedListener(selectedListener);
 
@@ -169,9 +172,9 @@ public class DashboardActivity extends AppCompatActivity {
             case R.id.action_logout:
                 firebaseAuth.signOut();
                 checkUserStatus();
-            case R.id.home:
+            case R.id.edit_subjects:
                 getSupportFragmentManager().popBackStack();
-                return true;
+                startActivity(new Intent(DashboardActivity.this, SubjectAddActivity.class));
             default:
                 return super.onOptionsItemSelected(item);
         }
