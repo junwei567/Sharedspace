@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,6 +19,8 @@ import java.util.List;
 
 public class SubjectAddActivity extends AppCompatActivity {
     ActionBar actionBar;
+    private SharedPreferences mPreferences;
+    private String sharedPrefFile = "com.example.android.mainsharedprefs";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

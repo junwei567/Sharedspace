@@ -1,14 +1,19 @@
+//TODO: (zhiyou): URL links to blackboard, piazza, myportal, office365
+
 package com.example.sharedspace;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.NavUtils;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -16,6 +21,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.example.sharedspace.Calendar.CalendarActivity;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -29,6 +35,7 @@ public class DashboardActivity extends AppCompatActivity {
     BottomNavigationView navigationView;
     //FirebaseDatabase firebaseDatabase;
 
+
     TextView appDescriptionTextView;
     Button discussionChatButton, calendarButton;
 
@@ -39,13 +46,24 @@ public class DashboardActivity extends AppCompatActivity {
         actionBar = getSupportActionBar();
         firebaseAuth = FirebaseAuth.getInstance();
         navigationView = findViewById(R.id.navigation);
-        FirebaseDatabase.getInstance().setPersistenceEnabled(true);
+
+        FirebaseDatabase.getInstance().setPersistenceEnabled(true); //enables persistence offline!!
+
+
 
         navigationView.setOnNavigationItemSelectedListener(selectedListener);
 
         appDescriptionTextView = findViewById(R.id.app_description);
         discussionChatButton = findViewById(R.id.discussion_chat);
         calendarButton = findViewById(R.id.calendar);
+
+        calendarButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(DashboardActivity.this, CalendarActivity.class);
+                startActivity(intent);
+            }
+        });
 
         discussionChatButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -100,11 +118,7 @@ public class DashboardActivity extends AppCompatActivity {
                             hft.replace(R.id.content, emptyFragment, "");
                             hft.addToBackStack("");
                             hft.commit();
-//
-//                            //removes ALL fragments, should show the basic layout of dashboard activity
-//                            for (Fragment fragment: getSupportFragmentManager().getFragments()){
-//                                getSupportFragmentManager().beginTransaction().remove(fragment).commit();
-//                            }
+
                             return true;
 
                         case R.id.nav_profile:

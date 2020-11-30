@@ -31,10 +31,15 @@ public class CalendarActivity extends AppCompatActivity implements CalendarPicke
     private static final String LOG_TAG = CalendarActivity.class.getSimpleName();
     AgendaCalendarView mAgendaCalendarView;
     Calendar minDate, maxDate;
+    String[] calendarPermission;
+    private static final int CALENDAR_REQUEST_CODE = 400;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        calendarPermission = new String[]{Manifest.permission.READ_CALENDAR};
+        if (!checkCalendarPermission()) requestCalendarPermission();
+
         setContentView(R.layout.activity_calendar);
         mAgendaCalendarView = findViewById(R.id.agenda_calendar_view);
         Context context = this;
@@ -53,6 +58,8 @@ public class CalendarActivity extends AppCompatActivity implements CalendarPicke
 
         mAgendaCalendarView.init(eventList, minDate, maxDate, Locale.getDefault(), this);
         mAgendaCalendarView.addEventRenderer(new DrawableEventRenderer());
+
+
     }
 
     public static void readCalendarEvent(Context context,List<CalendarEvent> eventList) {
@@ -74,7 +81,7 @@ public class CalendarActivity extends AppCompatActivity implements CalendarPicke
         Calendar startD;
         String nameOfEvent;
         String descriptions;
-        for (int i = 0; i < 50; i++) {
+        for (int i = 0; i < CNames.length; i++) {
 
             nameOfEvent = cursor.getString(1);
             descriptions = cursor.getString(2);
@@ -167,6 +174,15 @@ public class CalendarActivity extends AppCompatActivity implements CalendarPicke
         if (getSupportActionBar() != null) {
             getSupportActionBar().setTitle(calendar.getDisplayName(Calendar.MONTH, Calendar.LONG, Locale.getDefault()));
         }
+    }
+
+    private boolean checkCalendarPermission() {
+        boolean result = ContextCompat.checkSelfPermission(this, Manifest.permission.READ_CALENDAR) == (PackageManager.PERMISSION_GRANTED);
+        return result;
+    }
+
+    private void requestCalendarPermission() {
+        requestPermissions(calendarPermission, CALENDAR_REQUEST_CODE);
     }
     
 }

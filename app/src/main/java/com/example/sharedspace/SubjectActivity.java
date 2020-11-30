@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -46,6 +47,8 @@ public class SubjectActivity extends AppCompatActivity {
     final static String SUBJECT_TITLE = "title";
     ArrayList<Subject> subjectList;
     SubjectAdapter subjectAdapter;
+    private SharedPreferences mPreferences;
+    private String sharedPrefFile = "com.example.android.mainsharedprefs";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
