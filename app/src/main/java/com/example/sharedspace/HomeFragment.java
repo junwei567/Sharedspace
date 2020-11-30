@@ -48,7 +48,7 @@ public class HomeFragment extends Fragment {
 //        firebaseDatabase = FirebaseDatabase.getInstance();
 //        databaseReference = firebaseDatabase.getReference("Users");
 
-        Button butt = view.findViewById(R.id.message_butt);
+        Button butt = view.findViewById(R.id.discussion_chat);
         butt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

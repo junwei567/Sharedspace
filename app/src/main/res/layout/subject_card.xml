@@ -2,7 +2,7 @@
 <androidx.cardview.widget.CardView
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:id="@+id/algo_card_view"
+    android:id="@+id/subject_card_view"
     android:layout_height="100dp"
     android:layout_marginTop="75dp"
     android:clickable="true"
@@ -18,7 +18,7 @@
             android:id="@+id/card_header"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:text="Alge"
+            android:text="Algo"
             android:fontFamily="sans-serif-black"
             android:textSize="20dp"
             android:gravity="center"
@@ -53,12 +53,7 @@
             android:layout_marginEnd="5dp"
             android:textSize="12dp" />
 
-        <Button
-            android:id="@+id/alButton"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@android:color/transparent"
-            />
+
 
     </RelativeLayout>
 

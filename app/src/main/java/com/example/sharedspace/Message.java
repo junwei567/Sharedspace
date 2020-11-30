@@ -1,19 +1,20 @@
 package com.example.sharedspace;
 
+
 import java.util.Date;
 
-public class ModelChatMessage {
+public class Message {
     private String messageText;
     private String messageUser;
     private long messageTime;
 
-    public ModelChatMessage(String messageText, String messageUser) {
+    public Message(String messageText, String messageUser) {
         this.messageText = messageText;
         this.messageUser = messageUser;
 
         messageTime = new Date().getTime();
     }
-    public ModelChatMessage(){
+    public Message(){
 
     }
     public String getMessageText() {
