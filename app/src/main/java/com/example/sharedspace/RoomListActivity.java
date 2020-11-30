@@ -47,62 +47,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 
-//public class ChatActivityInfoSys extends AppCompatActivity {
-//
-//    FloatingActionButton fab;
-//    private FirebaseListAdapter<ModelChatMessage> adapter;
-//
-//    @Override
-//    protected void onCreate(@Nullable Bundle savedInstanceState) {
-//        super.onCreate(savedInstanceState);
-//        setContentView(R.layout.activity_chat);
-//
-//        fab = findViewById(R.id.fab_write);
-//        fab.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                EditText inp = findViewById(R.id.input);
-//                FirebaseDatabase.getInstance()
-//                        .getReference("InfoSys")
-//                        .push()
-//                        .setValue(new ModelChatMessage(inp.getText().toString(),
-//                                FirebaseAuth.getInstance()
-//                                        .getCurrentUser()
-//                                        .getDisplayName())
-//                        );
-//                inp.setText("");
-//            }
-//        });
-//
-//        displayChatMessages();
-//    }
-//
-//    private void displayChatMessages() {
-//        ListView listOfMessages = findViewById(R.id.list_of_msg);
-//        adapter = new FirebaseListAdapter<ModelChatMessage>(this, ModelChatMessage.class,
-//                R.layout.message, FirebaseDatabase.getInstance().getReference("InfoSys")) {
-//            @Override
-//            protected void populateView(View v, ModelChatMessage model, int position) {
-//                // Get references to the views of message.xml
-//                TextView messageText = (TextView)v.findViewById(R.id.message_text);
-//                TextView messageUser = (TextView)v.findViewById(R.id.message_user);
-//                TextView messageTime = (TextView)v.findViewById(R.id.message_time);
-//
-//                // Set their text
-//                messageText.setText(model.getMessageText());
-//                messageUser.setText(model.getMessageUser());
-//
-//                // Format the date before showing it
-//                messageTime.setText(DateFormat.format("dd-MM-yyyy (HH:mm:ss)",
-//                        model.getMessageTime()));
-//            }
-//        };
-//
-//        listOfMessages.setAdapter(adapter);
-//    }
-//
-//
-//}
+
 public class RoomListActivity extends AppCompatActivity {
     FirebaseAuth firebaseAuth; //is this necessary here? firebase should only be called in our controllers
     DatabaseReference mDatabase;
@@ -112,7 +57,7 @@ public class RoomListActivity extends AppCompatActivity {
     ListView listViewRooms;
     Subject thisSubject;
 
-    public final static String COURSE_ID_KEY = "COURSE_ID_KEY";
+    public final static String ROOM_UID = "room_uid";
 
 
     @Override
@@ -172,6 +117,7 @@ public class RoomListActivity extends AppCompatActivity {
                 R.layout.room_card, mDatabase.child(courseType).child("roomList")) {
             @Override
             protected void populateView(View v, Room model, int position) {
+                final Room thisModel = model;
                 TextView roomTitleTextView, timeClosedTextView, numberOfPeopleTextView;
                 Button joinRoomButton;
                 roomTitleTextView = v.findViewById(R.id.room_title);
@@ -188,6 +134,14 @@ public class RoomListActivity extends AppCompatActivity {
                 numberOfPeopleTextView.setText(String.valueOf(model.getSizeOfRoom()));
                 joinRoomButton.setText(model.isFull() ? "Room Full":"Join Room");
                 joinRoomButton.setEnabled(!model.isFull());
+                joinRoomButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(RoomListActivity.this,RoomActivity.class);
+                        intent.putExtra(RoomListActivity.ROOM_UID, String.valueOf(thisModel.getRoomUID()));
+                        startActivity(intent);
+                    }
+                });
 
             }
         };
