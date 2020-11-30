@@ -5,18 +5,16 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.FragmentTransaction;
-import androidx.recyclerview.widget.DefaultItemAnimator;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.OrientationHelper;
-import androidx.recyclerview.widget.RecyclerView;
+
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
-import android.widget.LinearLayout;
+import android.widget.ListView;
+import android.widget.TextView;
 
+import com.firebase.ui.database.FirebaseListAdapter;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
@@ -29,7 +27,7 @@ public class SubjectActivity extends AppCompatActivity {
     FirebaseAuth firebaseAuth;
     ActionBar actionBar;
     BottomNavigationView navigationView;
-    RecyclerView mRecyclerView;
+    ListView mListViewSubjects;
     final static String SUBJECT_TYPE="subject";
     final static String SUBJECT_TITLE = "title";
 
@@ -40,6 +38,7 @@ public class SubjectActivity extends AppCompatActivity {
         actionBar = getSupportActionBar();
         firebaseAuth = FirebaseAuth.getInstance();
         navigationView = findViewById(R.id.navigation);
+        DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference().child("subjects");
 
         navigationView.setOnNavigationItemSelectedListener(selectedListener);
 
@@ -48,15 +47,42 @@ public class SubjectActivity extends AppCompatActivity {
         subjectArrayList.add(new Subject("50.002","50002","Computer Structures"));
         subjectArrayList.add(new Subject("50.004","50004","Introduction to Algorithms"));
 
-        SubjectAdapter adapter = new SubjectAdapter(subjectArrayList,this);
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, RecyclerView.VERTICAL, false);
 
-        mRecyclerView = findViewById(R.id.recyclerView);
-        mRecyclerView.setLayoutManager(linearLayoutManager);
-        mRecyclerView.setItemAnimator(new DefaultItemAnimator());
-        mRecyclerView.setAdapter(adapter);
-        DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference().child("subjects");
-        for (Subject sub:subjectArrayList) mDatabase.child(sub.getCourseType()).setValue(sub);
+        mListViewSubjects = findViewById(R.id.ListViewSubjects);
+
+        FirebaseListAdapter<Subject> subjectListAdapter = new FirebaseListAdapter<Subject>(this, Subject.class,
+                R.layout.subject_card, mDatabase) {
+            @Override
+            protected void populateView(View v, Subject model, int position) {
+                final Subject thisModel = model;
+                TextView cardHeaderTextView, cardSubjectIDTextView, cardStudyingTextView;
+                CardView subjectCard;
+                cardHeaderTextView = v.findViewById(R.id.card_header);
+                cardSubjectIDTextView = v.findViewById(R.id.card_subjectID);
+                cardStudyingTextView = v.findViewById(R.id.card_studying);
+                subjectCard = v.findViewById(R.id.subject_card_view);
+                cardHeaderTextView.setText(model.getCourseTitle());
+                cardSubjectIDTextView.setText(model.getCourseID());
+                cardStudyingTextView.setText(String.valueOf(model.getRoomList().size()));
+                subjectCard.setOnClickListener(new View.OnClickListener() {
+
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(SubjectActivity.this, RoomListActivity.class);
+                        intent.putExtra(SubjectActivity.SUBJECT_TYPE, thisModel.getCourseType());
+                        intent.putExtra(SubjectActivity.SUBJECT_TITLE, thisModel.getCourseTitle());
+                        SubjectActivity.this.startActivity(intent);
+
+                    }
+                });
+            }
+        };
+
+
+        mListViewSubjects.setAdapter(subjectListAdapter);
+
+        //TODO: useful for adding new subjects manually
+        //for (Subject sub:subjectArrayList) mDatabase.child(sub.getCourseType()).setValue(sub);
 
     }
 
@@ -72,7 +98,7 @@ public class SubjectActivity extends AppCompatActivity {
                             hft.replace(R.id.content, emptyFragment, "");
                             hft.addToBackStack(null);
                             hft.commit();
-                            mRecyclerView.setVisibility(View.VISIBLE);
+                            mListViewSubjects.setVisibility(View.VISIBLE);
 
                             //removes ALL fragments, should show the basic layout of dashboard activity
 //                            for (Fragment fragment: getSupportFragmentManager().getFragments()){
@@ -89,7 +115,7 @@ public class SubjectActivity extends AppCompatActivity {
                             pft.addToBackStack(null);
                             pft.commit();
 
-                            mRecyclerView.setVisibility(View.INVISIBLE);
+                            mListViewSubjects.setVisibility(View.INVISIBLE);
                             return true;
 
                         case R.id.nav_friends:
@@ -101,7 +127,7 @@ public class SubjectActivity extends AppCompatActivity {
                             fft.addToBackStack(null);
                             fft.commit();
 
-                            mRecyclerView.setVisibility(View.INVISIBLE);
+                            mListViewSubjects.setVisibility(View.INVISIBLE);
                             return true;
                     }
                     return false;

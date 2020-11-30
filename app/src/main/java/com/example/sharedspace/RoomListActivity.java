@@ -168,7 +168,7 @@ public class RoomListActivity extends AppCompatActivity {
         //thisSubject = new Subject("500001", "info sys");
 
         // Create adapter passing in the sample user data
-        FirebaseListAdapter<Room> adapter = new FirebaseListAdapter<Room>(this, Room.class,
+        FirebaseListAdapter<Room> roomListAdapter = new FirebaseListAdapter<Room>(this, Room.class,
                 R.layout.room_card, mDatabase.child(courseType).child("roomList")) {
             @Override
             protected void populateView(View v, Room model, int position) {
@@ -192,7 +192,7 @@ public class RoomListActivity extends AppCompatActivity {
             }
         };
         // Attach the adapter to the recyclerview to populate items
-        listViewRooms.setAdapter(adapter);
+        listViewRooms.setAdapter(roomListAdapter);
         // Set layout manager to position the items
 
     }
