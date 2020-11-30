@@ -108,10 +108,7 @@ public class RoomListActivity extends AppCompatActivity {
         actionBar.setTitle(courseTitle); //TODO
 
         listViewRooms = findViewById(R.id.ListViewRooms);
-
-        //we need the controller to help us get the Subject from its courseID, this is just a dummy to test
-        //thisSubject = new Subject("500001", "info sys");
-
+        
         // Create adapter passing in the sample user data
         FirebaseListAdapter<Room> roomListAdapter = new FirebaseListAdapter<Room>(this, Room.class,
                 R.layout.room_card, mDatabase.child(courseType).child("roomList")) {
@@ -124,11 +121,8 @@ public class RoomListActivity extends AppCompatActivity {
                 timeClosedTextView = v.findViewById(R.id.time_closed);
                 numberOfPeopleTextView = v.findViewById(R.id.number_of_people);
                 joinRoomButton = v.findViewById(R.id.join_room_button);
-//                roomTitleTextView.setText(room.getTitle());
-//                timeClosedTextView.setText("Closed at "+room.getTimeToClose());
-//                numberPeopleTextView.setText(String.valueOf(room.getSizeOfRoom()));
-//                button.setText(room.isFull() ? "Room Full":"Join Room");
-//                button.setEnabled(!room.isFull());
+
+                //
                 roomTitleTextView.setText(model.getTitle());
                 timeClosedTextView.setText("Closed at" + model.getTimeToClose());
                 numberOfPeopleTextView.setText(String.valueOf(model.getSizeOfRoom()));
