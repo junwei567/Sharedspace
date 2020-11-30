@@ -12,11 +12,14 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.FirebaseDatabase;
 
 public class DashboardActivity extends AppCompatActivity {
 
@@ -24,6 +27,10 @@ public class DashboardActivity extends AppCompatActivity {
     FirebaseAuth firebaseAuth;
     ActionBar actionBar;
     BottomNavigationView navigationView;
+    //FirebaseDatabase firebaseDatabase;
+
+    TextView appDescriptionTextView;
+    Button discussionChatButton, calendarButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,23 +39,35 @@ public class DashboardActivity extends AppCompatActivity {
         actionBar = getSupportActionBar();
         firebaseAuth = FirebaseAuth.getInstance();
         navigationView = findViewById(R.id.navigation);
+        FirebaseDatabase.getInstance().setPersistenceEnabled(true);
 
         navigationView.setOnNavigationItemSelectedListener(selectedListener);
 
-        getSupportFragmentManager().addOnBackStackChangedListener(new FragmentManager.OnBackStackChangedListener() {
-            @Override
-            public void onBackStackChanged() {
-                int stackHeight = getSupportFragmentManager().getBackStackEntryCount();
-                if (stackHeight > 0) { // if we have something on the stack (doesn't include the current shown fragment)
-                    getSupportActionBar().setHomeButtonEnabled(true);
-                    getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-                } else {
-                    getSupportActionBar().setDisplayHomeAsUpEnabled(false);
-                    getSupportActionBar().setHomeButtonEnabled(false);
-                }
-            }
+        appDescriptionTextView = findViewById(R.id.app_description);
+        discussionChatButton = findViewById(R.id.discussion_chat);
+        calendarButton = findViewById(R.id.calendar);
 
+        discussionChatButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(DashboardActivity.this, SubjectActivity.class);
+                startActivity(intent);
+            }
         });
+//        getSupportFragmentManager().addOnBackStackChangedListener(new FragmentManager.OnBackStackChangedListener() {
+//            @Override
+//            public void onBackStackChanged() {
+//                int stackHeight = getSupportFragmentManager().getBackStackEntryCount();
+//                if (stackHeight > 0) { // if we have something on the stack (doesn't include the current shown fragment)
+//                    getSupportActionBar().setHomeButtonEnabled(true);
+//                    getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+//                } else {
+//                    getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+//                    getSupportActionBar().setHomeButtonEnabled(false);
+//                }
+//            }
+//
+//        });
 
 
         // modifies actionbar
@@ -56,11 +75,11 @@ public class DashboardActivity extends AppCompatActivity {
        // actionBar.setDisplayHomeAsUpEnabled(true);
 
 
-        // creates the default homeFragment
-        HomeFragment homeFragment = new HomeFragment();
-        FragmentTransaction hft = getSupportFragmentManager().beginTransaction();
-        hft.replace(R.id.content, homeFragment, "");
-        hft.commit();
+//        // creates the default homeFragment
+//        HomeFragment homeFragment = new HomeFragment();
+//        FragmentTransaction hft = getSupportFragmentManager().beginTransaction();
+//        hft.replace(R.id.content, homeFragment, "");
+//        hft.commit();
 
     }
 
@@ -71,13 +90,18 @@ public class DashboardActivity extends AppCompatActivity {
                     switch (menuItem.getItemId()) {
                         case R.id.nav_home:
                             actionBar.setTitle("Home");
-                            HomeFragment homeFragment = new HomeFragment();
-                            FragmentTransaction hft = getSupportFragmentManager().beginTransaction();
-                            hft.replace(R.id.content, homeFragment, "");
-                            hft.addToBackStack(null);
-                            hft.commit();
+                            appDescriptionTextView.setVisibility(View.VISIBLE);
+                            calendarButton.setVisibility(View.VISIBLE);
+                            discussionChatButton.setVisibility(View.VISIBLE);
 
-                            //removes ALL fragments, should show the basic layout of dashboard activity
+
+                            EmptyFragment emptyFragment = new EmptyFragment();
+                            FragmentTransaction hft = getSupportFragmentManager().beginTransaction();
+                            hft.replace(R.id.content, emptyFragment, "");
+                            hft.addToBackStack("");
+                            hft.commit();
+//
+//                            //removes ALL fragments, should show the basic layout of dashboard activity
 //                            for (Fragment fragment: getSupportFragmentManager().getFragments()){
 //                                getSupportFragmentManager().beginTransaction().remove(fragment).commit();
 //                            }
@@ -89,8 +113,12 @@ public class DashboardActivity extends AppCompatActivity {
                             ProfileFragment profileFragment = new ProfileFragment();
                             FragmentTransaction pft = getSupportFragmentManager().beginTransaction();
                             pft.replace(R.id.content, profileFragment, "");
-                            pft.addToBackStack(null);
+                            pft.addToBackStack("");
                             pft.commit();
+                            appDescriptionTextView.setVisibility(View.INVISIBLE);
+                            calendarButton.setVisibility(View.INVISIBLE);
+                            discussionChatButton.setVisibility(View.INVISIBLE);
+
                             return true;
 
                         case R.id.nav_friends:
@@ -99,8 +127,12 @@ public class DashboardActivity extends AppCompatActivity {
                             FriendsFragment friendFragment = new FriendsFragment();
                             FragmentTransaction fft = getSupportFragmentManager().beginTransaction();
                             fft.replace(R.id.content, friendFragment, "");
-                            fft.addToBackStack(null);
+                            fft.addToBackStack("");
                             fft.commit();
+                            appDescriptionTextView.setVisibility(View.INVISIBLE);
+                            calendarButton.setVisibility(View.INVISIBLE);
+                            discussionChatButton.setVisibility(View.INVISIBLE);
+
                             return true;
                     }
                     return false;
@@ -140,9 +172,9 @@ public class DashboardActivity extends AppCompatActivity {
             case R.id.action_logout:
                 firebaseAuth.signOut();
                 checkUserStatus();
-            case R.id.home:
+            case R.id.edit_subjects:
                 getSupportFragmentManager().popBackStack();
-                return true;
+                startActivity(new Intent(DashboardActivity.this, SubjectAddActivity.class));
             default:
                 return super.onOptionsItemSelected(item);
         }

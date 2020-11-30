@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical"
+    tools:context=".RoomActivity">
+    <FrameLayout
+        android:id="@+id/content"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <RelativeLayout
+            android:id="@+id/message_board"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:clickable="true"
+                android:src="@drawable/ic_edit_white"
+                android:id="@+id/fab_write"
+                android:tint="@android:color/white"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentEnd="true"
+                app:fabSize="mini" />
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/text_input_layout"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentStart="true" >
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Input"
+                    android:id="@+id/input" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <ListView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentStart="true"
+                android:layout_above="@id/fab_write"
+                android:dividerHeight="16dp"
+                android:divider="@android:color/transparent"
+                android:id="@+id/list_of_msg"
+                android:layout_marginBottom="16dp" />
+
+
+        </RelativeLayout>
+    </FrameLayout>
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/navigation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:background="?android:attr/windowBackground"
+        app:menu="@menu/menu_nav">
+    </com.google.android.material.bottomnavigation.BottomNavigationView>
+
+</LinearLayout>
+
+<!--    <?xml version="1.0" encoding="utf-8"?>-->
+<!--<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"-->
+<!--xmlns:app="http://schemas.android.com/apk/res-auto"-->
+<!--xmlns:tools="http://schemas.android.com/tools"-->
+<!--android:layout_width="match_parent"-->
+<!--android:layout_height="match_parent"-->
+<!--tools:context=".ChatActivityInfoSys">-->
+
+<!--<com.google.android.material.floatingactionbutton.FloatingActionButton-->
+<!--    android:layout_width="wrap_content"-->
+<!--    android:layout_height="wrap_content"-->
+<!--    android:clickable="true"-->
+<!--    android:src="@drawable/ic_edit_white"-->
+<!--    android:id="@+id/fab_write"-->
+<!--    android:tint="@android:color/white"-->
+<!--    android:layout_alignParentBottom="true"-->
+<!--    android:layout_alignParentEnd="true"-->
+<!--    app:fabSize="mini" />-->
+<!--<com.google.android.material.textfield.TextInputLayout-->
+<!--    android:layout_width="match_parent"-->
+<!--    android:layout_height="wrap_content"-->
+<!--    android:id="@+id/text_input_layout"-->
+<!--    android:layout_alignParentBottom="true"-->
+<!--    android:layout_alignParentStart="true" >-->
+
+<!--    <EditText-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:hint="Input"-->
+<!--        android:id="@+id/input" />-->
+<!--</com.google.android.material.textfield.TextInputLayout>-->
+
+<!--<ListView-->
+<!--    android:layout_width="match_parent"-->
+<!--    android:layout_height="match_parent"-->
+<!--    android:layout_alignParentTop="true"-->
+<!--    android:layout_alignParentStart="true"-->
+<!--    android:layout_above="@id/fab_write"-->
+<!--    android:dividerHeight="16dp"-->
+<!--    android:divider="@android:color/transparent"-->
+<!--    android:id="@+id/list_of_msg"-->
+<!--    android:layout_marginBottom="16dp" />-->
+
+<!--</RelativeLayout>-->

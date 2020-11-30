@@ -56,7 +56,7 @@ public class HomeFragment extends Fragment {
         calendarPermission = new String[]{Manifest.permission.READ_CALENDAR};
         if (!checkCalendarPermission()) requestCalendarPermission();
 
-        Button butt = view.findViewById(R.id.message_butt);
+        Button butt = view.findViewById(R.id.discussion_chat);
         butt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

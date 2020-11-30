@@ -16,11 +16,13 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+
+        <activity android:name=".RoomActivity"></activity>
+        <activity
+            android:name=".RoomListActivity"
+            android:label="@string/title_activity_room_list"></activity>
         <activity android:name=".Calendar.CalendarActivity"></activity>
-        <activity android:name=".ChatActivityAlgo" />
-        <activity android:name=".ChatActivityComStr" />
         <activity android:name=".SubjectActivity" />
-        <activity android:name=".ChatActivityInfoSys" />
         <activity android:name=".LoginActivity" />
         <activity android:name=".DashboardActivity">
             <intent-filter>
