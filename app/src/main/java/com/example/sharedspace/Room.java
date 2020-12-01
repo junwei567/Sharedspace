@@ -54,7 +54,6 @@ public class Room{
         return studentUIDList;
     }
 
-
     public void addStudent(String studentUID) {
         this.studentUIDList.add(studentUID);
         //notifySubject(studentUID);

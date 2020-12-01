@@ -19,7 +19,7 @@ public class Subject{
 
     // To be removed when firebase functionality added
     private HashMap<String, Object> roomList;
-    final private DatabaseReference mDataBase = FirebaseDatabase.getInstance()
+    final private static DatabaseReference mDataBase = FirebaseDatabase.getInstance()
             .getReference().child("subjects");
 
     public Subject(String courseID, String courseType,String courseTitle){
@@ -50,14 +50,14 @@ public class Subject{
         studentList.add(studentID);
     }
 
-    public void createRoom(String title, String roomDescription, String studentID, long timeToClose){ // Also input studentID so we can automatically add the creator into the room
-        final Room newRoom =  new Room(title, roomDescription, studentID, timeToClose, courseType);
+    public static void createRoom(String title, String roomDescription, String studentID, long timeToClose, String thisCourseType){ // Also input studentID so we can automatically add the creator into the room
+        final Room newRoom =  new Room(title, roomDescription, studentID, timeToClose, thisCourseType);
         HashMap<String, Object> updates = new HashMap<>();
         updates.put(String.valueOf(newRoom.getRoomUID()), newRoom);
-        mDataBase.child(courseType).child("roomList").updateChildren(updates, new DatabaseReference.CompletionListener() {
+        mDataBase.child(thisCourseType).child("roomList").updateChildren(updates, new DatabaseReference.CompletionListener() {
             @Override
             public void onComplete(@Nullable DatabaseError databaseError, @NonNull DatabaseReference databaseReference) {
-                roomList.put(String.valueOf(newRoom.getRoomUID()), newRoom);
+                //roomList.put(String.valueOf(newRoom.getRoomUID()), newRoom);
             }
         });
     }
