@@ -21,8 +21,8 @@
             android:id="@+id/images"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_marginBottom="337dp"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="100dp"
             android:gravity="center">
 
             <ImageView
@@ -70,10 +70,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/images"
-            android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="419dp"
-            android:layout_alignTop="@+id/images"
+            android:layout_marginTop="25dp"
             android:clickable="true"
             android:padding="20dp"
             android:text="discussion chat" />
