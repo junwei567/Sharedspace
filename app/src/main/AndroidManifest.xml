@@ -17,25 +17,48 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
-        <activity android:name=".Room.RoomActivity"></activity>
-        <activity
-            android:name=".Room.RoomListActivity"
-            android:label="@string/title_activity_room_list"></activity>
-        <activity android:name=".Calendar.CalendarActivity"></activity>
-        <activity android:name=".Subject.SubjectActivity" />
-        <activity android:name=".LoginActivity" />
-        <activity android:name=".DashboardActivity">
+        <activity android:name=".Room.RoomActivity"
+            android:screenOrientation="portrait">
+        </activity>
+
+        <activity android:name=".Room.RoomListActivity"
+            android:label="@string/title_activity_room_list"
+            android:screenOrientation="portrait">
+        </activity>
+
+        <activity android:name=".Calendar.CalendarActivity"
+            android:screenOrientation="portrait">
+        </activity>
+
+        <activity android:name=".Subject.SubjectActivity"
+            android:screenOrientation="portrait"/>
+
+        <activity android:name=".LoginActivity"
+            android:screenOrientation="portrait"/>
+
+        <activity android:name=".DashboardActivity"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".RegisterActivity" />
-        <activity android:name=".MainActivity" />
-        <activity android:name=".Subject.SubjectAddActivity"></activity>
+
+        <activity android:name=".RegisterActivity"
+            android:screenOrientation="portrait"/>
+
+        <activity android:name=".MainActivity"
+            android:screenOrientation="portrait"/>
+
+        <activity
+            android:name=".Subject.SubjectAddActivity"
+            android:screenOrientation="portrait" />
+
         <activity android:name=".Room.RoomAddActivity"
-            android:noHistory="true"/>
+            android:noHistory="true"
+            android:screenOrientation="portrait"/>
+
     </application>
 
 </manifest>

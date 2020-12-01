@@ -75,7 +75,7 @@
         android:layout_centerVertical="true"
         android:layout_centerHorizontal="true"
         android:textSize="15sp"
-        android:hint="Type here..."
+        android:hint="Add something here!"
         android:background="@color/LightGreen"
         android:padding="10dp"
         android:layout_marginLeft="20dp"
