@@ -8,6 +8,7 @@
 
     <ScrollView
         android:layout_width="match_parent"
+        android:id="@+id/scrollView"
 
         android:layout_height="wrap_content">
         <RelativeLayout
@@ -67,17 +68,19 @@
         </RelativeLayout>
     </ScrollView>
 
-    <TextView
+    <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@+id/scrollView"
         android:layout_centerVertical="true"
         android:layout_centerHorizontal="true"
-        android:background="#F1EDED"
         android:textSize="15sp"
-        android:text="STUDY HARD DONT DROP OUT \n work on Algo quiz \n brush up on ABCs"
+        android:hint="Type here..."
+        android:background="@color/LightGreen"
         android:padding="10dp"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
+        android:id="@+id/EditText1"
         />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -92,5 +95,22 @@
         android:layout_marginEnd="6dp"
         android:layout_marginRight="10dp"
         android:layout_marginBottom="36dp"
+<<<<<<< Updated upstream
         android:src="@drawable/ic_smiley_white" />
+=======
+        android:src="@drawable/ic_edit_white" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fabtext"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="6dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginBottom="36dp"
+        android:src="@drawable/ic_edit_white" />
+>>>>>>> Stashed changes
 </RelativeLayout>

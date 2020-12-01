@@ -17,6 +17,7 @@ import androidx.fragment.app.Fragment;
 
 import android.text.TextUtils;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
@@ -44,6 +45,12 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Picasso;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
 import java.util.HashMap;
 
 import static android.app.Activity.RESULT_OK;
@@ -69,7 +76,8 @@ public class ProfileFragment extends Fragment {
     // views from xml
     ImageView avatarIv;
     TextView nameTv, classTv, phoneTv;
-    FloatingActionButton editProfile;
+    FloatingActionButton editProfile, editTextButton;
+    EditText EditText1;
     
     ProgressDialog pd;
 
@@ -111,6 +119,7 @@ public class ProfileFragment extends Fragment {
         classTv = view.findViewById(R.id.classTv);
         phoneTv = view.findViewById(R.id.phoneTv);
         editProfile = view.findViewById(R.id.fab);
+        editTextButton = view.findViewById(R.id.fabtext);
 
         pd = new ProgressDialog(getActivity());
 
@@ -151,8 +160,60 @@ public class ProfileFragment extends Fragment {
             }
         });
 
+        editTextButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Save("Note1.txt");
+            }
+        });
+
+        EditText1 = view.findViewById(R.id.EditText1);
+        EditText1.setText(Open("Note1.txt"));
+
+
         return view;
     }
+
+    public void Save(String fileName) {
+        try {
+            OutputStreamWriter out =
+                    new OutputStreamWriter(getContext().openFileOutput(fileName, 0));
+            out.write(EditText1.getText().toString());
+            out.close();
+            Toast.makeText(getContext(), "Note saved!", Toast.LENGTH_SHORT).show();
+        } catch (Throwable t) {
+            Toast.makeText(getContext(), "Exception: " + t.toString(), Toast.LENGTH_LONG).show();
+        }
+    }
+
+
+    public String Open(String fileName) {
+        String content = "";
+        if (FileExists(fileName)) {
+            try {
+                InputStream in = getContext().openFileInput(fileName);
+                if ( in != null) {
+                    InputStreamReader tmp = new InputStreamReader( in );
+                    BufferedReader reader = new BufferedReader(tmp);
+                    String str;
+                    StringBuilder buf = new StringBuilder();
+                    while ((str = reader.readLine()) != null) {
+                        buf.append(str + "\n");
+                    } in .close();
+                    content = buf.toString();
+                }
+            } catch (java.io.FileNotFoundException e) {} catch (Throwable t) {
+                Toast.makeText(getContext(), "Exception: " + t.toString(), Toast.LENGTH_LONG).show();
+            }
+        }
+        return content;
+    }
+
+    public boolean FileExists(String fname) {
+        File file = getActivity().getBaseContext().getFileStreamPath(fname);
+        return file.exists();
+    }
+
 
     private boolean checkStoragePermission() {
         boolean result = ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.WRITE_EXTERNAL_STORAGE) == (PackageManager.PERMISSION_GRANTED);
