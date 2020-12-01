@@ -189,6 +189,8 @@ public class SubjectActivity extends AppCompatActivity {
                    intent.putExtra(SubjectActivity.SUBJECT_TYPE, thisSubject.getCourseType());
                    intent.putExtra(SubjectActivity.SUBJECT_TITLE, thisSubject.getCourseTitle());
                    SubjectActivity.this.startActivity(intent);
+                   // Testcase
+                   //Subject.createRoom("new Room", "describe", "1004483", 1609, thisSubject.getCourseType());
                }
             });
             // Return the completed view to render on screen
