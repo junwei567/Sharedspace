@@ -19,6 +19,7 @@ import android.widget.TextView;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.FirebaseDatabase;
 
 public class DashboardActivity extends AppCompatActivity {
 
@@ -29,6 +30,7 @@ public class DashboardActivity extends AppCompatActivity {
 
     TextView appDescriptionTextView;
     Button discussionChatButton, calendarButton;
+    EmptyFragment emptyFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +39,10 @@ public class DashboardActivity extends AppCompatActivity {
         actionBar = getSupportActionBar();
         firebaseAuth = FirebaseAuth.getInstance();
         navigationView = findViewById(R.id.navigation);
+
+
+        FirebaseDatabase.getInstance().setPersistenceEnabled(true); //enables persistence offline!!
+
 
         navigationView.setOnNavigationItemSelectedListener(selectedListener);
 
@@ -51,32 +57,17 @@ public class DashboardActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-//        getSupportFragmentManager().addOnBackStackChangedListener(new FragmentManager.OnBackStackChangedListener() {
-//            @Override
-//            public void onBackStackChanged() {
-//                int stackHeight = getSupportFragmentManager().getBackStackEntryCount();
-//                if (stackHeight > 0) { // if we have something on the stack (doesn't include the current shown fragment)
-//                    getSupportActionBar().setHomeButtonEnabled(true);
-//                    getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-//                } else {
-//                    getSupportActionBar().setDisplayHomeAsUpEnabled(false);
-//                    getSupportActionBar().setHomeButtonEnabled(false);
-//                }
-//            }
-//
-//        });
-
 
         // modifies actionbar
         actionBar.setTitle("Home");
        // actionBar.setDisplayHomeAsUpEnabled(true);
 
 
-//        // creates the default homeFragment
-//        HomeFragment homeFragment = new HomeFragment();
-//        FragmentTransaction hft = getSupportFragmentManager().beginTransaction();
-//        hft.replace(R.id.content, homeFragment, "");
-//        hft.commit();
+        // creates the default homeFragment
+        emptyFragment = new EmptyFragment();
+        FragmentTransaction hft = getSupportFragmentManager().beginTransaction();
+        hft.replace(R.id.content, emptyFragment, "");
+        hft.commit();
 
     }
 
@@ -91,17 +82,10 @@ public class DashboardActivity extends AppCompatActivity {
                             calendarButton.setVisibility(View.VISIBLE);
                             discussionChatButton.setVisibility(View.VISIBLE);
 
-
-                            EmptyFragment emptyFragment = new EmptyFragment();
                             FragmentTransaction hft = getSupportFragmentManager().beginTransaction();
                             hft.replace(R.id.content, emptyFragment, "");
                             hft.addToBackStack("");
                             hft.commit();
-//
-//                            //removes ALL fragments, should show the basic layout of dashboard activity
-//                            for (Fragment fragment: getSupportFragmentManager().getFragments()){
-//                                getSupportFragmentManager().beginTransaction().remove(fragment).commit();
-//                            }
                             return true;
 
                         case R.id.nav_profile:
@@ -115,7 +99,6 @@ public class DashboardActivity extends AppCompatActivity {
                             appDescriptionTextView.setVisibility(View.INVISIBLE);
                             calendarButton.setVisibility(View.INVISIBLE);
                             discussionChatButton.setVisibility(View.INVISIBLE);
-
                             return true;
 
                         case R.id.nav_friends:
@@ -129,7 +112,6 @@ public class DashboardActivity extends AppCompatActivity {
                             appDescriptionTextView.setVisibility(View.INVISIBLE);
                             calendarButton.setVisibility(View.INVISIBLE);
                             discussionChatButton.setVisibility(View.INVISIBLE);
-
                             return true;
                     }
                     return false;

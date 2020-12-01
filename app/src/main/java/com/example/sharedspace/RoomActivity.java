@@ -41,6 +41,8 @@ public class RoomActivity extends AppCompatActivity {
         actionBar.setTitle(roomUID);
 
         mDatabase = FirebaseDatabase.getInstance().getReference().child("messages").child(roomUID);
+        //TODO: add dependencies to update firebase.Room.studentUIDList upon entering the room.
+
 
         fabPostMessage = findViewById(R.id.fab_write);
         fabPostMessage.setOnClickListener(new View.OnClickListener() {
@@ -60,7 +62,7 @@ public class RoomActivity extends AppCompatActivity {
     }
 
     private void displayChatMessages() {
-        ListView listOfMessages = findViewById(R.id.list_of_msg);
+        listOfMessages = findViewById(R.id.list_of_msg);
         roomActivityAdapter = new FirebaseListAdapter<Message>(this, Message.class,
                 R.layout.message, mDatabase) {
             @Override
@@ -85,58 +87,3 @@ public class RoomActivity extends AppCompatActivity {
 
 
 }
-
-//public class ChatActivityAlgo extends AppCompatActivity {
-//
-//    FloatingActionButton fab;
-//    private FirebaseListAdapter<ModelChatMessage> adapter;
-//
-//    @Override
-//    protected void onCreate(@Nullable Bundle savedInstanceState) {
-//        super.onCreate(savedInstanceState);
-//        setContentView(R.layout.activity_chat);
-//
-//        fab = findViewById(R.id.fab_write);
-//        fab.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                EditText inp = findViewById(R.id.input);
-//                FirebaseDatabase.getInstance()
-//                        .getReference("Algo")
-//                        .push()
-//                        .setValue(new ModelChatMessage(inp.getText().toString(),
-//                                FirebaseAuth.getInstance()
-//                                        .getCurrentUser()
-//                                        .getDisplayName())
-//                        );
-//                inp.setText("");
-//            }
-//        });
-//
-//        displayChatMessages();
-//    }
-//
-//    private void displayChatMessages() {
-//        ListView listOfMessages = findViewById(R.id.list_of_msg);
-//        adapter = new FirebaseListAdapter<ModelChatMessage>(this, ModelChatMessage.class,
-//                R.layout.message, FirebaseDatabase.getInstance().getReference("Algo")) {
-//            @Override
-//            protected void populateView(View v, ModelChatMessage model, int position) {
-//                // Get references to the views of message.xml
-//                TextView messageText = (TextView)v.findViewById(R.id.message_text);
-//                TextView messageUser = (TextView)v.findViewById(R.id.message_user);
-//                TextView messageTime = (TextView)v.findViewById(R.id.message_time);
-//
-//                // Set their text
-//                messageText.setText(model.getMessageText());
-//                messageUser.setText(model.getMessageUser());
-//
-//                // Format the date before showing it
-//                messageTime.setText(DateFormat.format("dd-MM-yyyy (HH:mm:ss)",
-//                        model.getMessageTime()));
-//            }
-//        };
-//
-//        listOfMessages.setAdapter(adapter);
-//    }
-//}

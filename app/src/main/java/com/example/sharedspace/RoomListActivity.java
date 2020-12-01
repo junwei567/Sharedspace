@@ -58,6 +58,7 @@ public class RoomListActivity extends AppCompatActivity {
     Subject thisSubject;
 
     public final static String ROOM_UID = "room_uid";
+    public final static String STUDENT_UID = "student_uid";
 
 
     @Override
@@ -124,7 +125,7 @@ public class RoomListActivity extends AppCompatActivity {
 
                 //
                 roomTitleTextView.setText(model.getTitle());
-                timeClosedTextView.setText("Closed at" + model.getTimeToClose());
+                timeClosedTextView.setText("Closed at " + model.getTimeToClose());
                 numberOfPeopleTextView.setText(String.valueOf(model.getSizeOfRoom()));
                 joinRoomButton.setText(model.isFull() ? "Room Full":"Join Room");
                 joinRoomButton.setEnabled(!model.isFull());
@@ -133,6 +134,7 @@ public class RoomListActivity extends AppCompatActivity {
                     public void onClick(View v) {
                         Intent intent = new Intent(RoomListActivity.this,RoomActivity.class);
                         intent.putExtra(RoomListActivity.ROOM_UID, String.valueOf(thisModel.getRoomUID()));
+                        intent.putExtra(RoomListActivity.STUDENT_UID, firebaseAuth.getCurrentUser().getUid());
                         startActivity(intent);
                     }
                 });

@@ -40,7 +40,7 @@ public class Subject {
     }
 
     public void createRoom(String title, String roomDescription, String studentID, long timeStarted, long timeToClose){ // Also input studentID so we can automatically add the creator into the room
-        roomList.add(new Room(title, roomDescription, studentID, timeStarted, timeToClose));
+        roomList.add(new Room(title, roomDescription, studentID, timeToClose));
     }
 
 
@@ -51,16 +51,18 @@ public class Subject {
     }
 
     public ArrayList<Room> getRoomList() {
-        if (roomList.size()==0) {
-            for (int i=1; i< 21;i++) {
-                roomList.add(new Room("Room "+i,"This describes a room","1004485", 10000, 69000));
 
-                // this extra line is just to simulate test case
-                if (i==3||i==7||i==18) {
-                    for (int j=0;j<4;j++) roomList.get(i-1).addStudent("1004483");
-                }
-            }
-        }
+//        // to be deleted if no need test case
+//        if (roomList.size()==0) {
+//            for (int i=1; i< 21;i++) {
+//                roomList.add(new Room("Room "+i,"This describes a room","1004485", 69000));
+//
+//                // this extra line is just to simulate test case
+//                if (i==3||i==7||i==18) {
+//                    for (int j=0;j<4;j++) roomList.get(i-1).addStudent("1004483");
+//                }
+//            }
+//        }
         return roomList;
     }
 
