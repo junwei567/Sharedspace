@@ -69,6 +69,7 @@ public class RoomListActivity extends AppCompatActivity {
 
     public final static String ROOM_UID = "room_uid";
     public final static String STUDENT_UID = "student_uid";
+    public final static String ROOM_TITLE = "room_title";
 
 
     @Override
@@ -126,6 +127,7 @@ public class RoomListActivity extends AppCompatActivity {
                         intent.putExtra(RoomListActivity.ROOM_UID, enterRoomUID);
                         intent.putExtra(RoomListActivity.STUDENT_UID, firebaseAuth.getCurrentUser().getUid());
                         intent.putExtra(SubjectActivity.SUBJECT_TYPE, courseType);
+                        intent.putExtra(SubjectActivity.SUBJECT_TITLE, thisModel.getTitle());
                         HashMap<String, Object> updates = new HashMap<>();
                         updates.put(firebaseAuth.getCurrentUser().getUid(), new Integer(1));
                         FirebaseDatabase.getInstance().getReference().child("subjects").child(courseType)

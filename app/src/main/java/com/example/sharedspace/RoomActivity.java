@@ -41,6 +41,7 @@ public class RoomActivity extends AppCompatActivity {
     String roomUID;
     String studentUID;
     String courseType;
+    String roomTitle;
 
     // fragments used in layouts
     EmptyFragment emptyFragment;
@@ -60,8 +61,10 @@ public class RoomActivity extends AppCompatActivity {
         roomUID = getIntent().getStringExtra(RoomListActivity.ROOM_UID);
         studentUID = getIntent().getStringExtra(RoomListActivity.STUDENT_UID);
         courseType = getIntent().getStringExtra(SubjectActivity.SUBJECT_TYPE);
+        roomTitle = getIntent().getStringExtra(SubjectActivity.SUBJECT_TITLE);
 
-        actionBar.setTitle(roomUID);
+
+        actionBar.setTitle(roomTitle);
         mDatabase = FirebaseDatabase.getInstance().getReference().child("messages").child(roomUID);
 
         //update firebase.Room.studentUIDList upon entering the room.

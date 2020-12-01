@@ -132,6 +132,7 @@ public class RoomAddActivity extends AppCompatActivity implements View.OnClickLi
                     intent.putExtra(RoomListActivity.ROOM_UID, enterRoomUID);
                     intent.putExtra(RoomListActivity.STUDENT_UID, mAuth.getCurrentUser().getUid());
                     intent.putExtra(SubjectActivity.SUBJECT_TYPE, courseType);
+                    intent.putExtra(SubjectActivity.SUBJECT_TITLE, newRoom.getTitle());
                     startActivity(intent);
 
 
