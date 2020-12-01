@@ -86,4 +86,9 @@ public class RoomActivity extends AppCompatActivity {
     }
 
 
+<<<<<<< HEAD
 }
+=======
+}
+
+>>>>>>> master

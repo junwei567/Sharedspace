@@ -1,14 +1,19 @@
+//TODO: (zhiyou): URL links to blackboard, piazza, myportal, office365
+
 package com.example.sharedspace;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.NavUtils;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -16,6 +21,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.example.sharedspace.Calendar.CalendarActivity;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -27,6 +33,8 @@ public class DashboardActivity extends AppCompatActivity {
     FirebaseAuth firebaseAuth;
     ActionBar actionBar;
     BottomNavigationView navigationView;
+    //FirebaseDatabase firebaseDatabase;
+
 
     TextView appDescriptionTextView;
     Button discussionChatButton, calendarButton;
@@ -40,15 +48,30 @@ public class DashboardActivity extends AppCompatActivity {
         firebaseAuth = FirebaseAuth.getInstance();
         navigationView = findViewById(R.id.navigation);
 
+<<<<<<< HEAD
 
         FirebaseDatabase.getInstance().setPersistenceEnabled(true); //enables persistence offline!!
 
 
+=======
+        FirebaseDatabase.getInstance().setPersistenceEnabled(true); //enables persistence offline!!
+
+
+
+>>>>>>> master
         navigationView.setOnNavigationItemSelectedListener(selectedListener);
 
         appDescriptionTextView = findViewById(R.id.app_description);
         discussionChatButton = findViewById(R.id.discussion_chat);
         calendarButton = findViewById(R.id.calendar);
+
+        calendarButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(DashboardActivity.this, CalendarActivity.class);
+                startActivity(intent);
+            }
+        });
 
         discussionChatButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -86,6 +109,10 @@ public class DashboardActivity extends AppCompatActivity {
                             hft.replace(R.id.content, emptyFragment, "");
                             hft.addToBackStack("");
                             hft.commit();
+<<<<<<< HEAD
+=======
+
+>>>>>>> master
                             return true;
 
                         case R.id.nav_profile:
@@ -151,9 +178,9 @@ public class DashboardActivity extends AppCompatActivity {
             case R.id.action_logout:
                 firebaseAuth.signOut();
                 checkUserStatus();
-            case R.id.home:
+            case R.id.edit_subjects:
                 getSupportFragmentManager().popBackStack();
-                return true;
+                startActivity(new Intent(DashboardActivity.this, SubjectAddActivity.class));
             default:
                 return super.onOptionsItemSelected(item);
         }
