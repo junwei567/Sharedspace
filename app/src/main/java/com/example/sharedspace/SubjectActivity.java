@@ -83,6 +83,8 @@ public class SubjectActivity extends AppCompatActivity {
         FragmentTransaction hft = getSupportFragmentManager().beginTransaction();
         hft.replace(R.id.content, emptyFragment, "");
         hft.commit();
+
+        actionBar.setTitle("Subjects");
     }
 
     @Override

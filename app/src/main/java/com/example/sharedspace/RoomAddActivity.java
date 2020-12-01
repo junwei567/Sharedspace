@@ -2,6 +2,7 @@ package com.example.sharedspace;
 
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
+import android.content.Intent;
 import android.icu.util.Calendar;
 import android.os.Bundle;
 import android.view.View;
@@ -120,8 +121,8 @@ public class RoomAddActivity extends AppCompatActivity implements View.OnClickLi
                 //formatting the dateString to convert it into a Date
                 Date date = sdf.parse(dateString);
                 outTime = date.getTime();
-                Room newRoom = new Room(title, desc, creatorID, outTime, courseType);
-                //TODO: do something with newroom, or wait for David's static Subject.createRoom method
+                Subject.createRoom(title, desc, creatorID, outTime, courseType);
+                startActivity(new Intent(RoomAddActivity.this, RoomListActivity.class));
 
             }catch(ParseException e){
                 e.printStackTrace();
