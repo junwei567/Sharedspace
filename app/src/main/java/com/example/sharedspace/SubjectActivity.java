@@ -50,6 +50,11 @@ public class SubjectActivity extends AppCompatActivity {
     private SharedPreferences mPreferences;
     private String sharedPrefFile = "com.example.android.mainsharedprefs";
 
+    // fragments used in layouts
+    EmptyFragment emptyFragment;
+    ProfileFragment profileFragment;
+    FriendsFragment friendFragment;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -95,6 +100,11 @@ public class SubjectActivity extends AppCompatActivity {
 //        for (Subject sub:subjectArrayList) mDatabase.child(sub.getCourseType()).setValue(sub);
 //        FirebaseDatabase.getInstance().getReference().child("messages").child("10000").setValue("messages");
 
+        // creates the default homeFragment
+        emptyFragment = new EmptyFragment();
+        FragmentTransaction hft = getSupportFragmentManager().beginTransaction();
+        hft.replace(R.id.content, emptyFragment, "");
+        hft.commit();
     }
 
     private BottomNavigationView.OnNavigationItemSelectedListener selectedListener =
@@ -104,40 +114,30 @@ public class SubjectActivity extends AppCompatActivity {
                     switch (menuItem.getItemId()) {
                         case R.id.nav_home:
                             actionBar.setTitle("Home");
-                            EmptyFragment emptyFragment = new EmptyFragment();
+                            emptyFragment = new EmptyFragment();
                             FragmentTransaction hft = getSupportFragmentManager().beginTransaction();
                             hft.replace(R.id.content, emptyFragment, "");
-                            hft.addToBackStack(null);
                             hft.commit();
                             mListViewSubjects.setVisibility(View.VISIBLE);
-
-                            //removes ALL fragments, should show the basic layout of dashboard activity
-//                            for (Fragment fragment: getSupportFragmentManager().getFragments()){
-//                                getSupportFragmentManager().beginTransaction().remove(fragment).commit();
-//                            }
                             return true;
 
                         case R.id.nav_profile:
                             // profile fragment transaction
                             actionBar.setTitle("Profile");
-                            ProfileFragment profileFragment = new ProfileFragment();
+                            profileFragment = new ProfileFragment();
                             FragmentTransaction pft = getSupportFragmentManager().beginTransaction();
                             pft.replace(R.id.content, profileFragment, "");
-                            pft.addToBackStack(null);
                             pft.commit();
-
                             mListViewSubjects.setVisibility(View.INVISIBLE);
                             return true;
 
                         case R.id.nav_friends:
                             // users fragment transaction
                             actionBar.setTitle("Friends");
-                            FriendsFragment friendFragment = new FriendsFragment();
+                            friendFragment = new FriendsFragment();
                             FragmentTransaction fft = getSupportFragmentManager().beginTransaction();
                             fft.replace(R.id.content, friendFragment, "");
-                            fft.addToBackStack(null);
                             fft.commit();
-
                             mListViewSubjects.setVisibility(View.INVISIBLE);
                             return true;
                     }

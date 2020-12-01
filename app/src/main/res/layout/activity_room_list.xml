@@ -7,23 +7,25 @@
     android:orientation="vertical"
     android:gravity="center"
     tools:context=".RoomListActivity">
-
-    <ListView
-        android:id="@+id/ListViewRooms"
+    <FrameLayout
+        android:id="@+id/content"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1"/>
-
-
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/add_room_button"
-        android:src="@drawable/ic_edit_white"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="10dp"
-        android:layout_gravity="right"
-        android:translationY="-60dp"/>
-
+        android:layout_weight="1">
+        <ListView
+            android:id="@+id/ListViewRooms"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"/>
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/add_room_button"
+            android:src="@drawable/ic_edit_white"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:layout_gravity="right|bottom"
+            android:translationY="-20dp"/>
+    </FrameLayout>
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/navigation"
         android:layout_width="match_parent"
@@ -32,5 +34,4 @@
         android:background="?android:attr/windowBackground"
         app:menu="@menu/menu_nav">
     </com.google.android.material.bottomnavigation.BottomNavigationView>
-
 </LinearLayout>

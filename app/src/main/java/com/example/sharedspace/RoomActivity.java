@@ -1,14 +1,18 @@
 package com.example.sharedspace;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.os.Bundle;
 import android.text.format.DateFormat;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.firebase.ui.database.FirebaseListAdapter;
@@ -27,7 +31,12 @@ public class RoomActivity extends AppCompatActivity {
     private FirebaseListAdapter<Message> roomActivityAdapter;
     FloatingActionButton fabPostMessage;
     ListView listOfMessages;
+    RelativeLayout messageBoard;
 
+    // fragments used in layouts
+    EmptyFragment emptyFragment;
+    ProfileFragment profileFragment;
+    FriendsFragment friendFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +45,8 @@ public class RoomActivity extends AppCompatActivity {
         actionBar = getSupportActionBar();
         firebaseAuth = FirebaseAuth.getInstance();
         navigationView = findViewById(R.id.navigation);
+        navigationView.setOnNavigationItemSelectedListener(selectedListener);
+        messageBoard = findViewById(R.id.message_board);
 
         final String roomUID = getIntent().getStringExtra(RoomListActivity.ROOM_UID);
         actionBar.setTitle(roomUID);
@@ -60,6 +71,12 @@ public class RoomActivity extends AppCompatActivity {
             }
         });
         displayChatMessages();
+
+        // creates the default homeFragment
+        emptyFragment = new EmptyFragment();
+        FragmentTransaction hft = getSupportFragmentManager().beginTransaction();
+        hft.replace(R.id.content, emptyFragment, "");
+        hft.commit();
 
     }
 
@@ -86,6 +103,44 @@ public class RoomActivity extends AppCompatActivity {
 
         listOfMessages.setAdapter(roomActivityAdapter);
     }
+
+    private BottomNavigationView.OnNavigationItemSelectedListener selectedListener =
+            new BottomNavigationView.OnNavigationItemSelectedListener() {
+                @Override
+                public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+                    switch (menuItem.getItemId()) {
+                        case R.id.nav_home:
+                            actionBar.setTitle("Home");
+                            messageBoard.setVisibility(View.VISIBLE);
+                            FragmentTransaction hft = getSupportFragmentManager().beginTransaction();
+                            hft.replace(R.id.content, emptyFragment, "");
+                            hft.commit();
+                            return true;
+
+                        case R.id.nav_profile:
+                            // profile fragment transaction
+                            actionBar.setTitle("Profile");
+                            profileFragment = new ProfileFragment();
+                            FragmentTransaction pft = getSupportFragmentManager().beginTransaction();
+                            pft.replace(R.id.content, profileFragment, "");
+                            pft.commit();
+                            messageBoard.setVisibility(View.INVISIBLE);
+                            return true;
+
+                        case R.id.nav_friends:
+                            // users fragment transaction
+                            actionBar.setTitle("Friends");
+                            friendFragment = new FriendsFragment();
+                            FragmentTransaction fft = getSupportFragmentManager().beginTransaction();
+                            fft.replace(R.id.content, friendFragment, "");
+                            fft.commit();
+                            messageBoard.setVisibility(View.INVISIBLE);
+                            return true;
+                    }
+                    return false;
+                }
+            };
+
 }
 
 

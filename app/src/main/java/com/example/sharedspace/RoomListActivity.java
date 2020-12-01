@@ -3,6 +3,7 @@ package com.example.sharedspace;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -11,6 +12,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -55,7 +57,12 @@ public class RoomListActivity extends AppCompatActivity {
     ActionBar actionBar;
     BottomNavigationView navigationView;
     ListView listViewRooms;
-    Subject thisSubject;
+    FloatingActionButton fab_add_room;
+
+    // fragments used in layouts
+    EmptyFragment emptyFragment;
+    ProfileFragment profileFragment;
+    FriendsFragment friendFragment;
 
     public final static String ROOM_UID = "room_uid";
     public final static String STUDENT_UID = "student_uid";
@@ -69,6 +76,8 @@ public class RoomListActivity extends AppCompatActivity {
         actionBar = getSupportActionBar();
         firebaseAuth = FirebaseAuth.getInstance();
         navigationView = findViewById(R.id.navigation);
+        navigationView.setOnNavigationItemSelectedListener(selectedListener);
+        fab_add_room = findViewById(R.id.add_room_button);
         
         //gets the course_id that was passed to SubjectActivity from DashboardActivity (so you know what course's rooms to display)
         final String courseType = getIntent().getStringExtra(SubjectActivity.SUBJECT_TYPE);
@@ -120,7 +129,6 @@ public class RoomListActivity extends AppCompatActivity {
                 timeClosedTextView = v.findViewById(R.id.time_closed);
                 numberOfPeopleTextView = v.findViewById(R.id.number_of_people);
                 joinRoomButton = v.findViewById(R.id.join_room_button);
-
                 //
                 roomTitleTextView.setText(model.getTitle());
                 timeClosedTextView.setText("Closed at " + model.getTimeToClose());
@@ -145,10 +153,53 @@ public class RoomListActivity extends AppCompatActivity {
         };
         // Attach the adapter to the recyclerview to populate items
         listViewRooms.setAdapter(roomListAdapter);
-        // Set layout manager to position the items
 
+        // creates the default homeFragment
+        emptyFragment = new EmptyFragment();
+        FragmentTransaction hft = getSupportFragmentManager().beginTransaction();
+        hft.replace(R.id.content, emptyFragment, "");
+        hft.commit();
     }
+    private BottomNavigationView.OnNavigationItemSelectedListener selectedListener =
+        new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+                switch (menuItem.getItemId()) {
+                    case R.id.nav_home:
+                        actionBar.setTitle("Home");
+                        emptyFragment = new EmptyFragment();
+                        FragmentTransaction hft = getSupportFragmentManager().beginTransaction();
+                        hft.replace(R.id.content, emptyFragment, "");
+                        hft.commit();
+                        listViewRooms.setVisibility(View.VISIBLE);
+                        fab_add_room.show();
+                        return true;
 
+                    case R.id.nav_profile:
+                        // profile fragment transaction
+                        actionBar.setTitle("Profile");
+                        profileFragment = new ProfileFragment();
+                        FragmentTransaction pft = getSupportFragmentManager().beginTransaction();
+                        pft.replace(R.id.content, profileFragment, "");
+                        pft.commit();
+                        listViewRooms.setVisibility(View.INVISIBLE);
+                        fab_add_room.hide();
+                        return true;
+
+                    case R.id.nav_friends:
+                        // users fragment transaction
+                        actionBar.setTitle("Friends");
+                        friendFragment = new FriendsFragment();
+                        FragmentTransaction fft = getSupportFragmentManager().beginTransaction();
+                        fft.replace(R.id.content, friendFragment, "");
+                        fft.commit();
+                        listViewRooms.setVisibility(View.INVISIBLE);
+                        fab_add_room.hide();
+                        return true;
+                }
+                return false;
+            }
+        };
 
 }
 

@@ -36,7 +36,11 @@ public class DashboardActivity extends AppCompatActivity {
 
     TextView appDescriptionTextView;
     Button discussionChatButton, calendarButton;
+
+    // fragments used in layouts
     EmptyFragment emptyFragment;
+    ProfileFragment profileFragment;
+    FriendsFragment friendFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -93,21 +97,17 @@ public class DashboardActivity extends AppCompatActivity {
                             appDescriptionTextView.setVisibility(View.VISIBLE);
                             calendarButton.setVisibility(View.VISIBLE);
                             discussionChatButton.setVisibility(View.VISIBLE);
-
                             FragmentTransaction hft = getSupportFragmentManager().beginTransaction();
                             hft.replace(R.id.content, emptyFragment, "");
-                            hft.addToBackStack("");
                             hft.commit();
-
                             return true;
 
                         case R.id.nav_profile:
                             // profile fragment transaction
                             actionBar.setTitle("Profile");
-                            ProfileFragment profileFragment = new ProfileFragment();
+                            profileFragment = new ProfileFragment();
                             FragmentTransaction pft = getSupportFragmentManager().beginTransaction();
                             pft.replace(R.id.content, profileFragment, "");
-                            pft.addToBackStack("");
                             pft.commit();
                             appDescriptionTextView.setVisibility(View.INVISIBLE);
                             calendarButton.setVisibility(View.INVISIBLE);
@@ -117,10 +117,9 @@ public class DashboardActivity extends AppCompatActivity {
                         case R.id.nav_friends:
                             // users fragment transaction
                             actionBar.setTitle("Friends");
-                            FriendsFragment friendFragment = new FriendsFragment();
+                            friendFragment = new FriendsFragment();
                             FragmentTransaction fft = getSupportFragmentManager().beginTransaction();
                             fft.replace(R.id.content, friendFragment, "");
-                            fft.addToBackStack("");
                             fft.commit();
                             appDescriptionTextView.setVisibility(View.INVISIBLE);
                             calendarButton.setVisibility(View.INVISIBLE);
