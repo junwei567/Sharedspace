@@ -41,17 +41,21 @@ public class RoomActivity extends AppCompatActivity {
         actionBar.setTitle(roomUID);
 
         mDatabase = FirebaseDatabase.getInstance().getReference().child("messages").child(roomUID);
+        //TODO: add dependencies to update firebase.Room.studentUIDList upon entering the room.
+
 
         fabPostMessage = findViewById(R.id.fab_write);
         fabPostMessage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 EditText inp = findViewById(R.id.input);
-                mDatabase.push().setValue(new Message(inp.getText().toString(),
-                                FirebaseAuth.getInstance()
-                                        .getCurrentUser()
-                                        .getDisplayName())
-                        );
+                if (inp.getText().length()!=0) {
+                    mDatabase.push().setValue(new Message(inp.getText().toString(),
+                            FirebaseAuth.getInstance()
+                                    .getCurrentUser()
+                                    .getDisplayName())
+                    );
+                }
                 inp.setText("");
             }
         });
@@ -60,7 +64,7 @@ public class RoomActivity extends AppCompatActivity {
     }
 
     private void displayChatMessages() {
-        ListView listOfMessages = findViewById(R.id.list_of_msg);
+        listOfMessages = findViewById(R.id.list_of_msg);
         roomActivityAdapter = new FirebaseListAdapter<Message>(this, Message.class,
                 R.layout.message, mDatabase) {
             @Override
@@ -82,7 +86,6 @@ public class RoomActivity extends AppCompatActivity {
 
         listOfMessages.setAdapter(roomActivityAdapter);
     }
-
-
 }
+
 

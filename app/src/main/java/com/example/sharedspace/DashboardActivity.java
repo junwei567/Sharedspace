@@ -38,6 +38,7 @@ public class DashboardActivity extends AppCompatActivity {
 
     TextView appDescriptionTextView;
     Button discussionChatButton, calendarButton;
+    EmptyFragment emptyFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,32 +73,17 @@ public class DashboardActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-//        getSupportFragmentManager().addOnBackStackChangedListener(new FragmentManager.OnBackStackChangedListener() {
-//            @Override
-//            public void onBackStackChanged() {
-//                int stackHeight = getSupportFragmentManager().getBackStackEntryCount();
-//                if (stackHeight > 0) { // if we have something on the stack (doesn't include the current shown fragment)
-//                    getSupportActionBar().setHomeButtonEnabled(true);
-//                    getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-//                } else {
-//                    getSupportActionBar().setDisplayHomeAsUpEnabled(false);
-//                    getSupportActionBar().setHomeButtonEnabled(false);
-//                }
-//            }
-//
-//        });
-
 
         // modifies actionbar
         actionBar.setTitle("Home");
        // actionBar.setDisplayHomeAsUpEnabled(true);
 
 
-//        // creates the default homeFragment
-//        HomeFragment homeFragment = new HomeFragment();
-//        FragmentTransaction hft = getSupportFragmentManager().beginTransaction();
-//        hft.replace(R.id.content, homeFragment, "");
-//        hft.commit();
+        // creates the default homeFragment
+        emptyFragment = new EmptyFragment();
+        FragmentTransaction hft = getSupportFragmentManager().beginTransaction();
+        hft.replace(R.id.content, emptyFragment, "");
+        hft.commit();
 
     }
 
@@ -112,8 +98,6 @@ public class DashboardActivity extends AppCompatActivity {
                             calendarButton.setVisibility(View.VISIBLE);
                             discussionChatButton.setVisibility(View.VISIBLE);
 
-
-                            EmptyFragment emptyFragment = new EmptyFragment();
                             FragmentTransaction hft = getSupportFragmentManager().beginTransaction();
                             hft.replace(R.id.content, emptyFragment, "");
                             hft.addToBackStack("");
@@ -132,7 +116,6 @@ public class DashboardActivity extends AppCompatActivity {
                             appDescriptionTextView.setVisibility(View.INVISIBLE);
                             calendarButton.setVisibility(View.INVISIBLE);
                             discussionChatButton.setVisibility(View.INVISIBLE);
-
                             return true;
 
                         case R.id.nav_friends:
@@ -146,7 +129,6 @@ public class DashboardActivity extends AppCompatActivity {
                             appDescriptionTextView.setVisibility(View.INVISIBLE);
                             calendarButton.setVisibility(View.INVISIBLE);
                             discussionChatButton.setVisibility(View.INVISIBLE);
-
                             return true;
                     }
                     return false;
