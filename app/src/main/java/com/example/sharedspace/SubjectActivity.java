@@ -87,14 +87,14 @@ public class SubjectActivity extends AppCompatActivity {
         subjectAdapter = new SubjectAdapter(this, subjectList);
         mListViewSubjects.setAdapter(subjectAdapter);
 
-        //TODO: useful for adding new objects manually
-        //ArrayList<Subject> subjectArrayList = new ArrayList<>();
+//        //TODO: useful for adding new objects manually
+//        ArrayList<Subject> subjectArrayList = new ArrayList<>();
 //        subjectArrayList.add(new Subject("50.001","50001","Introduction to Information Systems and Programming"));
 //        subjectArrayList.add(new Subject("50.002","50002","Computer Structures"));
 //        subjectArrayList.add(new Subject("50.004","50004","Introduction to Algorithms"));
-
-        //for (Subject sub:subjectArrayList) mDatabase.child(sub.getCourseType()).setValue(sub);
-        //FirebaseDatabase.getInstance().getReference().child("messages").child("10000").setValue("messages");
+//
+//        for (Subject sub:subjectArrayList) mDatabase.child(sub.getCourseType()).setValue(sub);
+//        FirebaseDatabase.getInstance().getReference().child("messages").child("10000").setValue("messages");
 
     }
 

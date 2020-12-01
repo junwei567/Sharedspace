@@ -49,11 +49,13 @@ public class RoomActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 EditText inp = findViewById(R.id.input);
-                mDatabase.push().setValue(new Message(inp.getText().toString(),
-                                FirebaseAuth.getInstance()
-                                        .getCurrentUser()
-                                        .getDisplayName())
-                        );
+                if (inp.getText().length()!=0) {
+                    mDatabase.push().setValue(new Message(inp.getText().toString(),
+                            FirebaseAuth.getInstance()
+                                    .getCurrentUser()
+                                    .getDisplayName())
+                    );
+                }
                 inp.setText("");
             }
         });
@@ -84,11 +86,6 @@ public class RoomActivity extends AppCompatActivity {
 
         listOfMessages.setAdapter(roomActivityAdapter);
     }
-
-
-<<<<<<< HEAD
-}
-=======
 }
 
->>>>>>> master
+

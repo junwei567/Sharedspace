@@ -48,17 +48,10 @@ public class DashboardActivity extends AppCompatActivity {
         firebaseAuth = FirebaseAuth.getInstance();
         navigationView = findViewById(R.id.navigation);
 
-<<<<<<< HEAD
-
-        FirebaseDatabase.getInstance().setPersistenceEnabled(true); //enables persistence offline!!
-
-
-=======
         FirebaseDatabase.getInstance().setPersistenceEnabled(true); //enables persistence offline!!
 
 
 
->>>>>>> master
         navigationView.setOnNavigationItemSelectedListener(selectedListener);
 
         appDescriptionTextView = findViewById(R.id.app_description);
@@ -109,10 +102,7 @@ public class DashboardActivity extends AppCompatActivity {
                             hft.replace(R.id.content, emptyFragment, "");
                             hft.addToBackStack("");
                             hft.commit();
-<<<<<<< HEAD
-=======
 
->>>>>>> master
                             return true;
 
                         case R.id.nav_profile:

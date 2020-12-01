@@ -1,5 +1,7 @@
 package com.example.sharedspace;
 
+import com.google.firebase.auth.FirebaseAuth;
+
 import java.util.ArrayList;
 
 public class Subject {
@@ -51,32 +53,18 @@ public class Subject {
     }
 
     public ArrayList<Room> getRoomList() {
-<<<<<<< HEAD
 
-//        // to be deleted if no need test case
-//        if (roomList.size()==0) {
-//            for (int i=1; i< 21;i++) {
-//                roomList.add(new Room("Room "+i,"This describes a room","1004485", 69000));
-//
-//                // this extra line is just to simulate test case
-//                if (i==3||i==7||i==18) {
-//                    for (int j=0;j<4;j++) roomList.get(i-1).addStudent("1004483");
-//                }
-//            }
-//        }
-=======
         // to be deleted if no need test case
         if (roomList.size()==0) {
-            for (int i=1; i< 21;i++) {
-                roomList.add(new Room("Room "+i,"This describes a room","1004485", 10000, 69000));
+            for (int i=1; i< 5;i++) {
+                roomList.add(new Room("Room "+i,"This describes a room", FirebaseAuth.getInstance().getCurrentUser().getUid(), 69000+i));
 
                 // this extra line is just to simulate test case
-                if (i==3||i==7||i==18) {
+                if (i==2||i==7||i==18) {
                     for (int j=0;j<4;j++) roomList.get(i-1).addStudent("1004483");
                 }
             }
         }
->>>>>>> master
         return roomList;
     }
 
