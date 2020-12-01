@@ -50,7 +50,7 @@ public class DashboardActivity extends AppCompatActivity {
         firebaseAuth = FirebaseAuth.getInstance();
         navigationView = findViewById(R.id.navigation);
 
-        FirebaseDatabase.getInstance().setPersistenceEnabled(true); //enables persistence offline!!
+        //FirebaseDatabase.getInstance().setPersistenceEnabled(true); //enables persistence offline!!
 
         navigationView.setOnNavigationItemSelectedListener(selectedListener);
 

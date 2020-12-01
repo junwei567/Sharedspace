@@ -69,7 +69,8 @@ public class SubjectActivity extends AppCompatActivity {
 
 
 
-//        //TODO: useful for adding new objects manually
+//        //TODO: useful for adding new objects manually, also
+//              go to Room.java and edit line 29 to do studentUIDList.put() instead of addStudent()
 //        ArrayList<Subject> subjectArrayList = new ArrayList<>();
 //        subjectArrayList.add(new Subject("50.001","50001","Introduction to Information Systems and Programming"));
 //        subjectArrayList.add(new Subject("50.002","50002","Computer Structures"));

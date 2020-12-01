@@ -1,7 +1,6 @@
 package com.example.sharedspace;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentTransaction;
@@ -27,6 +26,7 @@ public class RoomActivity extends AppCompatActivity {
     ActionBar actionBar;
     BottomNavigationView navigationView;
     DatabaseReference mDatabase;
+    DatabaseReference mRoom_StudentUIDListDataBase;
 
     private FirebaseListAdapter<Message> roomActivityAdapter;
     FloatingActionButton fabPostMessage;
@@ -49,15 +49,17 @@ public class RoomActivity extends AppCompatActivity {
         messageBoard = findViewById(R.id.message_board);
 
         final String roomUID = getIntent().getStringExtra(RoomListActivity.ROOM_UID);
+        final String studentUID = getIntent().getStringExtra(RoomListActivity.STUDENT_UID);
+        final String courseType = getIntent().getStringExtra(SubjectActivity.SUBJECT_TYPE);
+
         actionBar.setTitle(roomUID);
 
         mDatabase = FirebaseDatabase.getInstance().getReference().child("messages").child(roomUID);
+        //mRoom_StudentUIDListDataBase = FirebaseDatabase.getInstance().getReference().child("subjects").child(courseType)
+             //   .child("roomList").child(roomUID).child("studentUIDList");
 
         //TODO: add dependencies to update firebase.Room.studentUIDList upon entering the room.
-        final String studentUID = getIntent().getStringExtra(RoomListActivity.STUDENT_UID);
-        final String courseType = getIntent().getStringExtra(SubjectActivity.SUBJECT_TYPE);
-//        FirebaseDatabase.getInstance().getReference().child("subjects").child(courseType)
-//                .child(roomUID).child("studentUIDList").push().setValue(studentUID);
+        //mRoom_StudentUIDListDataBase.push().setValue(studentUID);
 
 
         fabPostMessage = findViewById(R.id.fab_write);

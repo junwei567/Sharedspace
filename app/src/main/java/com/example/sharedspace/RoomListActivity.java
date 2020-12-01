@@ -28,6 +28,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.util.HashMap;
 import java.util.List;
 
 import android.os.Bundle;
@@ -84,35 +85,7 @@ public class RoomListActivity extends AppCompatActivity {
         final String courseTitle = getIntent().getStringExtra(SubjectActivity.SUBJECT_TITLE);
 
         mDatabase = FirebaseDatabase.getInstance().getReference().child("subjects");
-//        mDatabase.addChildEventListener(new ChildEventListener() {
-//            @Override
-//            public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-//                if (dataSnapshot.getKey() == courseType) {
-//                    thisSubject = dataSnapshot.getValue(Subject.class);
-//                }
-//            }
 //
-//            @Override
-//            public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-//
-//            }
-//
-//            @Override
-//            public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
-//
-//            }
-//
-//            @Override
-//            public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-//
-//            }
-//
-//            @Override
-//            public void onCancelled(@NonNull DatabaseError databaseError) {
-//
-//            }
-//        });
-
         actionBar.setTitle(courseTitle); //TODO
 
         listViewRooms = findViewById(R.id.ListViewRooms);
@@ -132,7 +105,7 @@ public class RoomListActivity extends AppCompatActivity {
                 //
                 roomTitleTextView.setText(model.getTitle());
                 timeClosedTextView.setText("Closed at " + model.getTimeToClose());
-                numberOfPeopleTextView.setText(String.valueOf(model.getSizeOfRoom()));
+                numberOfPeopleTextView.setText("2");//String.valueOf(model.getSizeOfRoom()));
                 joinRoomButton.setText(model.isFull() ? "Room Full":"Join Room");
                 joinRoomButton.setEnabled(!model.isFull());
                 joinRoomButton.setOnClickListener(new View.OnClickListener() {
@@ -140,12 +113,17 @@ public class RoomListActivity extends AppCompatActivity {
                     public void onClick(View v) {
                         //TODO: update Room.studentIDList using addStudent() inside firebase.
                         // as of now its using studentID, but can modify to use the user's uid too.
-
+                        String enterRoomUID = String.valueOf(thisModel.getRoomUID());
 
                         Intent intent = new Intent(RoomListActivity.this,RoomActivity.class);
-                        intent.putExtra(RoomListActivity.ROOM_UID, String.valueOf(thisModel.getRoomUID()));
+                        intent.putExtra(RoomListActivity.ROOM_UID, enterRoomUID);
                         intent.putExtra(RoomListActivity.STUDENT_UID, firebaseAuth.getCurrentUser().getUid());
                         intent.putExtra(SubjectActivity.SUBJECT_TYPE, courseType);
+                        HashMap<String, Object> updates = new HashMap<>();
+                        updates.put(firebaseAuth.getCurrentUser().getUid(), new Integer(1));
+                        FirebaseDatabase.getInstance().getReference().child("subjects").child(courseType)
+                                .child("roomList").child(enterRoomUID)
+                                .child("studentUIDList").updateChildren(updates);
                         startActivity(intent);
                     }
                 });
