@@ -14,11 +14,14 @@ import androidx.fragment.app.FragmentTransaction;
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.media.Image;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.sharedspace.Calendar.CalendarActivity;
@@ -34,8 +37,9 @@ public class DashboardActivity extends AppCompatActivity {
     ActionBar actionBar;
     BottomNavigationView navigationView;
 
-    TextView appDescriptionTextView;
+    //TextView appDescriptionTextView;
     Button discussionChatButton, calendarButton;
+    ImageView blackboardImage, piazzaImage, outlookImage, myportalImage;
 
     // fragments used in layouts
     EmptyFragment emptyFragment;
@@ -54,9 +58,53 @@ public class DashboardActivity extends AppCompatActivity {
 
         navigationView.setOnNavigationItemSelectedListener(selectedListener);
 
-        appDescriptionTextView = findViewById(R.id.app_description);
+        //appDescriptionTextView = findViewById(R.id.app_description);
         discussionChatButton = findViewById(R.id.discussion_chat);
         calendarButton = findViewById(R.id.calendar);
+        blackboardImage = findViewById(R.id.blackboard);
+        piazzaImage = findViewById(R.id.piazza);
+        outlookImage = findViewById(R.id.outlook);
+        myportalImage = findViewById(R.id.myportal);
+
+        blackboardImage.setOnClickListener(new View.OnClickListener(){
+            public void onClick(View v){
+                Intent intent = new Intent();
+                intent.setAction(Intent.ACTION_VIEW);
+                intent.addCategory(Intent.CATEGORY_BROWSABLE);
+                intent.setData(Uri.parse("https://edimension.sutd.edu.sg/"));
+                startActivity(intent);
+            }
+        });
+
+        piazzaImage.setOnClickListener(new View.OnClickListener(){
+            public void onClick(View v){
+                Intent intent = new Intent();
+                intent.setAction(Intent.ACTION_VIEW);
+                intent.addCategory(Intent.CATEGORY_BROWSABLE);
+                intent.setData(Uri.parse("https://piazza.com/"));
+                startActivity(intent);
+            }
+        });
+
+        outlookImage.setOnClickListener(new View.OnClickListener(){
+            public void onClick(View v){
+                Intent intent = new Intent();
+                intent.setAction(Intent.ACTION_VIEW);
+                intent.addCategory(Intent.CATEGORY_BROWSABLE);
+                intent.setData(Uri.parse("https://outlook.office365.com/mail"));
+                startActivity(intent);
+            }
+        });
+
+        myportalImage.setOnClickListener(new View.OnClickListener(){
+            public void onClick(View v){
+                Intent intent = new Intent();
+                intent.setAction(Intent.ACTION_VIEW);
+                intent.addCategory(Intent.CATEGORY_BROWSABLE);
+                intent.setData(Uri.parse("https://myportal.sutd.edu.sg/"));
+                startActivity(intent);
+            }
+        });
 
         calendarButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -92,7 +140,10 @@ public class DashboardActivity extends AppCompatActivity {
                     switch (menuItem.getItemId()) {
                         case R.id.nav_home:
                             actionBar.setTitle("Home");
-                            appDescriptionTextView.setVisibility(View.VISIBLE);
+                            blackboardImage.setVisibility(View.VISIBLE);
+                            piazzaImage.setVisibility(View.VISIBLE);
+                            outlookImage.setVisibility(View.VISIBLE);
+                            myportalImage.setVisibility(View.VISIBLE);
                             calendarButton.setVisibility(View.VISIBLE);
                             discussionChatButton.setVisibility(View.VISIBLE);
                             FragmentTransaction hft = getSupportFragmentManager().beginTransaction();
@@ -107,7 +158,10 @@ public class DashboardActivity extends AppCompatActivity {
                             FragmentTransaction pft = getSupportFragmentManager().beginTransaction();
                             pft.replace(R.id.content, profileFragment, "");
                             pft.commit();
-                            appDescriptionTextView.setVisibility(View.INVISIBLE);
+                            blackboardImage.setVisibility(View.INVISIBLE);
+                            piazzaImage.setVisibility(View.INVISIBLE);
+                            myportalImage.setVisibility(View.INVISIBLE);
+                            outlookImage.setVisibility(View.INVISIBLE);
                             calendarButton.setVisibility(View.INVISIBLE);
                             discussionChatButton.setVisibility(View.INVISIBLE);
                             return true;
@@ -119,7 +173,10 @@ public class DashboardActivity extends AppCompatActivity {
                             FragmentTransaction fft = getSupportFragmentManager().beginTransaction();
                             fft.replace(R.id.content, friendFragment, "");
                             fft.commit();
-                            appDescriptionTextView.setVisibility(View.INVISIBLE);
+                            blackboardImage.setVisibility(View.INVISIBLE);
+                            piazzaImage.setVisibility(View.INVISIBLE);
+                            myportalImage.setVisibility(View.INVISIBLE);
+                            outlookImage.setVisibility(View.INVISIBLE);
                             calendarButton.setVisibility(View.INVISIBLE);
                             discussionChatButton.setVisibility(View.INVISIBLE);
                             return true;

@@ -16,24 +16,67 @@
         android:layout_height="0dp"
         android:layout_weight="1">
 
-        <TextView
-            android:id="@+id/app_description"
+<!--        <TextView-->
+<!--            android:id="@+id/app_description"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_marginLeft="20dp"-->
+<!--            android:layout_marginTop="20dp"-->
+<!--            android:layout_marginRight="20dp"-->
+<!--            android:background="@color/com_facebook_messenger_blue"-->
+<!--            android:padding="20dp"-->
+<!--            android:text="@string/pinboard"-->
+<!--            android:textAlignment="center"-->
+<!--            android:textSize="25sp" />-->
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="20dp"
-            android:layout_marginTop="20dp"
-            android:layout_marginRight="20dp"
-            android:background="@color/com_facebook_messenger_blue"
-            android:padding="20dp"
-            android:text="@string/pinboard"
-            android:textAlignment="center"
-            android:textSize="25sp" />
+            android:id="@+id/images"
+            android:gravity="center">
+            <ImageView
+                android:id="@+id/blackboard"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:clickable="true"
+                android:padding="25dp"
+                android:src="@drawable/bbstudent" />
+
+            <ImageView
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:id="@+id/piazza"
+                android:src="@drawable/piazza"
+                android:clickable="true"
+                android:padding="25dp"
+                android:layout_toRightOf="@id/blackboard"/>
+
+            <ImageView
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:id="@+id/outlook"
+                android:src="@drawable/outlook"
+                android:clickable="true"
+                android:padding="20dp"
+                android:layout_below="@id/piazza"/>
+
+            <ImageView
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:id="@+id/myportal"
+                android:src="@drawable/myportal"
+                android:clickable="true"
+                android:padding="15dp"
+                android:layout_below="@id/piazza"
+                android:layout_toRightOf="@id/outlook"/>
+        </RelativeLayout>
+
+
 
         <Button
             android:id="@+id/discussion_chat"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/app_description"
+            android:layout_below="@+id/images"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="51dp"
             android:clickable="true"
