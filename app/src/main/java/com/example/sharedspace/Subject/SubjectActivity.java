@@ -1,31 +1,30 @@
-package com.example.sharedspace;
+package com.example.sharedspace.Subject;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.FragmentTransaction;
-import androidx.recyclerview.widget.RecyclerView;
 
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.CompoundButton;
 import android.widget.ListView;
-import android.widget.Switch;
 import android.widget.TextView;
 
-import com.firebase.ui.database.FirebaseListAdapter;
+import com.example.sharedspace.EmptyFragment;
+import com.example.sharedspace.FriendsFragment;
+import com.example.sharedspace.ProfileFragment;
+import com.example.sharedspace.R;
+import com.example.sharedspace.Room.RoomListActivity;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -36,17 +35,16 @@ import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class SubjectActivity extends AppCompatActivity {
+    public final static String SUBJECT_TYPE="subject";
+    public final static String SUBJECT_TITLE = "title";
     // firebase auth
     FirebaseAuth firebaseAuth;
     ActionBar actionBar;
     BottomNavigationView navigationView;
     ListView mListViewSubjects;
-    final static String SUBJECT_TYPE="subject";
-    final static String SUBJECT_TITLE = "title";
     ArrayList<Subject> subjectList;
     SubjectAdapter subjectAdapter;
     List<String> userSubjects;
@@ -66,16 +64,6 @@ public class SubjectActivity extends AppCompatActivity {
         navigationView = findViewById(R.id.navigation);
         navigationView.setOnNavigationItemSelectedListener(selectedListener);
 
-//        //TODO: useful for adding new objects manually, also
-//              go to Room.java and edit line 29 to do studentUIDList.put() instead of addStudent()
-//        ArrayList<Subject> subjectArrayList = new ArrayList<>();
-//        subjectArrayList.add(new Subject("50.001","50001","Introduction to Information Systems and Programming"));
-//        subjectArrayList.add(new Subject("50.002","50002","Computer Structures"));
-//        subjectArrayList.add(new Subject("50.004","50004","Introduction to Algorithms"));
-//
-//        for (Subject sub:subjectArrayList) FirebaseDatabase.getInstance().getReference().child("subjects").child(sub.getCourseType()).setValue(sub);
-//        FirebaseDatabase.getInstance().getReference().child("messages").child("10000").setValue("messages");
-
         // creates the default homeFragment
         emptyFragment = new EmptyFragment();
         FragmentTransaction hft = getSupportFragmentManager().beginTransaction();
@@ -88,6 +76,7 @@ public class SubjectActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        Log.w("callback:", "ONRESUME");
         userSubjects = SharedPrefUtils.loadArray(this);
 
         //a temporary list. testing queries for specific things
@@ -97,9 +86,10 @@ public class SubjectActivity extends AppCompatActivity {
         if (userSubjects.size() != 0){
             for (String courseType : userSubjects){
                 Query query = mDatabase.orderByChild("courseType").equalTo(courseType);
-                query.addValueEventListener(new ValueEventListener() {
+                query.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        Log.w("callback:", "ONDATACHANGE");
                         for (DataSnapshot snapshot : dataSnapshot.getChildren()){
                             Subject subject = snapshot.getValue(Subject.class);
                             subjectList.add(subject);
@@ -192,8 +182,6 @@ public class SubjectActivity extends AppCompatActivity {
                    intent.putExtra(SubjectActivity.SUBJECT_TYPE, thisSubject.getCourseType());
                    intent.putExtra(SubjectActivity.SUBJECT_TITLE, thisSubject.getCourseTitle());
                    SubjectActivity.this.startActivity(intent);
-                   // Testcase
-                   //Subject.createRoom("new Room", "describe", "1004483", 1609, thisSubject.getCourseType());
                }
             });
             // Return the completed view to render on screen

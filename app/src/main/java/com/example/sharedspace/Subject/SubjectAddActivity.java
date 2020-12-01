@@ -1,23 +1,16 @@
-package com.example.sharedspace;
+package com.example.sharedspace.Subject;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
-import android.content.Context;
-import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.ListView;
 import android.widget.Switch;
 import android.widget.TextView;
 
+import com.example.sharedspace.R;
 import com.firebase.ui.database.FirebaseListAdapter;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;

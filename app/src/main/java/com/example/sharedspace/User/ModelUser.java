@@ -1,4 +1,4 @@
-package com.example.sharedspace;
+package com.example.sharedspace.User;
 
 public class ModelUser {
 

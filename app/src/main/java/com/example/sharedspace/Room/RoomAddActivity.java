@@ -1,4 +1,4 @@
-package com.example.sharedspace;
+package com.example.sharedspace.Room;
 
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
@@ -17,6 +17,9 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.sharedspace.R;
+import com.example.sharedspace.Subject.Subject;
+import com.example.sharedspace.Subject.SubjectActivity;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;

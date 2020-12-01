@@ -1,4 +1,4 @@
-package com.example.sharedspace;
+package com.example.sharedspace.User;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -11,10 +11,10 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.sharedspace.R;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class AdapterUsers extends RecyclerView.Adapter<AdapterUsers.MyHolder>{
 

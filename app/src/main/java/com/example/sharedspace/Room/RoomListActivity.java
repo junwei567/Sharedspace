@@ -1,55 +1,35 @@
-package com.example.sharedspace;
+package com.example.sharedspace.Room;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentTransaction;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.firebase.ui.database.FirebaseRecyclerAdapter;
+import com.example.sharedspace.EmptyFragment;
+import com.example.sharedspace.FriendsFragment;
+import com.example.sharedspace.ProfileFragment;
+import com.example.sharedspace.R;
+import com.example.sharedspace.Subject.SubjectActivity;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.ChildEventListener;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.List;
 
-import android.os.Bundle;
-import android.text.format.DateFormat;
-import android.view.View;
-import android.widget.EditText;
 import android.widget.ListView;
-import android.widget.TextView;
-
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
 
 import com.firebase.ui.database.FirebaseListAdapter;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 
 //TODO: add functionality to create room, and specifically allow creator of the room to delete the room. 
 

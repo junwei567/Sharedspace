@@ -1,9 +1,9 @@
-package com.example.sharedspace;
+package com.example.sharedspace.Subject;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import com.google.firebase.auth.FirebaseAuth;
+import com.example.sharedspace.Room.Room;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -57,13 +57,10 @@ public class Subject{
         mDataBase.child(thisCourseType).child("roomList").updateChildren(updates, new DatabaseReference.CompletionListener() {
             @Override
             public void onComplete(@Nullable DatabaseError databaseError, @NonNull DatabaseReference databaseReference) {
-                //roomList.put(String.valueOf(newRoom.getRoomUID()), newRoom);
             }
         });
         return newRoom;
     }
-
-
 
 
     public ArrayList<String> getStudentList() {
@@ -71,20 +68,6 @@ public class Subject{
     }
 
     public HashMap<String, Object> getRoomList() {
-        // to be deleted if no need test case
-//        Room newRoom;
-//        if (roomList.size()==0) {
-//            for (int i=1; i< 5;i++) {
-//                newRoom = new Room("Room "+i,"This describes a room", FirebaseAuth.getInstance().getCurrentUser().getUid(), 69000+i, courseType);
-//
-//
-//                // this extra line is just to simulate test case
-//                if (i==2||i==7||i==18) {
-//                    for (int j=0;j<4;j++) newRoom.addStudent("1004483");
-//                }
-//                roomList.put(String.valueOf(newRoom.getRoomUID()), newRoom);
-//            }
-//        }
         try {
             return roomList;
         } catch (NullPointerException e) {
@@ -92,10 +75,4 @@ public class Subject{
         }
 
     }
-
-    //TODO
-//    @Override
-//    public void update(String msg) {
-//
-//    }
 }

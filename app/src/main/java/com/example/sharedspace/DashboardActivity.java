@@ -5,16 +5,9 @@ package com.example.sharedspace;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.NavUtils;
-import androidx.core.content.ContextCompat;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
-import android.Manifest;
 import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.media.Image;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.Menu;
@@ -22,9 +15,9 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.example.sharedspace.Calendar.CalendarActivity;
+import com.example.sharedspace.Subject.SubjectActivity;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;

@@ -1,14 +1,12 @@
-package com.example.sharedspace;
+package com.example.sharedspace.Room;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentTransaction;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.text.format.DateFormat;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
@@ -16,6 +14,11 @@ import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.example.sharedspace.EmptyFragment;
+import com.example.sharedspace.FriendsFragment;
+import com.example.sharedspace.ProfileFragment;
+import com.example.sharedspace.R;
+import com.example.sharedspace.Subject.SubjectActivity;
 import com.firebase.ui.database.FirebaseListAdapter;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -63,16 +66,8 @@ public class RoomActivity extends AppCompatActivity {
         courseType = getIntent().getStringExtra(SubjectActivity.SUBJECT_TYPE);
         roomTitle = getIntent().getStringExtra(SubjectActivity.SUBJECT_TITLE);
 
-
         actionBar.setTitle(roomTitle);
         mDatabase = FirebaseDatabase.getInstance().getReference().child("messages").child(roomUID);
-
-        //update firebase.Room.studentUIDList upon entering the room.
-
-//        mRoom_StudentUIDListDataBase = FirebaseDatabase.getInstance().getReference().child("subjects").child(courseType)
-//                .child("roomList").child(roomUID).child("studentUIDList");
-//        mRoom_StudentUIDListDataBase.push().setValue(studentUID);
-
 
         fabPostMessage = findViewById(R.id.fab_write);
         fabPostMessage.setOnClickListener(new View.OnClickListener() {
@@ -173,7 +168,6 @@ public class RoomActivity extends AppCompatActivity {
                 if (dataSnapshot.getValue()==null) {
                     FirebaseDatabase.getInstance().getReference().child("subjects").child(courseType)
                         .child("roomList").child(roomUID).removeValue();
-                    //startActivity(new Intent(RoomActivity.this, RoomListActivity.class));
                 }
             }
 
@@ -183,11 +177,6 @@ public class RoomActivity extends AppCompatActivity {
             }
         });
 
-//        if (check.getRoot() == null) {
-//            FirebaseDatabase.getInstance().getReference().child("subjects").child(courseType)
-//                    .child("roomList").child(roomUID).removeValue();
-//        }
-        // Logic to remove room
     }
 }
 

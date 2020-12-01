@@ -1,4 +1,4 @@
-package com.example.sharedspace;
+package com.example.sharedspace.Room;
 
 
 import java.util.Date;

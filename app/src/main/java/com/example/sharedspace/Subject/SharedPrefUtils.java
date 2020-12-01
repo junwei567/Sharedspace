@@ -1,4 +1,4 @@
-package com.example.sharedspace;
+package com.example.sharedspace.Subject;
 
 import android.content.Context;
 import android.content.SharedPreferences;

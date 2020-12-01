@@ -1,4 +1,4 @@
-package com.example.sharedspace;
+package com.example.sharedspace.Room;
 
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -78,11 +78,4 @@ public class Room{
         return true;
     }
 
-//    @Override
-//    public void notifySubject(String studentUID) {
-//    }
-    // TODO: removed getTimeStarted as roomUID is now a unique hashcode.
-//    public String getTimeStarted() {
-//        return Long.toString(roomUID); //since roomUID and timestarted are now the same variable
-//    }
 }
