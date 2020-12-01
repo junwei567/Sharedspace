@@ -95,10 +95,7 @@
         android:layout_marginEnd="6dp"
         android:layout_marginRight="10dp"
         android:layout_marginBottom="36dp"
-<<<<<<< Updated upstream
         android:src="@drawable/ic_smiley_white" />
-=======
-        android:src="@drawable/ic_edit_white" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fabtext"
@@ -112,5 +109,5 @@
         android:layout_marginLeft="10dp"
         android:layout_marginBottom="36dp"
         android:src="@drawable/ic_edit_white" />
->>>>>>> Stashed changes
+
 </RelativeLayout>
