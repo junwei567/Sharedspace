@@ -160,6 +160,16 @@ public class RoomListActivity extends AppCompatActivity {
         FragmentTransaction hft = getSupportFragmentManager().beginTransaction();
         hft.replace(R.id.content, emptyFragment, "");
         hft.commit();
+
+        fab_add_room.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(RoomListActivity.this, RoomAddActivity.class);
+                intent.putExtra(SubjectActivity.SUBJECT_TYPE, courseType);
+                startActivity(intent);
+            }
+        });
+
     }
     private BottomNavigationView.OnNavigationItemSelectedListener selectedListener =
         new BottomNavigationView.OnNavigationItemSelectedListener() {
