@@ -50,7 +50,7 @@ public class Subject{
         studentList.add(studentID);
     }
 
-    public static void createRoom(String title, String roomDescription, String studentID, long timeToClose, String thisCourseType){ // Also input studentID so we can automatically add the creator into the room
+    public static Room createRoom(String title, String roomDescription, String studentID, long timeToClose, String thisCourseType){ // Also input studentID so we can automatically add the creator into the room
         final Room newRoom =  new Room(title, roomDescription, studentID, timeToClose, thisCourseType);
         HashMap<String, Object> updates = new HashMap<>();
         updates.put(String.valueOf(newRoom.getRoomUID()), newRoom);
@@ -60,6 +60,7 @@ public class Subject{
                 //roomList.put(String.valueOf(newRoom.getRoomUID()), newRoom);
             }
         });
+        return newRoom;
     }
 
 

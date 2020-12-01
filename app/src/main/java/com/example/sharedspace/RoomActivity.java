@@ -5,8 +5,10 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.format.DateFormat;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
@@ -18,8 +20,11 @@ import com.firebase.ui.database.FirebaseListAdapter;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 public class RoomActivity extends AppCompatActivity {
     FirebaseAuth firebaseAuth;
@@ -149,14 +154,37 @@ public class RoomActivity extends AppCompatActivity {
                             return true;
                     }
                     return false;
+
                 }
             };
 
     @Override
     protected void onPause() {
         super.onPause();
-        FirebaseDatabase.getInstance().getReference().child("subjects").child(courseType)
-                .child("roomList").child(roomUID).child("studentUIDList").child(studentUID).removeValue();
+        DatabaseReference minReference = FirebaseDatabase.getInstance().getReference()
+                .child("subjects").child(courseType).child("roomList").child(roomUID);
+        minReference.child("studentUIDList").child(studentUID).removeValue();
+        minReference.child("studentUIDList").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (dataSnapshot.getValue()==null) {
+                    FirebaseDatabase.getInstance().getReference().child("subjects").child(courseType)
+                        .child("roomList").child(roomUID).removeValue();
+                    //startActivity(new Intent(RoomActivity.this, RoomListActivity.class));
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+//        if (check.getRoot() == null) {
+//            FirebaseDatabase.getInstance().getReference().child("subjects").child(courseType)
+//                    .child("roomList").child(roomUID).removeValue();
+//        }
+        // Logic to remove room
     }
 }
 

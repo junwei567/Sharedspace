@@ -126,8 +126,14 @@ public class RoomAddActivity extends AppCompatActivity implements View.OnClickLi
                     //formatting the dateString to convert it into a Date
                     Date date = sdf.parse(dateString);
                     outTime = date.getTime();
-                    Subject.createRoom(title, desc, creatorID, outTime, courseType);
-                    startActivity(new Intent(RoomAddActivity.this, RoomListActivity.class));
+                    Room newRoom = Subject.createRoom(title, desc, creatorID, outTime, courseType);
+                    String enterRoomUID = String.valueOf(newRoom.getRoomUID());
+                    Intent intent = new Intent(RoomAddActivity.this, RoomActivity.class);
+                    intent.putExtra(RoomListActivity.ROOM_UID, enterRoomUID);
+                    intent.putExtra(RoomListActivity.STUDENT_UID, mAuth.getCurrentUser().getUid());
+                    intent.putExtra(SubjectActivity.SUBJECT_TYPE, courseType);
+                    startActivity(intent);
+
 
                 }catch(ParseException e){
                     e.printStackTrace();

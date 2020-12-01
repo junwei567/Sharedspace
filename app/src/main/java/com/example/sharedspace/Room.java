@@ -66,7 +66,11 @@ public class Room{
     }
 
     public int getSizeOfRoom() {
-        return this.studentUIDList.size();
+        try {
+            return this.studentUIDList.size();
+        } catch (NullPointerException e) {
+            return 0;
+        }
     }
 
     public Boolean isFull() {

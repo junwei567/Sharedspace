@@ -112,7 +112,7 @@ public class RoomListActivity extends AppCompatActivity {
                 timeClosedTextView.setText("Closing at " + simpleDateFormat.format(dateDisplayed));
 
                 roomTitleTextView.setText(model.getTitle());
-                numberOfPeopleTextView.setText("2");//String.valueOf(model.getSizeOfRoom()));
+                numberOfPeopleTextView.setText(String.valueOf(model.getSizeOfRoom()));
                 joinRoomButton.setText(model.isFull() ? "Room Full":"Join Room");
                 joinRoomButton.setEnabled(!model.isFull());
                 joinRoomButton.setOnClickListener(new View.OnClickListener() {

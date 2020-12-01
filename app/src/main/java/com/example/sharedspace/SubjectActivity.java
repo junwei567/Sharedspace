@@ -96,7 +96,6 @@ public class SubjectActivity extends AppCompatActivity {
         //a temporary list. testing queries for specific things
         DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference().child("subjects");
         //final List<String> testList = Arrays.asList("50001", "50002");
-
         subjectList = new ArrayList<>();
         if (userSubjects.size() != 0){
             for (String courseType : userSubjects){

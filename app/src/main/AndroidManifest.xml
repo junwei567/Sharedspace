@@ -34,7 +34,8 @@
         <activity android:name=".RegisterActivity" />
         <activity android:name=".MainActivity" />
         <activity android:name=".SubjectAddActivity"></activity>
-        <activity android:name="RoomAddActivity"></activity>
+        <activity android:name="RoomAddActivity"
+            android:noHistory="true"/>
     </application>
 
 </manifest>
