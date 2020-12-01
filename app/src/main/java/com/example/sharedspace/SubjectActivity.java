@@ -167,7 +167,7 @@ public class SubjectActivity extends AppCompatActivity {
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
             // Get the data item for this position
-            final Subject subject = getItem(position);
+            final Subject thisSubject = getItem(position);
             // Check if an existing view is being reused, otherwise inflate the view
             if (convertView == null) {
                 convertView = LayoutInflater.from(getContext()).inflate(R.layout.subject_card, parent, false);
@@ -179,15 +179,15 @@ public class SubjectActivity extends AppCompatActivity {
             CardView subjectCard = convertView.findViewById(R.id.subject_card_view);
 
             // Populate the data into the template view using the data object
-            cardHeaderTextView.setText(subject.getCourseTitle());
-            cardSubjectIDTextView.setText(subject.getCourseID());
-            cardStudyingTextView.setText(String.valueOf(subject.getRoomList().size()));
+            cardHeaderTextView.setText(thisSubject.getCourseTitle());
+            cardSubjectIDTextView.setText(thisSubject.getCourseID());
+            cardStudyingTextView.setText(String.valueOf(thisSubject.getRoomList().size()));
             subjectCard.setOnClickListener(new View.OnClickListener() {
                @Override
                public void onClick(View v) {
                    Intent intent = new Intent(SubjectActivity.this, RoomListActivity.class);
-                   intent.putExtra(SubjectActivity.SUBJECT_TYPE, subject.getCourseType());
-                   intent.putExtra(SubjectActivity.SUBJECT_TITLE, subject.getCourseTitle());
+                   intent.putExtra(SubjectActivity.SUBJECT_TYPE, thisSubject.getCourseType());
+                   intent.putExtra(SubjectActivity.SUBJECT_TITLE, thisSubject.getCourseTitle());
                    SubjectActivity.this.startActivity(intent);
                }
             });

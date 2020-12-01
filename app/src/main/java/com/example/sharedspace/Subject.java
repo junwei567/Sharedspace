@@ -1,6 +1,12 @@
 package com.example.sharedspace;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -13,6 +19,8 @@ public class Subject{
 
     // To be removed when firebase functionality added
     private HashMap<String, Object> roomList;
+    final private DatabaseReference mDataBase = FirebaseDatabase.getInstance()
+            .getReference().child("subjects");
 
     public Subject(String courseID, String courseType,String courseTitle){
         this.courseID = courseID;
@@ -43,8 +51,15 @@ public class Subject{
     }
 
     public void createRoom(String title, String roomDescription, String studentID, long timeToClose){ // Also input studentID so we can automatically add the creator into the room
-        Room newRoom =  new Room(title, roomDescription, studentID, timeToClose, courseType);
-        roomList.put(String.valueOf(newRoom.getRoomUID()), newRoom);
+        final Room newRoom =  new Room(title, roomDescription, studentID, timeToClose, courseType);
+        HashMap<String, Object> updates = new HashMap<>();
+        updates.put(String.valueOf(newRoom.getRoomUID()), newRoom);
+        mDataBase.child(courseType).child("roomList").updateChildren(updates, new DatabaseReference.CompletionListener() {
+            @Override
+            public void onComplete(@Nullable DatabaseError databaseError, @NonNull DatabaseReference databaseReference) {
+                roomList.put(String.valueOf(newRoom.getRoomUID()), newRoom);
+            }
+        });
     }
 
 
@@ -55,21 +70,22 @@ public class Subject{
     }
 
     public HashMap<String, Object> getRoomList() {
-        Room newRoom;
+
 
         // to be deleted if no need test case
-        if (roomList.size()==0) {
-            for (int i=1; i< 5;i++) {
-                newRoom = new Room("Room "+i,"This describes a room", FirebaseAuth.getInstance().getCurrentUser().getUid(), 69000+i, courseType);
-
-
-                // this extra line is just to simulate test case
-                if (i==2||i==7||i==18) {
-                    for (int j=0;j<4;j++) newRoom.addStudent("1004483");
-                }
-                roomList.put(String.valueOf(newRoom.getRoomUID()), newRoom);
-            }
-        }
+//        Room newRoom;
+//        if (roomList.size()==0) {
+//            for (int i=1; i< 5;i++) {
+//                newRoom = new Room("Room "+i,"This describes a room", FirebaseAuth.getInstance().getCurrentUser().getUid(), 69000+i, courseType);
+//
+//
+//                // this extra line is just to simulate test case
+//                if (i==2||i==7||i==18) {
+//                    for (int j=0;j<4;j++) newRoom.addStudent("1004483");
+//                }
+//                roomList.put(String.valueOf(newRoom.getRoomUID()), newRoom);
+//            }
+//        }
         return roomList;
     }
 
