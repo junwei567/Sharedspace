@@ -57,7 +57,6 @@ public class SubjectActivity extends AppCompatActivity {
         actionBar = getSupportActionBar();
         firebaseAuth = FirebaseAuth.getInstance();
         mListViewSubjects = findViewById(R.id.ListViewSubjects);
-        fakelistview = findViewById(R.id.fakeListViewSubjects);
         navigationView = findViewById(R.id.navigation);
         navigationView.setOnNavigationItemSelectedListener(selectedListener);
 
