@@ -145,6 +145,7 @@ public class RoomListActivity extends AppCompatActivity {
                         Intent intent = new Intent(RoomListActivity.this,RoomActivity.class);
                         intent.putExtra(RoomListActivity.ROOM_UID, String.valueOf(thisModel.getRoomUID()));
                         intent.putExtra(RoomListActivity.STUDENT_UID, firebaseAuth.getCurrentUser().getUid());
+                        intent.putExtra(SubjectActivity.SUBJECT_TYPE, courseType);
                         startActivity(intent);
                     }
                 });

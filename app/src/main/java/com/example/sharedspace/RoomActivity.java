@@ -52,7 +52,12 @@ public class RoomActivity extends AppCompatActivity {
         actionBar.setTitle(roomUID);
 
         mDatabase = FirebaseDatabase.getInstance().getReference().child("messages").child(roomUID);
+
         //TODO: add dependencies to update firebase.Room.studentUIDList upon entering the room.
+        final String studentUID = getIntent().getStringExtra(RoomListActivity.STUDENT_UID);
+        final String courseType = getIntent().getStringExtra(SubjectActivity.SUBJECT_TYPE);
+//        FirebaseDatabase.getInstance().getReference().child("subjects").child(courseType)
+//                .child(roomUID).child("studentUIDList").push().setValue(studentUID);
 
 
         fabPostMessage = findViewById(R.id.fab_write);

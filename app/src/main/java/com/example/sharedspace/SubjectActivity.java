@@ -75,7 +75,7 @@ public class SubjectActivity extends AppCompatActivity {
 //        subjectArrayList.add(new Subject("50.002","50002","Computer Structures"));
 //        subjectArrayList.add(new Subject("50.004","50004","Introduction to Algorithms"));
 //
-//        for (Subject sub:subjectArrayList) mDatabase.child(sub.getCourseType()).setValue(sub);
+//        for (Subject sub:subjectArrayList) FirebaseDatabase.getInstance().getReference().child("subjects").child(sub.getCourseType()).setValue(sub);
 //        FirebaseDatabase.getInstance().getReference().child("messages").child("10000").setValue("messages");
 
         // creates the default homeFragment
@@ -136,7 +136,6 @@ public class SubjectActivity extends AppCompatActivity {
                             hft.commit();
                             mListViewSubjects.setVisibility(View.VISIBLE);
                             return true;
-
                         case R.id.nav_profile:
                             // profile fragment transaction
                             actionBar.setTitle("Profile");
@@ -146,7 +145,6 @@ public class SubjectActivity extends AppCompatActivity {
                             pft.commit();
                             mListViewSubjects.setVisibility(View.INVISIBLE);
                             return true;
-
                         case R.id.nav_friends:
                             // users fragment transaction
                             actionBar.setTitle("Friends");
