@@ -13,6 +13,8 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -42,13 +44,11 @@ public class SubjectActivity extends AppCompatActivity {
     ActionBar actionBar;
     BottomNavigationView navigationView;
     ListView mListViewSubjects;
-    ListView fakelistview;
     final static String SUBJECT_TYPE="subject";
     final static String SUBJECT_TITLE = "title";
     ArrayList<Subject> subjectList;
     SubjectAdapter subjectAdapter;
-    private SharedPreferences mPreferences;
-    private String sharedPrefFile = "com.example.android.mainsharedprefs";
+    List<String> userSubjects;
 
     // fragments used in layouts
     EmptyFragment emptyFragment;
@@ -65,31 +65,9 @@ public class SubjectActivity extends AppCompatActivity {
         navigationView = findViewById(R.id.navigation);
         navigationView.setOnNavigationItemSelectedListener(selectedListener);
 
+        //loading userSubjects from sharedprefs
 
-        //a temporary list. testing queries for specific things
-        DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference().child("subjects");
-        final List<String> testList = Arrays.asList("50001", "50002");
-        subjectList = new ArrayList<>();
-        for (String courseType : testList){
-            Query query = mDatabase.orderByChild("courseType").equalTo(courseType);
-            query.addValueEventListener(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                    for (DataSnapshot snapshot : dataSnapshot.getChildren()){
-                        Subject subject = snapshot.getValue(Subject.class);
-                        subjectList.add(subject);
-                        subjectAdapter.notifyDataSetChanged();
-                    }
-                }
 
-                @Override
-                public void onCancelled(@NonNull DatabaseError databaseError) {
-                }
-            });
-        }
-
-        subjectAdapter = new SubjectAdapter(this, subjectList);
-        mListViewSubjects.setAdapter(subjectAdapter);
 
 //        //TODO: useful for adding new objects manually
 //        ArrayList<Subject> subjectArrayList = new ArrayList<>();
@@ -105,6 +83,44 @@ public class SubjectActivity extends AppCompatActivity {
         FragmentTransaction hft = getSupportFragmentManager().beginTransaction();
         hft.replace(R.id.content, emptyFragment, "");
         hft.commit();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        userSubjects = SharedPrefUtils.loadArray(this);
+
+        //a temporary list. testing queries for specific things
+        DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference().child("subjects");
+        //final List<String> testList = Arrays.asList("50001", "50002");
+
+        subjectList = new ArrayList<>();
+        if (userSubjects.size() != 0){
+            for (String courseType : userSubjects){
+                Query query = mDatabase.orderByChild("courseType").equalTo(courseType);
+                query.addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        for (DataSnapshot snapshot : dataSnapshot.getChildren()){
+                            Subject subject = snapshot.getValue(Subject.class);
+                            subjectList.add(subject);
+                            subjectAdapter.notifyDataSetChanged();
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+                    }
+                });
+            }
+
+            subjectAdapter = new SubjectAdapter(this, subjectList);
+            mListViewSubjects.setAdapter(subjectAdapter);
+        }
+        else{
+            mListViewSubjects.setAdapter(null);
+            mListViewSubjects.setEmptyView(findViewById(R.id.empty_list));
+        }
     }
 
     private BottomNavigationView.OnNavigationItemSelectedListener selectedListener =
@@ -179,6 +195,25 @@ public class SubjectActivity extends AppCompatActivity {
             });
             // Return the completed view to render on screen
             return convertView;
+        }
+    }
+
+
+    //Creates edit button in actionbar
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        menu.clear();
+        getMenuInflater().inflate(R.menu.edit_subjects, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.edit_subjects_button:
+                startActivity(new Intent(SubjectActivity.this, SubjectAddActivity.class));
+            default:
+                return super.onOptionsItemSelected(item);
         }
     }
 }

@@ -33,6 +33,7 @@
         </activity>
         <activity android:name=".RegisterActivity" />
         <activity android:name=".MainActivity" />
+        <activity android:name=".SubjectAddActivity"></activity>
     </application>
 
 </manifest>

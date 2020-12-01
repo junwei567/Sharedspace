@@ -76,10 +76,8 @@ public class DashboardActivity extends AppCompatActivity {
 
         // modifies actionbar
         actionBar.setTitle("Home");
-       // actionBar.setDisplayHomeAsUpEnabled(true);
 
-
-        // creates the default homeFragment
+        // creates the default emptyfragment
         emptyFragment = new EmptyFragment();
         FragmentTransaction hft = getSupportFragmentManager().beginTransaction();
         hft.replace(R.id.content, emptyFragment, "");
@@ -151,9 +149,9 @@ public class DashboardActivity extends AppCompatActivity {
     //
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
+        menu.clear();
         getMenuInflater().inflate(R.menu.menu_main, menu);
-        return super.onCreateOptionsMenu(menu);
-
+        return true;
     }
 
 
@@ -163,9 +161,6 @@ public class DashboardActivity extends AppCompatActivity {
             case R.id.action_logout:
                 firebaseAuth.signOut();
                 checkUserStatus();
-            case R.id.edit_subjects:
-                getSupportFragmentManager().popBackStack();
-                startActivity(new Intent(DashboardActivity.this, SubjectAddActivity.class));
             default:
                 return super.onOptionsItemSelected(item);
         }
