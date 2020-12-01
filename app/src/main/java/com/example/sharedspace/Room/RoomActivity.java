@@ -168,6 +168,7 @@ public class RoomActivity extends AppCompatActivity {
                 if (dataSnapshot.getValue()==null) {
                     FirebaseDatabase.getInstance().getReference().child("subjects").child(courseType)
                         .child("roomList").child(roomUID).removeValue();
+                    FirebaseDatabase.getInstance().getReference().child("messages").child(roomUID).removeValue();
                 }
             }
 

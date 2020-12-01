@@ -24,6 +24,7 @@ import com.example.sharedspace.EmptyFragment;
 import com.example.sharedspace.FriendsFragment;
 import com.example.sharedspace.ProfileFragment;
 import com.example.sharedspace.R;
+import com.example.sharedspace.Room.Room;
 import com.example.sharedspace.Room.RoomListActivity;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
@@ -34,7 +35,9 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
+import java.sql.Date;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class SubjectActivity extends AppCompatActivity {
@@ -63,6 +66,33 @@ public class SubjectActivity extends AppCompatActivity {
         mListViewSubjects = findViewById(R.id.ListViewSubjects);
         navigationView = findViewById(R.id.navigation);
         navigationView.setOnNavigationItemSelectedListener(selectedListener);
+
+        //Test cases for adding Subjects.
+//        ArrayList<Subject> subjectArrayList = new ArrayList<>();
+//        subjectArrayList.add(new Subject("50.001","50001","Introduction to Information Systems and Programming"));
+//        subjectArrayList.add(new Subject("50.002","50002","Computer Structures"));
+//        subjectArrayList.add(new Subject("50.004","50004","Introduction to Algorithms"));
+//        subjectArrayList.add(new Subject("50.003", "50003","Elements of Software Construction"));
+//        subjectArrayList.add(new Subject("02.143","02143","Artificial Intelligence and Ethics"));
+//        subjectArrayList.add(new Subject("02.204","02204","Technology and the Self"));
+//        subjectArrayList.add(new Subject("02.104","02104","The History of International Development in Asia: The Role of Engineers and Designers"));
+//
+//        for (Subject sub:subjectArrayList) FirebaseDatabase.getInstance().getReference().child("subjects").child(sub.getCourseType()).setValue(sub);
+
+        // Test cases for adding rooms.
+        //Subject.createRoom("Homework 3 discussion","Trying to complete Homework by today","1004485", Date.valueOf("2020-12-03").getTime() - 7200,"50004");
+        //Subject.createRoom("Week 5 content","Understanding Hash tables","1004485", Date.valueOf("2020-12-02").getTime() + 80800000,"50004");
+        //Subject.createRoom("Week 5 content","Understanding Hash tables","1004485", Date.valueOf("2020-12-02").getTime() + 80800000,"50004");
+        //Room testRoom1 = Subject.createRoom("Bellman-Ford Algo","help!","1004485", Date.valueOf("2020-12-02").getTime() + 60800000,"50004");
+
+        // Test cases for adding Students in rooms.
+//        HashMap<String, Object> updates = new HashMap<>();
+//        updates.put("131314", new Integer(1));
+//        updates.put("114114", new Integer(1));
+//        FirebaseDatabase.getInstance().getReference().child("subjects").child("50004")
+//                .child("roomList").child(String.valueOf(testRoom1.getRoomUID()))
+//                .child("studentUIDList").updateChildren(updates);
+
 
         // creates the default homeFragment
         emptyFragment = new EmptyFragment();
