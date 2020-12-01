@@ -69,7 +69,7 @@ public class RoomListActivity extends AppCompatActivity {
         actionBar = getSupportActionBar();
         firebaseAuth = FirebaseAuth.getInstance();
         navigationView = findViewById(R.id.navigation);
-
+        
         //gets the course_id that was passed to SubjectActivity from DashboardActivity (so you know what course's rooms to display)
         final String courseType = getIntent().getStringExtra(SubjectActivity.SUBJECT_TYPE);
         final String courseTitle = getIntent().getStringExtra(SubjectActivity.SUBJECT_TITLE);

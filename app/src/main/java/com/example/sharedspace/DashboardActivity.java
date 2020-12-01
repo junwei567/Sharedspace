@@ -33,8 +33,6 @@ public class DashboardActivity extends AppCompatActivity {
     FirebaseAuth firebaseAuth;
     ActionBar actionBar;
     BottomNavigationView navigationView;
-    //FirebaseDatabase firebaseDatabase;
-
 
     TextView appDescriptionTextView;
     Button discussionChatButton, calendarButton;
@@ -49,8 +47,6 @@ public class DashboardActivity extends AppCompatActivity {
         navigationView = findViewById(R.id.navigation);
 
         FirebaseDatabase.getInstance().setPersistenceEnabled(true); //enables persistence offline!!
-
-
 
         navigationView.setOnNavigationItemSelectedListener(selectedListener);
 
