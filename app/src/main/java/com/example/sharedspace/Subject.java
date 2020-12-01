@@ -71,23 +71,26 @@ public class Subject{
     }
 
     public HashMap<String, Object> getRoomList() {
-
-
         // to be deleted if no need test case
-        Room newRoom;
-        if (roomList.size()==0) {
-            for (int i=1; i< 5;i++) {
-                newRoom = new Room("Room "+i,"This describes a room", FirebaseAuth.getInstance().getCurrentUser().getUid(), 69000+i, courseType);
-
-
-                // this extra line is just to simulate test case
-                if (i==2||i==7||i==18) {
-                    for (int j=0;j<4;j++) newRoom.addStudent("1004483");
-                }
-                roomList.put(String.valueOf(newRoom.getRoomUID()), newRoom);
-            }
+//        Room newRoom;
+//        if (roomList.size()==0) {
+//            for (int i=1; i< 5;i++) {
+//                newRoom = new Room("Room "+i,"This describes a room", FirebaseAuth.getInstance().getCurrentUser().getUid(), 69000+i, courseType);
+//
+//
+//                // this extra line is just to simulate test case
+//                if (i==2||i==7||i==18) {
+//                    for (int j=0;j<4;j++) newRoom.addStudent("1004483");
+//                }
+//                roomList.put(String.valueOf(newRoom.getRoomUID()), newRoom);
+//            }
+//        }
+        try {
+            return roomList;
+        } catch (NullPointerException e) {
+            return new HashMap<>();
         }
-        return roomList;
+
     }
 
     //TODO

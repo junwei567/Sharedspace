@@ -183,7 +183,11 @@ public class SubjectActivity extends AppCompatActivity {
             // Populate the data into the template view using the data object
             cardHeaderTextView.setText(thisSubject.getCourseTitle());
             cardSubjectIDTextView.setText(thisSubject.getCourseID());
-            cardStudyingTextView.setText(String.valueOf(thisSubject.getRoomList().size()));
+            try {
+                cardStudyingTextView.setText(String.valueOf(thisSubject.getRoomList().size()));
+            } catch (NullPointerException e) {
+                cardStudyingTextView.setText("0");
+            }
             subjectCard.setOnClickListener(new View.OnClickListener() {
                @Override
                public void onClick(View v) {
