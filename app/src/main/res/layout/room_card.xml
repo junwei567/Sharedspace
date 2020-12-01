@@ -18,15 +18,15 @@
         <TextView
             android:id="@+id/room_title"
             android:layout_width="wrap_content"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            />
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
+
         <TextView
             android:id="@+id/time_closed"
-            android:text="Closing at 4pm"
             android:layout_width="wrap_content"
-            android:layout_height="0dp"
-            android:layout_weight="1"/>
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Closing at 4pm" />
 
     </LinearLayout>
     <LinearLayout

@@ -33,6 +33,10 @@ public class RoomActivity extends AppCompatActivity {
     ListView listOfMessages;
     RelativeLayout messageBoard;
 
+    String roomUID;
+    String studentUID;
+    String courseType;
+
     // fragments used in layouts
     EmptyFragment emptyFragment;
     ProfileFragment profileFragment;
@@ -48,18 +52,18 @@ public class RoomActivity extends AppCompatActivity {
         navigationView.setOnNavigationItemSelectedListener(selectedListener);
         messageBoard = findViewById(R.id.message_board);
 
-        final String roomUID = getIntent().getStringExtra(RoomListActivity.ROOM_UID);
-        final String studentUID = getIntent().getStringExtra(RoomListActivity.STUDENT_UID);
-        final String courseType = getIntent().getStringExtra(SubjectActivity.SUBJECT_TYPE);
+        roomUID = getIntent().getStringExtra(RoomListActivity.ROOM_UID);
+        studentUID = getIntent().getStringExtra(RoomListActivity.STUDENT_UID);
+        courseType = getIntent().getStringExtra(SubjectActivity.SUBJECT_TYPE);
 
         actionBar.setTitle(roomUID);
-
         mDatabase = FirebaseDatabase.getInstance().getReference().child("messages").child(roomUID);
-        //mRoom_StudentUIDListDataBase = FirebaseDatabase.getInstance().getReference().child("subjects").child(courseType)
-             //   .child("roomList").child(roomUID).child("studentUIDList");
 
-        //TODO: add dependencies to update firebase.Room.studentUIDList upon entering the room.
-        //mRoom_StudentUIDListDataBase.push().setValue(studentUID);
+        //update firebase.Room.studentUIDList upon entering the room.
+
+//        mRoom_StudentUIDListDataBase = FirebaseDatabase.getInstance().getReference().child("subjects").child(courseType)
+//                .child("roomList").child(roomUID).child("studentUIDList");
+//        mRoom_StudentUIDListDataBase.push().setValue(studentUID);
 
 
         fabPostMessage = findViewById(R.id.fab_write);
@@ -148,6 +152,12 @@ public class RoomActivity extends AppCompatActivity {
                 }
             };
 
+    @Override
+    protected void onPause() {
+        super.onPause();
+        FirebaseDatabase.getInstance().getReference().child("subjects").child(courseType)
+                .child("roomList").child(roomUID).child("studentUIDList").child(studentUID).removeValue();
+    }
 }
 
 

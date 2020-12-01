@@ -28,6 +28,8 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
@@ -103,8 +105,13 @@ public class RoomListActivity extends AppCompatActivity {
                 numberOfPeopleTextView = v.findViewById(R.id.number_of_people);
                 joinRoomButton = v.findViewById(R.id.join_room_button);
                 //
+                // Creating date format
+                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd MMM yyyy HH:mm:ss");
+                // Creating date from milliseconds
+                Date dateDisplayed = new Date(model.getTimeToClose());
+                timeClosedTextView.setText("Closing at " + simpleDateFormat.format(dateDisplayed));
+
                 roomTitleTextView.setText(model.getTitle());
-                timeClosedTextView.setText("Closed at " + model.getTimeToClose());
                 numberOfPeopleTextView.setText("2");//String.valueOf(model.getSizeOfRoom()));
                 joinRoomButton.setText(model.isFull() ? "Room Full":"Join Room");
                 joinRoomButton.setEnabled(!model.isFull());

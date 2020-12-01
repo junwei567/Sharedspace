@@ -116,7 +116,7 @@ public class SubjectActivity extends AppCompatActivity {
                     }
                 });
             }
-
+            mListViewSubjects.setAdapter(null);
             subjectAdapter = new SubjectAdapter(this, subjectList);
             mListViewSubjects.setAdapter(subjectAdapter);
         }

@@ -5,6 +5,7 @@ import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.icu.util.Calendar;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -113,22 +114,26 @@ public class RoomAddActivity extends AppCompatActivity implements View.OnClickLi
             String title = addRoomTitle.getText().toString();
             String desc = addRoomDesc.getText().toString();
             String creatorID = mAuth.getCurrentUser().getUid();
-
             long outTime;
-            SimpleDateFormat sdf = new SimpleDateFormat("dd-M-yyyy hh:mm:ss");
-            String dateString = addRoomDate.getText().toString() + " " + addRoomTime.getText().toString() + ":00";
-            try{
-                //formatting the dateString to convert it into a Date
-                Date date = sdf.parse(dateString);
-                outTime = date.getTime();
-                Subject.createRoom(title, desc, creatorID, outTime, courseType);
-                startActivity(new Intent(RoomAddActivity.this, RoomListActivity.class));
 
-            }catch(ParseException e){
-                e.printStackTrace();
-                Toast.makeText(this, "Please input a real date", Toast.LENGTH_SHORT).show();
+            if (TextUtils.isEmpty(title) || TextUtils.isEmpty(desc) || TextUtils.isEmpty(creatorID)) {
+                Toast.makeText(this, "Please don't leave the fields blank!", Toast.LENGTH_SHORT).show();
             }
+            else{
+                SimpleDateFormat sdf = new SimpleDateFormat("dd-M-yyyy hh:mm:ss");
+                String dateString = addRoomDate.getText().toString() + " " + addRoomTime.getText().toString() + ":00";
+                try{
+                    //formatting the dateString to convert it into a Date
+                    Date date = sdf.parse(dateString);
+                    outTime = date.getTime();
+                    Subject.createRoom(title, desc, creatorID, outTime, courseType);
+                    startActivity(new Intent(RoomAddActivity.this, RoomListActivity.class));
 
+                }catch(ParseException e){
+                    e.printStackTrace();
+                    Toast.makeText(this, "Please input a real date!", Toast.LENGTH_SHORT).show();
+                }
+            }
 
         }
     }
