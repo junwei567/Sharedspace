@@ -71,6 +71,8 @@ public class RoomListActivity extends AppCompatActivity {
     public final static String STUDENT_UID = "student_uid";
     public final static String ROOM_TITLE = "room_title";
 
+    private String courseTitle;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -85,7 +87,8 @@ public class RoomListActivity extends AppCompatActivity {
         
         //gets the course_id that was passed to SubjectActivity from DashboardActivity (so you know what course's rooms to display)
         final String courseType = getIntent().getStringExtra(SubjectActivity.SUBJECT_TYPE);
-        final String courseTitle = getIntent().getStringExtra(SubjectActivity.SUBJECT_TITLE);
+        courseTitle = getIntent().getStringExtra(SubjectActivity.SUBJECT_TITLE);
+
 
         mDatabase = FirebaseDatabase.getInstance().getReference().child("subjects");
 //
@@ -164,7 +167,7 @@ public class RoomListActivity extends AppCompatActivity {
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
                 switch (menuItem.getItemId()) {
                     case R.id.nav_home:
-                        actionBar.setTitle("Home");
+                        actionBar.setTitle(courseTitle);
                         emptyFragment = new EmptyFragment();
                         FragmentTransaction hft = getSupportFragmentManager().beginTransaction();
                         hft.replace(R.id.content, emptyFragment, "");

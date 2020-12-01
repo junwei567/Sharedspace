@@ -81,7 +81,7 @@ public class DashboardActivity extends AppCompatActivity {
                 Intent intent = new Intent();
                 intent.setAction(Intent.ACTION_VIEW);
                 intent.addCategory(Intent.CATEGORY_BROWSABLE);
-                intent.setData(Uri.parse("https://piazza.com/"));
+                intent.setData(Uri.parse("https://piazza.com/class"));
                 startActivity(intent);
             }
         });

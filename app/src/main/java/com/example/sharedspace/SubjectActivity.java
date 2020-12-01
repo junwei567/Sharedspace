@@ -19,6 +19,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.ListView;
 import android.widget.Switch;
@@ -64,10 +65,6 @@ public class SubjectActivity extends AppCompatActivity {
         mListViewSubjects = findViewById(R.id.ListViewSubjects);
         navigationView = findViewById(R.id.navigation);
         navigationView.setOnNavigationItemSelectedListener(selectedListener);
-
-        //loading userSubjects from sharedprefs
-
-
 
 //        //TODO: useful for adding new objects manually, also
 //              go to Room.java and edit line 29 to do studentUIDList.put() instead of addStudent()
@@ -131,7 +128,7 @@ public class SubjectActivity extends AppCompatActivity {
                 public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
                     switch (menuItem.getItemId()) {
                         case R.id.nav_home:
-                            actionBar.setTitle("Home");
+                            actionBar.setTitle("Subjects");
                             emptyFragment = new EmptyFragment();
                             FragmentTransaction hft = getSupportFragmentManager().beginTransaction();
                             hft.replace(R.id.content, emptyFragment, "");

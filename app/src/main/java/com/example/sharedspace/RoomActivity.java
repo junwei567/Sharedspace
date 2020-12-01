@@ -129,7 +129,7 @@ public class RoomActivity extends AppCompatActivity {
                 public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
                     switch (menuItem.getItemId()) {
                         case R.id.nav_home:
-                            actionBar.setTitle("Home");
+                            actionBar.setTitle(roomTitle);
                             messageBoard.setVisibility(View.VISIBLE);
                             FragmentTransaction hft = getSupportFragmentManager().beginTransaction();
                             hft.replace(R.id.content, emptyFragment, "");
