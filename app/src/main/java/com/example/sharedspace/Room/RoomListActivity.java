@@ -93,7 +93,7 @@ public class RoomListActivity extends AppCompatActivity {
                 SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd MMM yyyy HH:mm:ss");
                 // Creating date from milliseconds
                 Date dateDisplayed = new Date(model.getTimeToClose());
-                timeClosedTextView.setText("Closing at " + simpleDateFormat.format(dateDisplayed));
+                timeClosedTextView.setText("Due date: " + simpleDateFormat.format(dateDisplayed));
 
                 roomTitleTextView.setText(model.getTitle());
                 numberOfPeopleTextView.setText(String.valueOf(model.getSizeOfRoom()));
