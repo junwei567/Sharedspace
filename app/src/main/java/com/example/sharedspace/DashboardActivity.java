@@ -1,5 +1,3 @@
-//TODO: (zhiyou): URL links to blackboard, piazza, myportal, office365
-
 package com.example.sharedspace;
 
 import androidx.annotation.NonNull;
