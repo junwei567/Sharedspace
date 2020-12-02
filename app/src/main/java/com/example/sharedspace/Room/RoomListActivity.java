@@ -82,10 +82,11 @@ public class RoomListActivity extends AppCompatActivity {
             @Override
             protected void populateView(View v, Room model, int position) {
                 final Room thisModel = model;
-                TextView roomTitleTextView, timeClosedTextView, numberOfPeopleTextView;
+                TextView roomTitleTextView, timeClosedTextView, numberOfPeopleTextView, descriptionTextView;
                 Button joinRoomButton;
                 roomTitleTextView = v.findViewById(R.id.room_title);
                 timeClosedTextView = v.findViewById(R.id.time_closed);
+                descriptionTextView = v.findViewById(R.id.desc);
                 numberOfPeopleTextView = v.findViewById(R.id.number_of_people);
                 joinRoomButton = v.findViewById(R.id.join_room_button);
                 //
@@ -97,6 +98,7 @@ public class RoomListActivity extends AppCompatActivity {
 
                 roomTitleTextView.setText(model.getTitle());
                 numberOfPeopleTextView.setText(String.valueOf(model.getSizeOfRoom()));
+                descriptionTextView.setText(model.getRoomDescription());
                 joinRoomButton.setText(model.isFull() ? "Room Full":"Join Room");
                 joinRoomButton.setEnabled(!model.isFull());
                 joinRoomButton.setOnClickListener(new View.OnClickListener() {
