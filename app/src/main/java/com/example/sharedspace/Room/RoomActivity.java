@@ -7,6 +7,7 @@ import androidx.fragment.app.FragmentTransaction;
 
 import android.os.Bundle;
 import android.text.format.DateFormat;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
@@ -28,6 +29,8 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+
+import java.util.Date;
 
 public class RoomActivity extends AppCompatActivity {
     FirebaseAuth firebaseAuth;
@@ -159,16 +162,23 @@ public class RoomActivity extends AppCompatActivity {
     @Override
     protected void onPause() {
         super.onPause();
-        DatabaseReference minReference = FirebaseDatabase.getInstance().getReference()
+        final DatabaseReference minReference = FirebaseDatabase.getInstance().getReference()
                 .child("subjects").child(courseType).child("roomList").child(roomUID);
         minReference.child("studentUIDList").child(studentUID).removeValue();
-        minReference.child("studentUIDList").addValueEventListener(new ValueEventListener() {
+        minReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if (dataSnapshot.getValue()==null) {
-                    FirebaseDatabase.getInstance().getReference().child("subjects").child(courseType)
-                        .child("roomList").child(roomUID).removeValue();
-                    FirebaseDatabase.getInstance().getReference().child("messages").child(roomUID).removeValue();
+                try {
+                    Long currentTime = new Date().getTime();
+                    String time = dataSnapshot.child("timeToClose").getValue().toString();
+                    Long thisTime = Long.parseLong(time);
+                    Log.i("", "");
+                    if (dataSnapshot.child("studentUIDList").getValue() == null || thisTime < currentTime) {
+                        minReference.removeValue();
+                        FirebaseDatabase.getInstance().getReference().child("messages").child(roomUID).removeValue();
+                    }
+                } catch (NullPointerException e) {
+
                 }
             }
 
