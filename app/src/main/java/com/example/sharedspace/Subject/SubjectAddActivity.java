@@ -117,7 +117,7 @@ public class SubjectAddActivity extends AppCompatActivity {
 //                @Override
 //                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 //                    if (isChecked == true){
-//                        //TODO: save a local list of subjects
+//
 //                        //controller.AddSubject(subject);
 //                    }
 //                    else{

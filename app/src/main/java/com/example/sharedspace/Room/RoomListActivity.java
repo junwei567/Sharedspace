@@ -31,8 +31,6 @@ import android.widget.ListView;
 import com.firebase.ui.database.FirebaseListAdapter;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
-//TODO: add functionality to create room, and specifically allow creator of the room to delete the room. 
-
 public class RoomListActivity extends AppCompatActivity {
     FirebaseAuth firebaseAuth; //is this necessary here? firebase should only be called in our controllers
     DatabaseReference mDatabase;
@@ -72,7 +70,7 @@ public class RoomListActivity extends AppCompatActivity {
 
         mDatabase = FirebaseDatabase.getInstance().getReference().child("subjects");
 //
-        actionBar.setTitle(courseTitle); //TODO
+        actionBar.setTitle(courseTitle);
 
         listViewRooms = findViewById(R.id.ListViewRooms);
 
@@ -104,8 +102,7 @@ public class RoomListActivity extends AppCompatActivity {
                 joinRoomButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        //TODO: update Room.studentIDList using addStudent() inside firebase.
-                        // as of now its using studentID, but can modify to use the user's uid too.
+
                         String enterRoomUID = String.valueOf(thisModel.getRoomUID());
 
                         Intent intent = new Intent(RoomListActivity.this,RoomActivity.class);
