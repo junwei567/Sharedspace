@@ -3,7 +3,7 @@
 With the rise of online learning, our education and communication has changed drastically. Our app aims to improve the online learning environment through a shared and supportive communication platform with peers.
 
 ## UI
-![](assets/ss1.jpg)
+![](assets/ss1.jpg | width=100)
 
 ## Features
 - Account registration and authentication
