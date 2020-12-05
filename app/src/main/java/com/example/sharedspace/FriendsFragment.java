@@ -55,15 +55,20 @@ public class FriendsFragment extends Fragment {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 userList.clear();
-                for (DataSnapshot ds : dataSnapshot.getChildren()) {
-                    ModelUser modelUser = ds.getValue(ModelUser.class);
+                try {
+                    for (DataSnapshot ds : dataSnapshot.getChildren()) {
+                        ModelUser modelUser = ds.getValue(ModelUser.class);
 
-                    if (!modelUser.getUid().equals(firebaseUser.getUid())) {
-                        userList.add(modelUser);
+                        if (!modelUser.getUid().equals(firebaseUser.getUid())) {
+                            userList.add(modelUser);
+                        }
+                        adapterUsers = new AdapterUsers(getActivity(), userList);
+                        recyclerView.setAdapter(adapterUsers);
                     }
-                    adapterUsers = new AdapterUsers(getActivity(), userList);
-                    recyclerView.setAdapter(adapterUsers);
+                } catch (NullPointerException e) {
+
                 }
+
 
             }
 
