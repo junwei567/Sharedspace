@@ -37,7 +37,6 @@ public class RoomActivity extends AppCompatActivity {
     ActionBar actionBar;
     BottomNavigationView navigationView;
     DatabaseReference mDatabase;
-    DatabaseReference mRoom_StudentUIDListDataBase;
 
     private FirebaseListAdapter<Message> roomActivityAdapter;
     FloatingActionButton fabPostMessage;

@@ -23,7 +23,6 @@ public class Room{
         this.title = title;
         this.roomDescription = roomDescription;
         this.timeToClose = timeToClose;
-        //this.roomUID = timeStarted; // roomUID and time started will be in the same variable
         this.roomUID = String.valueOf(new Date().getTime()).hashCode();
         this.studentUIDList = new HashMap<>();
         studentUIDList.put(studentUID, new Integer(2));

@@ -32,7 +32,7 @@ import com.firebase.ui.database.FirebaseListAdapter;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 public class RoomListActivity extends AppCompatActivity {
-    FirebaseAuth firebaseAuth; //is this necessary here? firebase should only be called in our controllers
+    FirebaseAuth firebaseAuth;
     DatabaseReference mDatabase;
 
     ActionBar actionBar;
@@ -47,7 +47,6 @@ public class RoomListActivity extends AppCompatActivity {
 
     public final static String ROOM_UID = "room_uid";
     public final static String STUDENT_UID = "student_uid";
-    public final static String ROOM_TITLE = "room_title";
 
     private String courseTitle;
 
